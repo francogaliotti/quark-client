@@ -1,20 +1,30 @@
 import React from 'react'
-import styled from 'styled-components'
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../../features/userSlice';
+import './Navbar.css'
 
-const NavbarContainer = styled.div`
-    width: 100%;
-    height: 50px;
-    display: flex;
-    background-color: azure;
-    position: fixed;
-    top: 0;
-`
 
 function Navbar() {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout())
+    //navigate('/login')
+  }
+
   return (
-    <NavbarContainer>
-        Algo
-    </NavbarContainer>
+    <div className="navbarContainer">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">News</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#" onClick={handleLogout}>Logout</a></li>
+      </ul>
+    </div>
   )
 }
 
