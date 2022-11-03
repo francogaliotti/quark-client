@@ -1,0 +1,88 @@
+.profilePageContainer {
+    position: inherit;
+    display: flex;
+    width: 85%;
+    height: fit-content;
+    margin-left: 10%;
+    margin-top: 10%;
+    gap: 10px;
+}
+
+.leftContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 10px;
+    padding: 10px;
+}
+
+.basicInfo {
+    background-color: #eee;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.basicInfo img {
+    height: 200px;
+    width: 200px;
+    border-radius: 100px;
+    margin-top: 25px;
+}
+
+.descriptionContainer {
+    background-color: #eee;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    font-size: 110%;
+}
+
+h3 {
+    font-size: 90%;
+}
+
+p {
+    font-size: 70%;
+}
+
+.rightContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    padding: 10px;
+    gap: 10px;
+}
+
+.aboutContainer {
+    text-align: start;
+    background-color: #eee;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.aboutContainer .fillForms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.aboutContainer .fillForms .fillForm {
+    display: flex;
+    flex-direction: column;
+    width: 29%;
+    gap: 5px;
+    padding: 5px;
+    text-align: start;
+}
+
+.aboutContainer .fillForms .fillForm label {
+    font-size: 60%;
+}
+
+.aboutContainer .fillForms .fillForm input {
+    width: 80%;
+    height: 20px;
+}

@@ -6,6 +6,7 @@ import Navbar from './components/navbar';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react';
 import PublicRoutes from './routes/PublicRoutes';
+import VerticalNavbar from './components/verticalNavbar';
 
 
 function App() {
@@ -15,8 +16,13 @@ function App() {
 
   return (
     <div className="app-container">
-      {user && <Navbar />}
-      <PublicRoutes />
+      {user && <>
+        <Navbar />
+        <VerticalNavbar />
+      </>}
+      <div className="content-container">
+        <PublicRoutes />
+      </div>
     </div>
   );
 }

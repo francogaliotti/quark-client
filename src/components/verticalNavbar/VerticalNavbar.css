@@ -1,0 +1,28 @@
+.verticalNavbarContainer {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background-color: #282c34;
+    width: 15%;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    z-index: 9;
+}
+
+.verticalList {
+    display: flex;
+    flex-direction: column;
+    margin-right: 40px;
+    list-style-type: none;
+    padding: 0;
+    margin-top: 80px;
+}
+
+.verticalList a {
+    color: #ddd;
+    cursor: pointer;
+}
+
+.verticalList a:hover {
+    color: #fff;
+}
