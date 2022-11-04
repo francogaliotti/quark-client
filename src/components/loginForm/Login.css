@@ -4,10 +4,10 @@ form {
     gap: 20px;
     justify-content: center;
     align-items: center;
-    border: solid #8e44ad;
+    border: solid #444;
     padding: 40px;
     border-radius: 10px;
-    background-color: #555;
+    background-color: #eee;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
@@ -24,24 +24,22 @@ input {
     border-radius: 3px;
     padding: 0 10px;
 }
-
-button {
-    width: 70%;
-    outline: none;
-    background-color: #8e44ad;
-    color: #fff;
-    font-size: 17px;
-    border: 2px solid transparent;
-    border-radius: 5px;
-    padding: 4px 18px;
-    transition: all 230ms ease-in-out;
-    margin-top: 1em;
-    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-}
-
-button:hover {
-    cursor: pointer;
-    background-color: transparent;
-    border: 2px solid #8e44ad;
-    color: #8e44ad;
-}
+@media (max-width: 800px){
+    form {
+      width: 65%;
+      
+    }
+    form input {
+      height: 30px;
+      font-size: 15px;
+      width: 80%
+    }
+    form button {
+      height: 35px;
+      border-radius: 8px;
+      border: none;
+      margin-top: 15px;
+      font-size: 15px;
+    }
+    
+  }

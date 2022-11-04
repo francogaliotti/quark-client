@@ -12,14 +12,14 @@ function Navbar() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isMovile = useMediaQuery({ maxWidth: "650px" })
+  const isMovile = useMediaQuery({ maxWidth: "860px" })
 
   if (isMovile) return (
     <Menu right styles={menuStyle}>
       <div>
-        <ul className='verticalList'>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">News</a></li>
+        <ul className='verticalList' id='verticalResponsive'>
+          <li><a onClick={() => navigate('/')}>Home</a></li>
+          <li><a onClick={() => navigate('/profile')}>Mi Perfil</a></li>
           <li><a href="#">Contact</a></li>
           <li><a href="#">About</a></li>
           <li><a href="/login" onClick={() => dispatch(logout())}>Logout</a></li>

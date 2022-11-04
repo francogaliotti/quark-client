@@ -6,6 +6,7 @@
     margin-left: 10%;
     margin-top: 10%;
     gap: 10px;
+    font-family: Andale Mono, monospace;
 }
 
 .leftContainer {
@@ -20,6 +21,7 @@
     background-color: #eee;
     border-radius: 10px;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    padding: 10px;
 }
 
 .basicInfo img {
@@ -33,18 +35,29 @@
     background-color: #eee;
     border-radius: 10px;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    padding-bottom: 20px;
+}
+
+#fileInput {
+    width: 80%;
+    height: 20px;
+    cursor: pointer;
 }
 
 h2 {
-    font-size: 110%;
+    font-size: 100%;
 }
 
 h3 {
     font-size: 90%;
 }
 
-p {
-    font-size: 70%;
+.descriptionContainer textarea {
+    resize: none;
+    width: 85%;
+    height: 100px;
+    border-radius: 10px;
+    padding: 10px;
 }
 
 .rightContainer {
@@ -53,6 +66,7 @@ p {
     flex: 2;
     padding: 10px;
     gap: 10px;
+    align-items: center;
 }
 
 .aboutContainer {
@@ -61,6 +75,7 @@ p {
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     padding: 10px;
+    width: 100%;
 }
 
 .aboutContainer .fillForms {
@@ -73,9 +88,11 @@ p {
     display: flex;
     flex-direction: column;
     width: 29%;
+    min-width: 150px;
     gap: 5px;
     padding: 5px;
     text-align: start;
+    height: max-content;
 }
 
 .aboutContainer .fillForms .fillForm label {
@@ -85,4 +102,35 @@ p {
 .aboutContainer .fillForms .fillForm input {
     width: 80%;
     height: 20px;
+    position: relative;
+    bottom: 0;
+    border: 1px solid #777;
+    border-radius: 5px;
+}
+
+.aboutContainer .fillForms .fillForm select {
+    width: 80%;
+    height: 22px;
+    position: relative;
+    bottom: 0;
+    border: 1px solid #777;
+    border-radius: 5px;
+}
+
+@media (max-width: 980px){
+    .aboutContainer .fillForms .fillForm {
+        width: 100%;
+    }
+}
+
+@media (max-width: 860px){
+    .profilePageContainer {
+        flex-direction: column;
+        margin-left: 0;
+    }
+
+    .basicInfo img {
+        height: 40%;
+        width: 40%;
+    }
 }

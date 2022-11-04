@@ -28,3 +28,9 @@ li a:hover {
     color: #282c34;
     text-decoration: underline;
 }
+
+#verticalResponsive {
+    position: absolute;
+    left: 0;
+    top: 0;
+}

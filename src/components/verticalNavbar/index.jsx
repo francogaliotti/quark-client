@@ -5,7 +5,7 @@ import './VerticalNavbar.css'
 
 function VerticalNavbar() {
 
-    const isMovile = useMediaQuery({ maxWidth: "650px" })
+    const isMovile = useMediaQuery({ maxWidth: "860px" })
     const navigate = useNavigate()
 
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../features/userSlice';
+import { PrimaryButton } from '../buttons/Buttons';
 import './Login.css'
 
 function LoginForm() {
@@ -42,7 +43,7 @@ function LoginForm() {
                     onChange={(event) => { setPassword(event.target.value) }}
                 />
             </div>
-            <button type='submit'>Login </button>
+            <PrimaryButton type='submit'>Login</PrimaryButton>
         </form>
     )
 }

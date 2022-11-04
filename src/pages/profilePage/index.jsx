@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { PrimaryButton } from '../../components/buttons/Buttons';
 import { selectUser } from '../../features/userSlice';
 import './ProfilePage.css'
 
@@ -17,12 +18,16 @@ function ProfilePage() {
             <div className="leftContainer">
                 <div className="basicInfo">
                     <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="" />
-                    <h2 className="name">Nombre del usuario</h2>
+                    <h2 className="name">{user.name}</h2>
                     <h3 className="email">user@mail.com</h3>
                 </div>
                 <div className="descriptionContainer">
+                    <h3>Añade tu CV</h3>
+                    <input type="file" id='fileInput' />
+                </div>
+                <div className="descriptionContainer">
                     <h3>Mi Descripción</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt asperiores id natus ad enim voluptatem, et, quibusdam ab incidunt quis quia aliquid fuga praesentium reprehenderit nihil, voluptatum in laudantium minima!</p>
+                    <textarea></textarea>
                 </div>
             </div>
             <div className="rightContainer">
@@ -39,11 +44,11 @@ function ProfilePage() {
                         </div>
                         <div className="fillForm">
                             <label>Genero</label>
-                            <input type="text" />
+                            <select name="" id=""></select>
                         </div>
                         <div className="fillForm">
                             <label>Fecha de Nacimiento</label>
-                            <input type="text" />
+                            <input type="date" />
                         </div>
                         <div className="fillForm">
                             <label>Codigo de Pais</label>
@@ -55,15 +60,15 @@ function ProfilePage() {
                         </div>
                         <div className="fillForm">
                             <label>Pais</label>
-                            <input type="text" />
+                            <select name="" id=""></select>
                         </div>
                         <div className="fillForm">
                             <label>Provincia</label>
-                            <input type="text" />
+                            <select name="" id=""></select>
                         </div>
                         <div className="fillForm">
                             <label>Localidad</label>
-                            <input type="text" />
+                            <select name="" id=""></select>
                         </div>
                     </div>
 
@@ -83,23 +88,40 @@ function ProfilePage() {
                         </div>
                         <div className="fillForm">
                             <label>Área de Estudio</label>
-                            <input type="text" />
+                            <select name="" id=""></select>
                         </div>
                         <div className="fillForm">
                             <label>Estado</label>
-                            <input type="text" />
+                            <select name="" id=""></select>
                         </div>
                         <div className="fillForm">
                             <label>Fecha de Inicio</label>
-                            <input type="text" />
+                            <input type="date" />
                         </div>
                         <div className="fillForm">
-                            <label>Fecha de Finalización</label>
-                            <input type="text" />
+                            <label>Fecha Finalización</label>
+                            <input type="date" />
                         </div>
                     </div>
 
+                    
+
                 </div>
+                <div className="aboutContainer">
+                        <h3>Idiomas</h3>
+                        <div className="fillForms">
+                            <div className="fillForm">
+                                <label>Idioma</label>
+                                <select name="" id=""></select>
+                            </div>
+                            <div className="fillForm">
+                                <label>Nivel</label>
+                                <select name="" id=""></select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <PrimaryButton>Guardar</PrimaryButton>
             </div>
         </div>
     )
