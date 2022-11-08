@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { PrimaryButton } from '../../components/buttons/Buttons';
+import { PrimaryButton, SecondaryButton } from '../../components/commonComponents/Buttons';
 import { selectUser } from '../../features/userSlice';
 import './ProfilePage.css'
 
 function ProfilePage() {
     const user = useSelector(selectUser);
     const navigate = useNavigate();
+    const ref = useRef(null);
 
     useEffect(() => {
         if (!user) navigate('/login')
@@ -23,7 +24,8 @@ function ProfilePage() {
                 </div>
                 <div className="descriptionContainer">
                     <h3>Añade tu CV</h3>
-                    <input type="file" id='fileInput' />
+                    <PrimaryButton onClick={() => ref.current.click()}>Añadir CV</PrimaryButton>
+                    <input ref={ref} type='file' id="getFile" />
                 </div>
                 <div className="descriptionContainer">
                     <h3>Mi Descripción</h3>
@@ -44,7 +46,12 @@ function ProfilePage() {
                         </div>
                         <div className="fillForm">
                             <label>Genero</label>
-                            <select name="" id=""></select>
+                            <select name="" id="">
+                                <option value=""> </option>
+                                <option value="">Masculino</option>
+                                <option value="">Femenino</option>
+                                <option value="">No especifica</option>
+                            </select>
                         </div>
                         <div className="fillForm">
                             <label>Fecha de Nacimiento</label>
@@ -104,24 +111,24 @@ function ProfilePage() {
                         </div>
                     </div>
 
-                    
+
 
                 </div>
                 <div className="aboutContainer">
-                        <h3>Idiomas</h3>
-                        <div className="fillForms">
-                            <div className="fillForm">
-                                <label>Idioma</label>
-                                <select name="" id=""></select>
-                            </div>
-                            <div className="fillForm">
-                                <label>Nivel</label>
-                                <select name="" id=""></select>
-                            </div>
-
+                    <h3>Idiomas</h3>
+                    <div className="fillForms">
+                        <div className="fillForm">
+                            <label>Idioma</label>
+                            <select name="" id=""></select>
                         </div>
+                        <div className="fillForm">
+                            <label>Nivel</label>
+                            <select name="" id=""></select>
+                        </div>
+
                     </div>
-                    <PrimaryButton>Guardar</PrimaryButton>
+                </div>
+                <PrimaryButton>Guardar</PrimaryButton>
             </div>
         </div>
     )

@@ -38,10 +38,8 @@
     padding-bottom: 20px;
 }
 
-#fileInput {
-    width: 80%;
-    height: 20px;
-    cursor: pointer;
+#getFile {
+    display: none;
 }
 
 h2 {
@@ -117,13 +115,13 @@ h3 {
     border-radius: 5px;
 }
 
-@media (max-width: 980px){
+@media (max-width: 980px) {
     .aboutContainer .fillForms .fillForm {
         width: 100%;
     }
 }
 
-@media (max-width: 860px){
+@media (max-width: 860px) {
     .profilePageContainer {
         flex-direction: column;
         margin-left: 0;
