@@ -17,9 +17,9 @@ function App() {
   return (
     <div className="app-container">
       {user && <>
-        <Navbar />
         <VerticalNavbar />
       </>}
+      <Navbar />
       <div className="content-container">
         <PublicRoutes />
       </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { PrimaryButton, SecondaryButton } from '../../components/commonComponents/Buttons';
+import { PrimaryButton, SecondaryButton } from '../../components/styledComponents/Buttons';
 import { selectUser } from '../../features/userSlice';
 import './ProfilePage.css'
 

@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../features/userSlice';
-import { PrimaryButton } from '../buttons/Buttons';
+import { PrimaryButton } from '../styledComponents/Buttons';
+import { PrimaryInput } from '../styledComponents/Inputs';
 import './Login.css'
 
 function LoginForm() {
@@ -26,24 +27,24 @@ function LoginForm() {
     return (
         <form onSubmit={(e) => handleSubmit(e)}>
             <div className="singleField">
-                <label htmlFor="">Username: </label>
+                <label htmlFor="">Usuario: </label>
 
-                <input
+                <PrimaryInput
                     type="text"
                     placeholder='Username'
                     onChange={(event) => { setUsername(event.target.value) }}
                 />
             </div>
             <div className="singleField">
-                <label htmlFor="">Password: </label>
+                <label htmlFor="">Contraseña: </label>
 
-                <input
+                <PrimaryInput
                     type="password"
                     placeholder='Password'
                     onChange={(event) => { setPassword(event.target.value) }}
                 />
             </div>
-            <PrimaryButton type='submit'>Login</PrimaryButton>
+            <PrimaryButton type='submit'>Ingresar</PrimaryButton>
         </form>
     )
 }
