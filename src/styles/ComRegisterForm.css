@@ -26,6 +26,15 @@
     padding: 0 10px;
 }
 
+#selectField {
+    height: 30px;
+    width: 21.5em;
+    font-size: 17px;
+    outline: none;
+    border-radius: 3px;
+    padding: 0 10px;
+}
+
 @media (max-width: 800px) {
     #fieldAddRecord {
         height: 25px;
@@ -33,15 +42,28 @@
         width: 80%
     }
 
+    #selectField {
+        height: 25px;
+        font-size: 15px;
+        width: 13.2em;
+        margin-right: 18px;
+    }
+
     .inputContainer span {
         font-size: 50%;
     }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 470px) {
     #fieldAddRecord {
         height: 22px;
         font-size: 13px;
+    }
+    #selectField {
+        height: 22px;
+        font-size: 13px;
+        width: 10em;
+        margin-right: 18px;
     }
 
 }

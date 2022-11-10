@@ -1,8 +1,8 @@
 import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import './DevRegisterForm.css'
-import { PrimaryButton } from '../styledComponents/Buttons'
+import '../../styles/DevRegisterForm.css'
+import { PrimaryButton } from '../../styles/styledComponents/Buttons'
 
 function DevRegisterForm() {
 
@@ -16,7 +16,7 @@ function DevRegisterForm() {
     }
 
     const validationSchema = Yup.object().shape({
-        username: Yup.string().min(3, "El minimo de caracteres es 3").max(20, "El máximo de caracteres es 20").required(),
+        username: Yup.string().min(3, "El minimo de caracteres es 3").max(20, "El máximo de caracteres es 20").required("Campo requerido"),
         name: Yup.string().min(3, "El minimo de caracteres es 3").max(20, "El máximo de caracteres es 20").required("Campo requerido"),
         lastName: Yup.string().min(3, "El minimo de caracteres es 3").max(20, "El máximo de caracteres es 20").required("Campo requerido"),
         password: Yup.string().min(4, "El minimo de caracteres es 4").max(20, "El máximo de caracteres es 20").required("Campo requerido"),

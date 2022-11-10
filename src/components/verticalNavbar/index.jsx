@@ -1,7 +1,7 @@
 import React from 'react'
 import { useMediaQuery } from 'react-responsive'
 import { useNavigate } from 'react-router-dom'
-import './VerticalNavbar.css'
+import '../../styles/VerticalNavbar.css'
 
 function VerticalNavbar() {
 
@@ -14,8 +14,9 @@ function VerticalNavbar() {
             <ul className='verticalList'>
                 <li><a onClick={()=>navigate('/')}>Inicio</a></li>
                 <li><a onClick={()=>navigate('/profile')}>Mi Perfil</a></li>
+                <li><a onClick={()=>navigate('/profesionalProfile')}>Perfil Profesional</a></li>
                 <li><a href="#">Mis Cursos</a></li>
-                <li><a href="#">About</a></li>
+                <li><a href="#">Eventos</a></li>
             </ul>
         </div>)
 

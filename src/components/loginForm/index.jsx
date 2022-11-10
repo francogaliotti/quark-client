@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../features/userSlice';
-import { PrimaryButton } from '../styledComponents/Buttons';
-import { PrimaryInput } from '../styledComponents/Inputs';
-import './Login.css'
+import { PrimaryButton } from '../../styles/styledComponents/Buttons';
+import { PrimaryInput } from '../../styles/styledComponents/Inputs';
+import '../../styles/Login.css'
 
 function LoginForm() {
     const [username, setUsername] = useState("")

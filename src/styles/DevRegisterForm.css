@@ -6,6 +6,11 @@
     width: 100%;
 }
 
+.singleField label {
+    text-align: start;
+    font-size: 100%;
+}
+
 .inputContainer {
     display: flex;
     flex-direction: column;
@@ -26,16 +31,12 @@
     padding: 0 10px;
 }
 
-#selectField {
-    height: 30px;
-    width: 21.5em;
-    font-size: 17px;
-    outline: none;
-    border-radius: 3px;
-    padding: 0 10px;
-}
-
 @media (max-width: 800px) {
+
+    #devFormId {
+        width: 90%;
+    }
+
     #fieldAddRecord {
         height: 25px;
         font-size: 15px;
@@ -47,10 +48,28 @@
     }
 }
 
+@media (max-width: 670px) {
+
+    
+
+}
+
 @media (max-width: 450px) {
     #fieldAddRecord {
         height: 22px;
         font-size: 13px;
+    }
+    #devFormId {
+        width: 80%;
+    }
+
+}
+
+@media (max-width: 420px) {
+
+    #devFormId {
+        width: 70%;
+        margin-left: 0px;
     }
 
 }

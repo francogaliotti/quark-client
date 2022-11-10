@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { PrimaryButton, SecondaryButton } from '../../components/styledComponents/Buttons';
+import { PrimaryButton, SecondaryButton } from '../../styles/styledComponents/Buttons';
 import { selectUser } from '../../features/userSlice';
-import './ProfilePage.css'
+import '../../styles/ProfilePage.css'
 
 function ProfilePage() {
     const user = useSelector(selectUser);

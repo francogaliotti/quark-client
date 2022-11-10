@@ -1,8 +1,8 @@
 import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import './ComRegisterForm.css'
-import { PrimaryButton } from '../styledComponents/Buttons'
+import '../../styles/ComRegisterForm.css'
+import { PrimaryButton } from '../../styles/styledComponents/Buttons'
 
 function ComRegisterForm() {
 
