@@ -12,9 +12,9 @@ function VerticalNavbar() {
     if (!isMovile)
         return (<div className="verticalNavbarContainer">
             <ul className='verticalList'>
-                <li><a onClick={()=>navigate('/')}>Home</a></li>
+                <li><a onClick={()=>navigate('/')}>Inicio</a></li>
                 <li><a onClick={()=>navigate('/profile')}>Mi Perfil</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="#">Mis Cursos</a></li>
                 <li><a href="#">About</a></li>
             </ul>
         </div>)

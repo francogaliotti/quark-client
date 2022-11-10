@@ -18,15 +18,15 @@ function Navbar() {
     <Menu right styles={menuStyle}>
       <div>
         {user ? <ul className='verticalList' id='verticalResponsive'>
-          <li><a onClick={() => navigate('/')}>Home</a></li>
+          <li><a onClick={() => navigate('/')}>Inicio</a></li>
           <li><a onClick={() => navigate('/profile')}>Mi Perfil</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="#">Mis Cursos</a></li>
           <li><a href="#">About</a></li>
           <li><a href="/login" onClick={() => dispatch(logout())}>Logout</a></li>
         </ul> :
           <ul className='verticalList' id='verticalResponsive'>
             <li><a onClick={() => navigate('/registerDev')}>Developer</a></li>
-            <li><a href="#">Empresa</a></li>
+            <li><a onClick={() => navigate('/registerCom')}>Empresa</a></li>
             <li><a href="/login">Login</a></li>
           </ul>}
       </div>
@@ -39,7 +39,7 @@ function Navbar() {
       </ul> :
         <ul>
           <li><a onClick={() => navigate('/registerDev')}>Developer</a></li>
-          <li><a href="#">Empresa</a></li>
+          <li><a onClick={() => navigate('/registerCom')}>Empresa</a></li>
           <li><a href="/login">Login</a></li>
         </ul>}
     </div>

@@ -1,15 +1,16 @@
 import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import './DevRegisterForm.css'
+import './ComRegisterForm.css'
 import { PrimaryButton } from '../styledComponents/Buttons'
 
-function DevRegisterForm() {
+function ComRegisterForm() {
 
     const initialValues = {
         username: "",
-        name: "",
-        lastName: "",
+        companyName: "",
+        nEmployees: "",
+        country: "",
         password: "",
         password2: "",
         email: ""
@@ -17,8 +18,9 @@ function DevRegisterForm() {
 
     const validationSchema = Yup.object().shape({
         username: Yup.string().min(3, "El minimo de caracteres es 3").max(20, "El máximo de caracteres es 20").required(),
-        name: Yup.string().min(3, "El minimo de caracteres es 3").max(20, "El máximo de caracteres es 20").required("Campo requerido"),
-        lastName: Yup.string().min(3, "El minimo de caracteres es 3").max(20, "El máximo de caracteres es 20").required("Campo requerido"),
+        companyName: Yup.string().min(3, "El minimo de caracteres es 3").max(20, "El máximo de caracteres es 20").required("Campo requerido"),
+        nEmployees: Yup.string().required("Campo requerido"),
+        country: Yup.string().required("Campo requerido"),
         password: Yup.string().min(4, "El minimo de caracteres es 4").max(20, "El máximo de caracteres es 20").required("Campo requerido"),
         password2: Yup.string().required('Debes confirmar la contraseña').oneOf([Yup.ref('password'), null], "Las contraseñas no coinciden"),
         email: Yup.string().email("Email invalido").required("Campo requerido")
@@ -42,27 +44,47 @@ function DevRegisterForm() {
                         </div>
                     </div>
                     <div className="singleField">
-                        <label>Nombre: </label>
+                        <label>Nombre de la Empresa: </label>
                         <div className="inputContainer">
 
                             <Field
                                 autoComplete="off"
                                 id="fieldAddRecord"
-                                name="name"
-                                placeholder="Tu nombre" />
-                            <ErrorMessage name='name' component='span' />
+                                name="companyName"
+                                placeholder="Nombre de la Empresa" />
+                            <ErrorMessage name='companyName' component='span' />
                         </div>
                     </div>
                     <div className="singleField">
-                        <label>Apellido: </label>
+                        <label>Pais: </label>
                         <div className="inputContainer">
 
                             <Field
                                 autoComplete="off"
-                                id="fieldAddRecord"
-                                name="lastName"
-                                placeholder="Tu Apellido" />
-                            <ErrorMessage name='lastName' component='span' />
+                                id="selectField"
+                                name="country"
+                                as="select" />
+                            <ErrorMessage name='country' component='span' />
+                        </div>
+                    </div>
+                    <div className="singleField">
+                        <label>Cantidad de empleados en tecnología: </label>
+                        <div className="inputContainer">
+
+                            <Field
+                                autoComplete="off"
+                                id="selectField"
+                                name="nEmployees"
+                                as="select">
+                                <option value=""></option>
+                                <option value="Menos de 20">Menos de 20</option>
+                                <option value="Entre 50 y 100">Entre 20 y 50</option>
+                                <option value="Entre 50 y 100">Entre 50 y 100</option>
+                                <option value="Entre 100 y 200">Entre 100 y 200</option>
+                                <option value="Más de 200">Más de 200</option>
+                            </Field>
+
+                            <ErrorMessage name='nEmployees' component='span' />
                         </div>
                     </div>
                     <div className="singleField">
@@ -73,7 +95,7 @@ function DevRegisterForm() {
                                 autoComplete="off"
                                 id="fieldAddRecord"
                                 name="email"
-                                placeholder="Tu Email" />
+                                placeholder="Email de la empresa" />
                             <ErrorMessage name='email' component='span' />
                         </div>
                     </div>
@@ -110,4 +132,4 @@ function DevRegisterForm() {
     )
 }
 
-export default DevRegisterForm
+export default ComRegisterForm
