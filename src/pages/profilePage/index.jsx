@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { PrimaryButton, SecondaryButton } from '../../styles/styledComponents/Buttons';
@@ -9,6 +9,25 @@ function ProfilePage() {
     const user = useSelector(selectUser);
     const navigate = useNavigate();
     const ref = useRef(null);
+
+    const [currentLanguage, setCurrentLanguage] = useState()
+    const [languages, setLanguages] = useState([]);
+
+    const addLanguage = () => {
+        if (currentLanguage && currentLanguage.language && currentLanguage.level) {
+            var exist = false
+            languages.map((l) => {
+                if (l.language === currentLanguage.language) {
+                    exist = true
+                }
+            })
+            if (!exist) {
+                setLanguages([...languages, currentLanguage])
+            }
+        }
+    }
+
+
 
     useEffect(() => {
         if (!user) navigate('/login')
@@ -116,22 +135,56 @@ function ProfilePage() {
                 </div>
                 <div className="aboutContainer">
                     <h3>Idiomas</h3>
+                    {languages?.map(lan => {
+                        return (
+                            <div className="fillForms">
+
+                                <div className="fillForm">
+                                    <label>Idioma</label>
+                                    <label >{lan?.language}</label>
+
+                                </div>
+                                <div className="fillForm">
+                                    <label>Nivel</label>
+                                    <label>{lan?.level}</label>
+                                </div>
+                                <button className='plus' onClick={() => setLanguages(languages.filter(l => l !== lan ))}>-</button>
+                            </div>
+                        )
+                    })}
                     <div className="fillForms">
+
                         <div className="fillForm">
                             <label>Idioma</label>
-                            <select name="" id=""></select>
+                            <select onClick={(v) => setCurrentLanguage({ ...currentLanguage, language: v.target.value })} id="">
+                                <option value=""></option>
+                                <option value="Ingles">Ingles</option>
+                                <option value="Español">Español</option>
+                                <option value="Portugues">Portugues</option>
+                            </select>
                         </div>
                         <div className="fillForm">
                             <label>Nivel</label>
-                            <select name="" id=""></select>
+                            <select onClick={(v) => setCurrentLanguage({ ...currentLanguage, level: v.target.value })} id="">
+                                <option value=""></option>
+                                <option value="C2">C2</option>
+                                <option value="C1">C1</option>
+                                <option value="B2">B2</option>
+                                <option value="B1">B1</option>
+                                <option value="A2">A2</option>
+                                <option value="A1">A1</option>
+                            </select>
                         </div>
 
                     </div>
+
+                    <button className='plus' onClick={() => addLanguage()}>+</button>
                 </div>
                 <PrimaryButton>Guardar</PrimaryButton>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
+
 
 export default ProfilePage
