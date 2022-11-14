@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import ProgressBar from '../../components/progressBar';
 import { selectUser } from '../../features/userSlice';
+import '../../styles/Home.css'
 
 function Home() {
     const user = useSelector(selectUser);
@@ -12,7 +14,9 @@ function Home() {
 
 
     return (
-        <div>Welcome {user?.name}</div>
+        <div className='homePageContainer'>
+            <ProgressBar/>
+        </div>
     )
 }
 

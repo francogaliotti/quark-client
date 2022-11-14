@@ -3,8 +3,14 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import '../../styles/DevRegisterForm.css'
 import { PrimaryButton } from '../../styles/styledComponents/Buttons'
+import { login } from '../../features/userSlice'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 function DevRegisterForm() {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const initialValues = {
         username: "",
@@ -25,9 +31,22 @@ function DevRegisterForm() {
     })
 
 
+    const onSubmit = (data) => {
+
+        dispatch(login({
+            username: data.username,
+            password: data.password,
+            name: data.name,
+            lastName: data.lastName,
+            email: data.email,
+            LoggedIn: true
+        }))
+        navigate("/")
+    }
+
     return (
         <div className="devRegisterForm">
-            <Formik initialValues={initialValues} onSubmit={() => console.log("Funciona")} validationSchema={validationSchema}>
+            <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                 <Form className="formContainer" id='devFormId'>
                     <div className="singleField">
                         <label>Nombre de Usuario: </label>

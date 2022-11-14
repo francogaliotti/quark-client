@@ -16,7 +16,7 @@ function LoginForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(login({
-            name: username,
+            username: username,
             password: password,
             LoggedIn: true
         }))

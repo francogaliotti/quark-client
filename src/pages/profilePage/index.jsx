@@ -38,8 +38,8 @@ function ProfilePage() {
             <div className="leftContainer">
                 <div className="basicInfo">
                     <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="" />
-                    <h2 className="name">{user.name}</h2>
-                    <h3 className="email">user@mail.com</h3>
+                    <h2 className="name">{user.username}</h2>
+                    <h3 className="email">{user.email}</h3>
                 </div>
                 <div className="descriptionContainer">
                     <h3>Añade tu CV</h3>
@@ -57,11 +57,11 @@ function ProfilePage() {
                     <div className="fillForms">
                         <div className="fillForm">
                             <label>Nombre</label>
-                            <input type="text" />
+                            <input type="text" value={user?.name} />
                         </div>
                         <div className="fillForm">
                             <label>Apellido</label>
-                            <input type="text" />
+                            <input type="text" value={user?.lastName} />
                         </div>
                         <div className="fillForm">
                             <label>Genero</label>
