@@ -13,3 +13,9 @@
 .content-container{
     margin-left: 15%;
 }
+
+@media (max-width: 860px){
+    .content-container {
+        margin-left: 0;
+    }
+}

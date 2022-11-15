@@ -4,7 +4,7 @@ import '../../styles/ProgressBar.css'
 function ProgressBar() {
   return (
     <div className="progressBarContainer">
-        <div className="progressBar">
+        <div className="progressBar" id='playy-animation'>
 
         </div>
     </div>

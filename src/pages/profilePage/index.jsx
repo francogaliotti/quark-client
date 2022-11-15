@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { PrimaryButton, SecondaryButton } from '../../styles/styledComponents/Buttons';
 import { selectUser } from '../../features/userSlice';
 import '../../styles/ProfilePage.css'
+import axios from 'axios';
 
 function ProfilePage() {
     const user = useSelector(selectUser);
@@ -31,6 +32,10 @@ function ProfilePage() {
 
     useEffect(() => {
         if (!user) navigate('/login')
+        /*axios.get('https://quark.academy/webservice/rest/server.php?wstoken=11e282e69970c31ed54f38925921b88f&wsfunction=core_user_get_users&criteria[0][key]=email&criteria[0][value]=matiascampoy@gmail.com&moodlewsrestformat=json')
+        .then((res) => {
+            console.log(res.data.users[0])
+        })*/
     }, [user]);
 
     return (
@@ -48,7 +53,7 @@ function ProfilePage() {
                 </div>
                 <div className="descriptionContainer">
                     <h3>Mi Descripción</h3>
-                    <textarea></textarea>
+                    <textarea value={user.description}></textarea>
                 </div>
             </div>
             <div className="rightContainer">

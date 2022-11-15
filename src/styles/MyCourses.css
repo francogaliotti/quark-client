@@ -1,0 +1,27 @@
+.myCoursesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 80vw;
+
+}
+
+.wrapContainer {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 15px;
+    justify-content: center;
+}
+
+#courseContainer{
+    width: 250px;
+    padding-bottom: 20px;
+}
+
+#courseImg {
+    width: 100px;
+    height: 100px;
+}

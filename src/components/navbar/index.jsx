@@ -21,7 +21,7 @@ function Navbar() {
           <li><a onClick={() => navigate('/')}>Inicio</a></li>
           <li><a onClick={() => navigate('/profile')}>Mi Perfil</a></li>
           <li><a onClick={()=>navigate('/profesionalProfile')}>Perfil Profesional</a></li>
-          <li><a href="#">Mis Cursos</a></li>
+          <li><a onClick={()=>navigate('/myCourses')}>Mis Cursos</a></li>
           <li><a href="#">Eventos</a></li>
           <li><a href="/login" onClick={() => dispatch(logout())}>Logout</a></li>
         </ul> :

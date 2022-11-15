@@ -20,9 +20,7 @@ function ProfesionalProfile() {
                 <h2 className="name">{user.name}</h2>
                 <div className="profesionalDescriptionContainer">
                     <h3>Descripción:</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum amet, aliquid quia perferendis
-                        vel neque unde vitae recusandae sed accusamus rem. Sequi consectetur enim animi beatae
-                        necessitatibus. Velit, ad possimus.</p>
+                    <p>{user.description}</p>
                 </div>
                 <div className="badgeContainer">
                     <h3>Insignias:</h3>
