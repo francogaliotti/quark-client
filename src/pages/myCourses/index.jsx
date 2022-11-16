@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { PrimaryButton, SecondaryButton } from '../../styles/styledComponents/Buttons';
 import { selectUser } from '../../features/userSlice';
 import '../../styles/MyCourses.css'
-import ProgressBar from '../../components/progressBar';
+import ProgressBar from "@ramonak/react-progress-bar";
 import axios from 'axios';
 
 
@@ -15,24 +15,21 @@ function MyCourses() {
 
     useEffect(() => {
         if (!user) navigate('/login')
-        axios.get(`https://quark.academy/webservice/rest/server.php?wstoken=11e282e69970c31ed54f38925921b88f&wsfunction=core_enrol_get_users_courses&userid=${user.id}&moodlewsrestformat=json`)
-        .then((res) => {
-            console.log(res.data)
-            setCourses(res.data)
-        })
+        
     }, [user]);
 
 
     return (
         <div className="myCoursesContainer">
-            <h2>Mis Cursos</h2>
             <div className="wrapContainer">
 
-                {courses.map((c)=> {
+                {user.coursesList.map((c)=> {
+                    console.log(c)
                     return (<div className="basicInfo" id='courseContainer'>
                     <img src="https://cdn.cdnlogo.com/logos/c/27/c.svg" id='courseImg' />
-                    <h3 id='courseTitle'>{c.fullname}</h3>
-                    <ProgressBar/>
+                    <h3 id='courseTitle'>{c.fullName}</h3>
+                    <h4 id='courseDate'>Inicio: {new Date(c.timestarted).toLocaleDateString("en-AU")}</h4>
+                    <ProgressBar completed={Math.round(c.progress)}/>
                 </div>)
                 })}
 

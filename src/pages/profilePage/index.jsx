@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { PrimaryButton, SecondaryButton } from '../../styles/styledComponents/Buttons';
+import { PrimaryButton } from '../../styles/styledComponents/Buttons';
 import { selectUser } from '../../features/userSlice';
 import '../../styles/ProfilePage.css'
-import axios from 'axios';
 
 function ProfilePage() {
     const user = useSelector(selectUser);
@@ -13,6 +12,12 @@ function ProfilePage() {
 
     const [currentLanguage, setCurrentLanguage] = useState()
     const [languages, setLanguages] = useState([]);
+    const [currentAcademic, setCurrentAcademic] = useState()
+    const [academics, setAcademics] = useState([])
+    const [currentLabor, setCurrentLabor] = useState()
+    const [labors, setLabors] = useState([])
+    const [currentIndependent, setCurrentIndependent] = useState()
+    const [independents, setIndependents] = useState([])
 
     const addLanguage = () => {
         if (currentLanguage && currentLanguage.language && currentLanguage.level) {
@@ -28,14 +33,29 @@ function ProfilePage() {
         }
     }
 
+    const addAcademic = () => {
+        if (currentAcademic && currentAcademic.institution && currentAcademic.title) {
+            setAcademics([...academics, currentAcademic])
+        }
+    }
+
+    const addLabor = () => {
+        if (currentLabor && currentLabor.company && currentLabor.title) {
+            setLabors([...labors, currentLabor])
+        }
+    }
+
+    const addIndependent = () => {
+        if (currentIndependent && currentIndependent.title) {
+            setIndependents([...independents, currentIndependent])
+        }
+    }
+
 
 
     useEffect(() => {
         if (!user) navigate('/login')
-        /*axios.get('https://quark.academy/webservice/rest/server.php?wstoken=11e282e69970c31ed54f38925921b88f&wsfunction=core_user_get_users&criteria[0][key]=email&criteria[0][value]=matiascampoy@gmail.com&moodlewsrestformat=json')
-        .then((res) => {
-            console.log(res.data.users[0])
-        })*/
+
     }, [user]);
 
     return (
@@ -44,7 +64,6 @@ function ProfilePage() {
                 <div className="basicInfo">
                     <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="" />
                     <h2 className="name">{user.username}</h2>
-                    <h3 className="email">{user.email}</h3>
                 </div>
                 <div className="descriptionContainer">
                     <h3>Añade tu CV</h3>
@@ -69,6 +88,10 @@ function ProfilePage() {
                             <input type="text" value={user?.lastName} />
                         </div>
                         <div className="fillForm">
+                            <label>Email</label>
+                            <input type="text" value={user?.email} />
+                        </div>
+                        {/*<div className="fillForm">
                             <label>Genero</label>
                             <select name="" id="">
                                 <option value=""> </option>
@@ -76,30 +99,22 @@ function ProfilePage() {
                                 <option value="">Femenino</option>
                                 <option value="">No especifica</option>
                             </select>
-                        </div>
+                        </div>*/}
                         <div className="fillForm">
                             <label>Fecha de Nacimiento</label>
                             <input type="date" />
                         </div>
                         <div className="fillForm">
-                            <label>Codigo de Pais</label>
-                            <input type="text" />
-                        </div>
-                        <div className="fillForm">
-                            <label>Celular</label>
-                            <input type="text" />
+                            <label>Telefono</label>
+                            <input type="text" value={user.phone}/>
                         </div>
                         <div className="fillForm">
                             <label>Pais</label>
-                            <select name="" id=""></select>
+                            <select name="" id="" value={user.country}></select>
                         </div>
                         <div className="fillForm">
-                            <label>Provincia</label>
-                            <select name="" id=""></select>
-                        </div>
-                        <div className="fillForm">
-                            <label>Localidad</label>
-                            <select name="" id=""></select>
+                            <label>Ciudad</label>
+                            <select name="" id="" value={user.city}></select>
                         </div>
                     </div>
 
@@ -107,37 +122,184 @@ function ProfilePage() {
 
 
                 <div className="aboutContainer">
-                    <h3>Formación</h3>
+                    <h3>Actividad Académica</h3>
+                    {academics?.map(lan => {
+                        return (
+                            <div className="fillForms">
+                                <div className="fillForm">
+                                    <label>Institución</label>
+                                    <label>{lan?.institution}</label>
+                                </div>
+                                <div className="fillForm">
+                                    <label>Título</label>
+                                    <label>{lan?.title}</label>
+                                </div>
+                                <div className="fillForm">
+                                    <label>Estado</label>
+                                    <label>{lan?.state}</label>
+                                </div>
+                                <div className="fillForm">
+                                    <label>Fecha de Inicio</label>
+                                    <label>{lan?.beginDate}</label>
+                                </div>
+                                <div className="fillForm">
+                                    <label>Fecha Finalización</label>
+                                    <label>{lan?.endDate}</label>
+                                </div>
+                                <button className='plus' onClick={() => setAcademics(academics.filter(l => l !== lan))}>-</button>
+                            </div>
+
+                        )
+                    })}
                     <div className="fillForms">
                         <div className="fillForm">
                             <label>Institución</label>
-                            <input type="text" />
+                            <input type="text" onChange={(event) => { setCurrentAcademic({ ...currentAcademic, institution: event.target.value }) }} />
                         </div>
                         <div className="fillForm">
                             <label>Título</label>
-                            <input type="text" />
-                        </div>
-                        <div className="fillForm">
-                            <label>Área de Estudio</label>
-                            <select name="" id=""></select>
+                            <input type="text" onChange={(event) => { setCurrentAcademic({ ...currentAcademic, title: event.target.value }) }} />
                         </div>
                         <div className="fillForm">
                             <label>Estado</label>
-                            <select name="" id=""></select>
+                            <select name="" id="" onClick={(event) => { setCurrentAcademic({ ...currentAcademic, state: event.target.value }) }}>
+                                <option value=""></option>
+                                <option value="En curso">En curso</option>
+                                <option value="Finalizado">Finalizado</option>
+                            </select>
                         </div>
                         <div className="fillForm">
                             <label>Fecha de Inicio</label>
-                            <input type="date" />
+                            <input type="date" onChange={(event) => { setCurrentAcademic({ ...currentAcademic, beginDate: event.target.value }) }} />
                         </div>
                         <div className="fillForm">
                             <label>Fecha Finalización</label>
-                            <input type="date" />
+                            <input type="date" onChange={(event) => { setCurrentAcademic({ ...currentAcademic, endDate: event.target.value }) }} />
                         </div>
+
                     </div>
 
-
+                    <button className='plus' onClick={() => addAcademic()}>+</button>
 
                 </div>
+
+                <div className="aboutContainer">
+                    <h3>Actividad Laboral</h3>
+                    {labors?.map(lan => {
+                        return (
+                            <div className="fillForms">
+                                <div className="fillForm">
+                                    <label>Empresa</label>
+                                    <label>{lan?.company}</label>
+                                </div>
+                                <div className="fillForm">
+                                    <label>Título</label>
+                                    <label>{lan?.title}</label>
+                                </div>
+                                <div className="fillForm">
+                                    <label>Estado</label>
+                                    <label>{lan?.state}</label>
+                                </div>
+                                <div className="fillForm">
+                                    <label>Fecha de Inicio</label>
+                                    <label>{lan?.beginDate}</label>
+                                </div>
+                                <div className="fillForm">
+                                    <label>Fecha Finalización</label>
+                                    <label>{lan?.endDate}</label>
+                                </div>
+                                <button className='plus' onClick={() => setLabors(labors.filter(l => l !== lan))}>-</button>
+                            </div>
+
+                        )
+                    })}
+                    <div className="fillForms">
+                        <div className="fillForm">
+                            <label>Empresa</label>
+                            <input type="text" onChange={(event) => { setCurrentLabor({ ...currentLabor, company: event.target.value }) }} />
+                        </div>
+                        <div className="fillForm">
+                            <label>Título</label>
+                            <input type="text" onChange={(event) => { setCurrentLabor({ ...currentLabor, title: event.target.value }) }} />
+                        </div>
+                        <div className="fillForm">
+                            <label>Estado</label>
+                            <select name="" id="" onClick={(event) => { setCurrentLabor({ ...currentLabor, state: event.target.value }) }}>
+                                <option value=""></option>
+                                <option value="En curso">En curso</option>
+                                <option value="Finalizado">Finalizado</option>
+                            </select>
+                        </div>
+                        <div className="fillForm">
+                            <label>Fecha de Inicio</label>
+                            <input type="date" onChange={(event) => { setCurrentLabor({ ...currentLabor, beginDate: event.target.value }) }} />
+                        </div>
+                        <div className="fillForm">
+                            <label>Fecha Finalización</label>
+                            <input type="date" onChange={(event) => { setCurrentLabor({ ...currentLabor, endDate: event.target.value }) }} />
+                        </div>
+
+                    </div>
+
+                    <button className='plus' onClick={() => addLabor()}>+</button>
+
+                </div>
+
+                <div className="aboutContainer">
+                    <h3>Actividad Independiente</h3>
+                    {independents?.map(lan => {
+                        return (
+                            <div className="fillForms">
+                                <div className="fillForm">
+                                    <label>Título</label>
+                                    <label>{lan?.title}</label>
+                                </div>
+                                <div className="fillForm">
+                                    <label>Estado</label>
+                                    <label>{lan?.state}</label>
+                                </div>
+                                <div className="fillForm">
+                                    <label>Fecha de Inicio</label>
+                                    <label>{lan?.beginDate}</label>
+                                </div>
+                                <div className="fillForm">
+                                    <label>Fecha Finalización</label>
+                                    <label>{lan?.endDate}</label>
+                                </div>
+                                <button className='plus' onClick={() => setIndependents(independents.filter(l => l !== lan))}>-</button>
+                            </div>
+
+                        )
+                    })}
+                    <div className="fillForms">
+                        <div className="fillForm">
+                            <label>Título</label>
+                            <input type="text" onChange={(event) => { setCurrentIndependent({ ...currentIndependent, title: event.target.value }) }} />
+                        </div>
+                        <div className="fillForm">
+                            <label>Estado</label>
+                            <select name="" id="" onClick={(event) => { setCurrentIndependent({ ...currentIndependent, state: event.target.value }) }}>
+                                <option value=""></option>
+                                <option value="En curso">En curso</option>
+                                <option value="Finalizado">Finalizado</option>
+                            </select>
+                        </div>
+                        <div className="fillForm">
+                            <label>Fecha de Inicio</label>
+                            <input type="date" onChange={(event) => { setCurrentIndependent({ ...currentIndependent, beginDate: event.target.value }) }} />
+                        </div>
+                        <div className="fillForm">
+                            <label>Fecha Finalización</label>
+                            <input type="date" onChange={(event) => { setCurrentIndependent({ ...currentIndependent, endDate: event.target.value }) }} />
+                        </div>
+
+                    </div>
+
+                    <button className='plus' onClick={() => addIndependent()}>+</button>
+
+                </div>
+
+
                 <div className="aboutContainer">
                     <h3>Idiomas</h3>
                     {languages?.map(lan => {
@@ -153,7 +315,7 @@ function ProfilePage() {
                                     <label>Nivel</label>
                                     <label>{lan?.level}</label>
                                 </div>
-                                <button className='plus' onClick={() => setLanguages(languages.filter(l => l !== lan ))}>-</button>
+                                <button className='plus' onClick={() => setLanguages(languages.filter(l => l !== lan))}>-</button>
                             </div>
                         )
                     })}
