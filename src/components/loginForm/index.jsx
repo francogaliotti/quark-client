@@ -20,16 +20,7 @@ function LoginForm() {
         const user = res.data
         console.log(user)
         dispatch(login({
-            id: user.id,
-            username: user.username,
-            name: user.firstname,
-            lastName:user.lastname,
-            email: user.email,
-            description: user.description,
-            phone: user.phone,
-            country: user.country,
-            city: user.city,
-            coursesList: user.listaCurso,
+            ...user,
             password: password,
             LoggedIn: true
         }))

@@ -15,7 +15,12 @@ function Home() {
 
     return (
         <div className='homePageContainer'>
-            <ProgressBar completed={80} />
+            <iframe id="inlineFrameExample"
+                title="Inline Frame Example"
+                width="600"
+                height="400"
+                src="https://quark.academy/login/index.php">
+            </iframe>
         </div>
     )
 }

@@ -81,11 +81,11 @@ function ProfilePage() {
                     <div className="fillForms">
                         <div className="fillForm">
                             <label>Nombre</label>
-                            <input type="text" value={user?.name} />
+                            <input type="text" value={user?.firstname} />
                         </div>
                         <div className="fillForm">
                             <label>Apellido</label>
-                            <input type="text" value={user?.lastName} />
+                            <input type="text" value={user?.lastname} />
                         </div>
                         <div className="fillForm">
                             <label>Email</label>
@@ -106,15 +106,15 @@ function ProfilePage() {
                         </div>
                         <div className="fillForm">
                             <label>Telefono</label>
-                            <input type="text" value={user.phone}/>
+                            <input type="text" value={user?.phone}/>
                         </div>
                         <div className="fillForm">
                             <label>Pais</label>
-                            <select name="" id="" value={user.country}></select>
+                            <select name="" id="" value={user?.country}></select>
                         </div>
                         <div className="fillForm">
                             <label>Ciudad</label>
-                            <select name="" id="" value={user.city}></select>
+                            <select name="" id="" value={user?.city}></select>
                         </div>
                     </div>
 

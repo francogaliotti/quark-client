@@ -23,13 +23,12 @@ function MyCourses() {
         <div className="myCoursesContainer">
             <div className="wrapContainer">
 
-                {user.coursesList.map((c)=> {
-                    console.log(c)
+                {user.listaCurso.map((c)=> {
                     return (<div className="basicInfo" id='courseContainer'>
-                    <img src="https://cdn.cdnlogo.com/logos/c/27/c.svg" id='courseImg' />
                     <h3 id='courseTitle'>{c.fullName}</h3>
-                    <h4 id='courseDate'>Inicio: {new Date(c.timestarted).toLocaleDateString("en-AU")}</h4>
-                    <ProgressBar completed={Math.round(c.progress)}/>
+                    <img src="https://cdn.cdnlogo.com/logos/c/27/c.svg" id='courseImg' />
+                    <h4 id='courseDate'>Fecha de inicio: <p>{new Date(c.timestarted).toLocaleDateString("en-AU")}</p></h4>
+                    <ProgressBar completed={Math.round(c.progress)} className="bar"/>
                 </div>)
                 })}
 
