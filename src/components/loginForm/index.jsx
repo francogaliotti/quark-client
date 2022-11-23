@@ -26,13 +26,24 @@ function LoginForm() {
             LoggedIn: true
         }))*/
         
+        await handleMoodleIFrame()
+        //navigate("/")
+        await goHome()
+    }
+
+    const handleMoodleIFrame = async () => {
         var form = document.getElementById("login")
         console.log(form.target)
         form.target='moodleframe'
         form.submit()
-        //navigate("/")
     }
 
+    const goHome = async () => {
+        setTimeout(function(){
+            navigate("/")
+        }, 2000);
+        
+    }
 
     return (
 
@@ -76,6 +87,7 @@ function LoginForm() {
             <PrimaryButton type='submit'>Ingresar</PrimaryButton>
     </form>*/}
             <iframe id="inlineFrameExample"
+                style={{display: "none"}}
                 title="Inline Frame Example"
                 width="600"
                 height="400"
