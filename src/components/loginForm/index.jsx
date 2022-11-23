@@ -27,7 +27,6 @@ function LoginForm() {
         }))*/
         
         await handleMoodleIFrame()
-        //navigate("/")
         await goHome()
     }
 
