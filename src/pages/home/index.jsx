@@ -9,7 +9,7 @@ function Home() {
     const user = useSelector(selectUser);
     const navigate = useNavigate();
     useEffect(() => {
-        if (!user) navigate('/login')
+        //if (!user) navigate('/login')
     }, [user]);
 
 
@@ -19,7 +19,8 @@ function Home() {
                 title="Inline Frame Example"
                 width="600"
                 height="400"
-                src="https://quark.academy/login/index.php">
+                src="http://localhost/moodle/my/"
+                name='moodleframe'>
             </iframe>
         </div>
     )

@@ -14,7 +14,7 @@ function MyCourses() {
     const [courses, setCourses] = useState([]);
 
     useEffect(() => {
-        if (!user) navigate('/login')
+        //if (!user) navigate('/login')
         
     }, [user]);
 
