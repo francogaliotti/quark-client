@@ -16,8 +16,8 @@ function ProfesionalProfile() {
     return (
         <div className="profesionalProfileContainer">
             <div className="basicInfo" id='profesionalInfo'>
-                <img src="https://art.pixilart.com/7f856e195b0e64b.png" alt="" />
-                <h2 className="name">{user.name}</h2>
+                <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="" />
+                <h2 className="name">{user.username}</h2>
                 <div className="profesionalDescriptionContainer">
                     <h3>Descripción:</h3>
                     <p>{user.description}</p>
@@ -25,15 +25,13 @@ function ProfesionalProfile() {
                 <div className="badgeContainer">
                     <h3>Insignias:</h3>
                     <div className="badges">
-                        <div className="badge">
-                            <img id='badgeImg' src="https://w7.pngwing.com/pngs/799/421/png-transparent-badge-gold-badge-s-template-presentation-logo.png" alt="" />
-                        </div>
-                        <div className="badge">
-                            <img id='badgeImg' src="https://w7.pngwing.com/pngs/938/674/png-transparent-badge-logo-red-badge-blue-label-heart.png" alt="" />
-                        </div>
-                        <div className="badge">
-                            <img id='badgeImg' src="https://w7.pngwing.com/pngs/799/421/png-transparent-badge-gold-badge-s-template-presentation-logo.png" alt="" />
-                        </div>
+                        {
+                            user?.badgesList.map((b) => {
+                                return (<div className="badge">
+                                    <img id='badgeImg' src={b.badgeUrl} alt="" />
+                                </div>)
+                            })
+                        }
                     </div>
                 </div>
             </div>

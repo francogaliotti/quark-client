@@ -6,6 +6,7 @@ import { slide as Menu } from 'react-burger-menu'
 import '../../styles/Navbar.css'
 import { useMediaQuery } from 'react-responsive';
 import menuStyle from './menuStyle'
+import quarkLogo from '../../images/quark-logo.png'
 
 
 function Navbar() {
@@ -35,6 +36,9 @@ function Navbar() {
   )
   return (
     <div className="navbarContainer">
+      <div className="logoContainer" onClick={() => navigate('/')}>
+        <img src={quarkLogo} alt="" />
+      </div>
       {user ? <ul>
         <li><a href="/login" onClick={() => dispatch(logout())}>Logout</a></li>
       </ul> :

@@ -5,7 +5,7 @@
     justify-content: center;
     align-items: center;
     width: 80vw;
-
+    margin-top: 20px;
 }
 
 .wrapContainer {
@@ -23,6 +23,7 @@
 #courseContainer{
     width: 200px;
     padding-bottom: 20px;
+    cursor: pointer;
 }
 
 #courseImg {

@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { PrimaryButton } from '../../styles/styledComponents/Buttons';
 import { selectUser } from '../../features/userSlice';
 import '../../styles/ProfilePage.css'
+import { Countries } from '../../jsons/countries';
+
 
 function ProfilePage() {
     const user = useSelector(selectUser);
@@ -54,7 +56,7 @@ function ProfilePage() {
 
 
     useEffect(() => {
-       // if (!user) navigate('/login')
+        // if (!user) navigate('/login')
 
     }, [user]);
 
@@ -99,22 +101,27 @@ function ProfilePage() {
                                 <option value="">Femenino</option>
                                 <option value="">No especifica</option>
                             </select>
-                        </div>*/}
+                        </div>
                         <div className="fillForm">
                             <label>Fecha de Nacimiento</label>
                             <input type="date" />
-                        </div>
+                        </div>*/}
                         <div className="fillForm">
                             <label>Telefono</label>
-                            <input type="text" value={user?.phone}/>
+                            <input type="text" value={user?.phone} />
                         </div>
                         <div className="fillForm">
                             <label>Pais</label>
-                            <select name="" id="" value={user?.country}></select>
+                            <select name="" id="" value={user?.country}>
+                                <option value=""></option>
+                                {Countries.map((c) => {
+                                    return <option value={c?.iso2}>{c?.nombre}</option>
+                                })}
+                            </select>
                         </div>
                         <div className="fillForm">
                             <label>Ciudad</label>
-                            <select name="" id="" value={user?.city}></select>
+                            <input type="text" value={user?.city} />
                         </div>
                     </div>
 

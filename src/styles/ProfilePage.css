@@ -2,8 +2,9 @@
     position: inherit;
     display: flex;
     width: 85%;
+    margin-top: 20px;
     height: fit-content;
-    margin-left: 10%;
+    margin-left: 5%;
     gap: 10px;
     font-family: Andale Mono, monospace;
 }

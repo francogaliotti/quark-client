@@ -9,7 +9,7 @@ function Home() {
     const user = useSelector(selectUser);
     const navigate = useNavigate();
     useEffect(() => {
-        //if (!user) navigate('/login')
+        if (!user) navigate('/login')
     }, [user]);
 
 
@@ -17,11 +17,12 @@ function Home() {
         <div className='homePageContainer'>
             <iframe id="inlineFrameExample"
                 title="Inline Frame Example"
-                width="600"
-                height="400"
+                width="1100"
+                height="600"
                 src="http://localhost/moodle/my/"
                 name='moodleframe'>
             </iframe>
+            <ProgressBar completed={Math.round(8*100/12)}/>
         </div>
     )
 }
