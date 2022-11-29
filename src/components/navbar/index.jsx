@@ -15,6 +15,12 @@ function Navbar() {
   const navigate = useNavigate();
   const isMovile = useMediaQuery({ maxWidth: "860px" })
 
+  const handleLogout = () => {
+
+    //window.location.href = "http://localhost/moodle/login/logout.php"
+    dispatch(logout())
+  }
+
   if (isMovile) return (
     <Menu right styles={menuStyle}>
       <div>
@@ -24,7 +30,7 @@ function Navbar() {
           <li><a onClick={()=>navigate('/profesionalProfile')}>Perfil Profesional</a></li>
           <li><a onClick={()=>navigate('/myCourses')}>Mis Cursos</a></li>
           <li><a href="#">Eventos</a></li>
-          <li><a href="/login" onClick={() => dispatch(logout())}>Logout</a></li>
+          <li><a  onClick={() => handleLogout()}>Logout</a></li>
         </ul> :
           <ul className='verticalList' id='verticalResponsive'>
             <li><a onClick={() => navigate('/registerDev')}>Developer</a></li>
@@ -40,7 +46,7 @@ function Navbar() {
         <img src={quarkLogo} alt="" />
       </div>
       {user ? <ul>
-        <li><a href="/login" onClick={() => dispatch(logout())}>Logout</a></li>
+        <li><a  onClick={() => handleLogout()}>Logout</a></li>
       </ul> :
         <ul>
           <li><a onClick={() => navigate('/registerDev')}>Developer</a></li>

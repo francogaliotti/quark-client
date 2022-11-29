@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { login } from '../../features/userSlice';
@@ -12,6 +12,7 @@ function LoginForm() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const ref = useRef(null);
+    const params = useParams()
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -24,10 +25,21 @@ function LoginForm() {
 
     const handleMoodleIFrame = async () => {
         var form = document.getElementById("login")
-        console.log(form.target)
         form.target = 'moodleframe'
-        form.submit()
+        const res = await form.submit()
+        /*setTimeout(async () => {
+            var content = window.frames['moodleframe']
+            console.log(content)
+        }, 1000)*/
+        
     }
+
+    useEffect(()=>{
+        setTimeout(async () => {
+            var content = window.frames['moodleframe'].document.getElementById("page-my-index")
+            console.log(content)
+        }, 3000)
+    }, [])
 
     const goHome = async () => {
         setTimeout(async () => {
@@ -40,7 +52,7 @@ function LoginForm() {
                 password: password,
                 LoggedIn: true
             }))
-            navigate("/")
+            navigate("/profile")
         } catch (e) {
             console.log(e)
             Swal.fire({
@@ -93,7 +105,7 @@ function LoginForm() {
             <PrimaryButton type='submit'>Ingresar</PrimaryButton>
     </form>*/}
             <iframe id="inlineFrameExample"
-                style={{ display: "none" }}
+                style={{ display: "none"}}
                 title="Inline Frame Example"
                 width="600"
                 height="400"

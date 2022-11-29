@@ -56,7 +56,7 @@ function ProfilePage() {
 
 
     useEffect(() => {
-        // if (!user) navigate('/login')
+        if (!user) navigate('/login')
 
     }, [user]);
 
