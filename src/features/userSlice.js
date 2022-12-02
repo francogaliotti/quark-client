@@ -1,5 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+const moodleLogout = async (key) => {
+    window.location.href = `http://localhost/moodle/login/logout.php?sesskey=${key}`
+}
+
+const goLogin = async () => {
+    window.location.href = `http://localhost:3000/login`
+}
 
 export const userSlice = createSlice({
     name: "user",
@@ -9,12 +16,16 @@ export const userSlice = createSlice({
     reducers: {
         login: (state, action) => {
             localStorage.setItem("username", action.payload.username)
+            localStorage.setItem("sesskey", action.payload.sesskey)
             state.user = action.payload
             console.log(state.user)
         },
-        logout: (state) => {
+        logout: async (state) => {
             localStorage.removeItem("username")
+            localStorage.removeItem("sesskey")
+            await moodleLogout(state.user.sesskey)
             state.user = null;
+            await goLogin()
         }
     }
 })

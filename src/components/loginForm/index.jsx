@@ -31,10 +31,10 @@ function LoginForm() {
             var content = window.frames['moodleframe']
             console.log(content)
         }, 1000)*/
-        
+
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         setTimeout(async () => {
             var content = window.frames['moodleframe'].document.getElementById("page-my-index")
             console.log(content)
@@ -43,24 +43,23 @@ function LoginForm() {
 
     const goHome = async () => {
         setTimeout(async () => {
-            try{
-            const res = await axios.get(`https://api-perfil.uc.r.appspot.com/${email}`)
-            const user = res.data
-            console.log(user)
-            dispatch(login({
-                ...user,
-                password: password,
-                LoggedIn: true
-            }))
-            navigate("/profile")
-        } catch (e) {
-            console.log(e)
-            Swal.fire({
-                icon: 'error',
-                title: 'Usuario incorrecto',
-                text: 'Intenta de nuevo'
-              })
-        }  
+            try {
+                const res = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${email}`)
+                const user = res.data
+                dispatch(login({
+                    ...user,
+                    password: password,
+                    LoggedIn: true
+                }))
+                navigate("/")
+            } catch (e) {
+                console.log(e)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Usuario incorrecto',
+                    text: 'Intenta de nuevo'
+                })
+            }
         }, 1000);
 
     }
@@ -105,7 +104,7 @@ function LoginForm() {
             <PrimaryButton type='submit'>Ingresar</PrimaryButton>
     </form>*/}
             <iframe id="inlineFrameExample"
-                style={{ display: "none"}}
+                style={{ display: "none" }}
                 title="Inline Frame Example"
                 width="600"
                 height="400"
