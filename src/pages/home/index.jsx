@@ -10,7 +10,7 @@ function Home() {
     const user = useSelector(selectUser);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    useEffect(() => {
+    /*useEffect(() => {
         axios.get("https://api-perfil.uc.r.appspot.com/sesskey/4").then((res)=> {
             console.log(res.data)
             dispatch(login({
@@ -19,7 +19,7 @@ function Home() {
             }))
             console.log(user)
         })
-    }, []);
+    }, []);*/
 
     useEffect(() => {
         if (!user) navigate('/login')
@@ -32,13 +32,13 @@ function Home() {
     return (
         <div className='homePageContainer'>
             <ProgressBar completed={Math.round(8*100/12)}/>
-            <iframe id="inlineFrameExample"
+            {/*<iframe id="inlineFrameExample"
                 title="Inline Frame Example"
                 width="1100"
                 height="600"
                 src="http://localhost/moodle/my/"
                 name='moodleframe'>
-            </iframe>
+    </iframe>*/}
             
         </div>
     )

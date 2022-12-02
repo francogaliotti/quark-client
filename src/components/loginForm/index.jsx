@@ -27,30 +27,33 @@ function LoginForm() {
         var form = document.getElementById("login")
         form.target = 'moodleframe'
         const res = await form.submit()
-        /*setTimeout(async () => {
-            var content = window.frames['moodleframe']
-            console.log(content)
-        }, 1000)*/
 
     }
-
-    useEffect(() => {
-        setTimeout(async () => {
-            var content = window.frames['moodleframe'].document.getElementById("page-my-index")
-            console.log(content)
-        }, 3000)
-    }, [])
 
     const goHome = async () => {
         setTimeout(async () => {
             try {
                 const res = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${email}`)
                 const user = res.data
-                dispatch(login({
-                    ...user,
-                    password: password,
-                    LoggedIn: true
-                }))
+                try{
+                    const res = await axios.get("https://api-perfil.uc.r.appspot.com/sesskey/4") //aca tendria que usar user.id
+                    if (res.data[0].sesskey === ""){
+                        throw "Contraseña incorrecta"
+                    }
+                    dispatch(login({
+                        ...user,
+                        sesskey : res.data[0].sesskey,
+                        password: password,
+                        LoggedIn: true
+                    }))
+                } catch (e) {
+                    console.log(e)
+                    Swal.fire({
+                        icon: 'error',
+                        title: e,
+                        text: 'Intenta de nuevo'
+                    })
+                }
                 navigate("/")
             } catch (e) {
                 console.log(e)
@@ -82,27 +85,7 @@ function LoginForm() {
             <div className="login-form-forgotpassword form-group">
                 <a href="http://localhost/moodle/login/forgot_password.php">¿Ha extraviado la contraseña?</a>
             </div>
-            {/*<form onSubmit={(e) => handleSubmit(e)}>
-            <div className="singleField">
-                <label htmlFor="">Email: </label>
-
-                <PrimaryInput
-                    type="text"
-                    placeholder='Username'
-                    onChange={(event) => { setEmail(event.target.value) }}
-                />
-            </div>
-            <div className="singleField">
-                <label htmlFor="">Contraseña: </label>
-
-                <PrimaryInput
-                    type="password"
-                    placeholder='Password'
-                    onChange={(event) => { setPassword(event.target.value) }}
-                />
-            </div>
-            <PrimaryButton type='submit'>Ingresar</PrimaryButton>
-    </form>*/}
+            
             <iframe id="inlineFrameExample"
                 style={{ display: "none" }}
                 title="Inline Frame Example"

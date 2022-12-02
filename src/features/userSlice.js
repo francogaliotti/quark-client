@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import axios from 'axios'
 
 const moodleLogout = async (key) => {
     window.location.href = `http://localhost/moodle/login/logout.php?sesskey=${key}`
@@ -23,9 +24,13 @@ export const userSlice = createSlice({
         logout: async (state) => {
             localStorage.removeItem("username")
             localStorage.removeItem("sesskey")
+            const res = await axios.post(`https://api-perfil.uc.r.appspot.com/sesskey/`, {
+                'id': 4, //aca tiene que ir state.user.id
+                'sesskey': null
+            })
             await moodleLogout(state.user.sesskey)
             state.user = null;
-            await goLogin()
+            //await goLogin()
         }
     }
 })
