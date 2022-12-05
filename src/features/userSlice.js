@@ -5,10 +5,6 @@ const moodleLogout = async (key) => {
     window.location.href = `http://localhost/moodle/login/logout.php?sesskey=${key}`
 }
 
-const goLogin = async () => {
-    window.location.href = `http://localhost:3000/login`
-}
-
 export const userSlice = createSlice({
     name: "user",
     initialState: {
@@ -30,7 +26,6 @@ export const userSlice = createSlice({
             })
             await moodleLogout(state.user.sesskey)
             state.user = null;
-            //await goLogin()
         }
     }
 })
