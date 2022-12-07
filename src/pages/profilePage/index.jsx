@@ -6,6 +6,10 @@ import { selectUser } from '../../features/userSlice';
 import '../../styles/ProfilePage.css'
 import { Countries } from '../../jsons/countries';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPenToSquare, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import Swal from 'sweetalert2';
+
 
 
 function ProfilePage() {
@@ -15,7 +19,14 @@ function ProfilePage() {
 
     const [currentLanguage, setCurrentLanguage] = useState()
     const [languages, setLanguages] = useState([]);
-    const [currentAcademic, setCurrentAcademic] = useState()
+    const [currentAcademic, setCurrentAcademic] = useState({
+        institution: "",
+        title: "",
+        state: "",
+        beginDate: "",
+        endDate: "",
+        description: ""
+    })
     const [academics, setAcademics] = useState([])
     const [currentLabor, setCurrentLabor] = useState()
     const [labors, setLabors] = useState([])
@@ -24,12 +35,13 @@ function ProfilePage() {
 
     const [basicData, setBasicData] = useState()
     const [biography, setBiography] = useState("")
+    const [lanList, setLanList] = useState([]);
 
     const addLanguage = () => {
-        if (currentLanguage && currentLanguage.language && currentLanguage.level) {
+        if (currentLanguage && currentLanguage.id_language && currentLanguage.level) {
             var exist = false
             languages.map((l) => {
-                if (l.language === currentLanguage.language) {
+                if (l.id_language === currentLanguage.id_language) {
                     exist = true
                 }
             })
@@ -40,9 +52,29 @@ function ProfilePage() {
     }
 
     const addAcademic = () => {
-        if (currentAcademic && currentAcademic.institution && currentAcademic.title) {
+        if (currentAcademic && currentAcademic.institution && currentAcademic.title && currentAcademic.state) {
             setAcademics([...academics, currentAcademic])
+            if (!currentAcademic.edited) {
+                console.log("Aca hace el POST")
+            } else {
+                console.log("Aca hace el PUT")
+            }
+            setCurrentAcademic({
+                ...currentAcademic,
+                institution: "",
+                title: "",
+                //state:"",
+                beginDate: "",
+                endDate: "",
+                description: "",
+                edited: false
+            })
         }
+    }
+
+    const editAcademic = (ac) => {
+        setCurrentAcademic({ ...ac, edited: true })
+        setAcademics(academics.filter(l => l !== ac))
     }
 
     const addLabor = () => {
@@ -70,7 +102,7 @@ function ProfilePage() {
         }
         console.log(info)
         try {
-            const res = await axios.post(`https://api-perfil.uc.r.appspot.com/crudPerfil/crear`, info)
+            const res = await axios.post(`https://api-perfil.uc.r.appspot.com/profileInfo/crear`, info)
             console.log(JSON.stringify(info))
         } catch (e) {
             console.log(e)
@@ -89,6 +121,11 @@ function ProfilePage() {
             country: user?.country
         })
 
+        const fetchaData = async () => {
+            const languageList = await axios.get('https://api-perfil.uc.r.appspot.com/profileInfo')
+            setLanList(languageList.data)
+        }
+        fetchaData()
 
     }, []);
 
@@ -189,7 +226,31 @@ function ProfilePage() {
                                     <label>Descripción</label>
                                     <label id='activityDescription'>{lan?.description}</label>
                                 </div>
-                                <button className='plus' onClick={() => setAcademics(academics.filter(l => l !== lan))}>-</button>
+                                <div className="crudButtons">
+                                    <button className='plus' onClick={() => editAcademic(lan)}><FontAwesomeIcon icon={faPenToSquare} /></button>
+                                    <button className='plus' onClick={() => {
+                                        Swal.fire({
+                                            title: 'Deseas eliminar esta actividad?',
+                                            text: "Esta acción es irreversible",
+                                            icon: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#3085d6',
+                                            cancelButtonColor: '#d33',
+                                            confirmButtonText: 'Si, eliminar!',
+                                            cancelButtonText: "Cancelar"
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                Swal.fire(
+                                                    'Deleted!',
+                                                    'Your file has been deleted.',
+                                                    'success'
+                                                )
+                                                setAcademics(academics.filter(l => l !== lan))
+                                            }
+                                        })
+
+                                    }}><FontAwesomeIcon icon={faTrashCan} /></button>
+                                </div>
                             </div>
 
                         )
@@ -197,11 +258,11 @@ function ProfilePage() {
                     <div className="fillForms">
                         <div className="fillForm">
                             <label>Institución</label>
-                            <input type="text" onChange={(event) => { setCurrentAcademic({ ...currentAcademic, institution: event.target.value }) }} />
+                            <input type="text" value={currentAcademic.institution} onChange={(event) => { setCurrentAcademic({ ...currentAcademic, institution: event.target.value }) }} />
                         </div>
                         <div className="fillForm">
                             <label>Título</label>
-                            <input type="text" onChange={(event) => { setCurrentAcademic({ ...currentAcademic, title: event.target.value }) }} />
+                            <input type="text" value={currentAcademic.title} onChange={(event) => { setCurrentAcademic({ ...currentAcademic, title: event.target.value }) }} />
                         </div>
                         <div className="fillForm">
                             <label>Estado</label>
@@ -213,19 +274,19 @@ function ProfilePage() {
                         </div>
                         <div className="fillForm">
                             <label>Fecha de Inicio</label>
-                            <input type="date" onChange={(event) => { setCurrentAcademic({ ...currentAcademic, beginDate: event.target.value }) }} />
+                            <input type="date" value={currentAcademic.beginDate} onChange={(event) => { setCurrentAcademic({ ...currentAcademic, beginDate: event.target.value }) }} />
                         </div>
                         <div className="fillForm">
                             <label>Fecha Finalización</label>
-                            <input type="date" onChange={(event) => { setCurrentAcademic({ ...currentAcademic, endDate: event.target.value }) }} />
+                            <input type="date" value={currentAcademic.endDate} onChange={(event) => { setCurrentAcademic({ ...currentAcademic, endDate: event.target.value }) }} />
                         </div>
                         <div className="fillForm">
                             <label>Descripción</label>
-                            <textarea type="date" onChange={(event) => { setCurrentAcademic({ ...currentAcademic, description: event.target.value }) }} />
+                            <textarea type="date" value={currentAcademic.description} onChange={(event) => { setCurrentAcademic({ ...currentAcademic, description: event.target.value }) }} />
                         </div>
                     </div>
 
-                    <button className='plus' onClick={() => addAcademic()}>+</button>
+                    <button className='plus' onClick={() => addAcademic()}><FontAwesomeIcon icon={faPlus} /></button>
 
                 </div>
 
@@ -385,11 +446,15 @@ function ProfilePage() {
 
                         <div className="fillForm">
                             <label>Idioma</label>
-                            <select onClick={(v) => setCurrentLanguage({ ...currentLanguage, language: v.target.value })} id="">
+                            <select onClick={(v) => {
+                                const languagesSelected = lanList.filter((l) => l.id_idioma == v.target.value)
+                                const languageSelected = languagesSelected[0]
+                                setCurrentLanguage({ ...currentLanguage, language: languageSelected.nombre, id_language: languageSelected.id_idioma })
+                            }} id="">
                                 <option value=""></option>
-                                <option value="Ingles">Ingles</option>
-                                <option value="Español">Español</option>
-                                <option value="Portugues">Portugues</option>
+                                {lanList.map((l) => {
+                                    return (<option value={l.id_idioma}>{l.nombre}</option>)
+                                })}
                             </select>
                         </div>
                         <div className="fillForm">
