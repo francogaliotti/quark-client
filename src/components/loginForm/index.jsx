@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { login } from '../../features/userSlice';
+import { login, selectUser } from '../../features/userSlice';
 import { PrimaryButton } from '../../styles/styledComponents/Buttons';
 import { PrimaryInput } from '../../styles/styledComponents/Inputs';
 import '../../styles/Login.css'
@@ -13,14 +13,28 @@ function LoginForm() {
     const [password, setPassword] = useState("")
     const ref = useRef(null);
     const params = useParams()
+    const user = useSelector(selectUser);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (user) navigate('/')
+
+    }, [user]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        await setSesskeyNull()
         await handleMoodleIFrame()
         await goHome()
+    }
+
+    const setSesskeyNull = async () => {
+        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/sesskey/`, {
+                'id': 4, //aca tiene que ir user.id
+                'sesskey': null
+        })
     }
 
     const handleMoodleIFrame = async () => {

@@ -10,17 +10,17 @@ function ProfesionalProfile() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!user) navigate('/login')
-    }, [user]);
+        if (!localStorage.getItem("sesskey")) navigate('/login')
+    }, []);
 
     return (
         <div className="profesionalProfileContainer">
             <div className="basicInfo" id='profesionalInfo'>
                 <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="" />
-                <h2 className="name">{user.username}</h2>
+                <h2 className="name">{user?.username}</h2>
                 <div className="profesionalDescriptionContainer">
                     <h3>Descripción:</h3>
-                    <p>{user.description}</p>
+                    <p>{user?.description}</p>
                 </div>
                 <div className="badgeContainer">
                     <h3>Insignias:</h3>

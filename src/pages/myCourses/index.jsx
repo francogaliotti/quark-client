@@ -14,9 +14,9 @@ function MyCourses() {
     //const [courses, setCourses] = useState([]);
 
     useEffect(() => {
-        if (!user) navigate('/login')
+        if (!localStorage.getItem("sesskey")) navigate('/login')
         
-    }, [user]);
+    }, []);
 
 
     return (

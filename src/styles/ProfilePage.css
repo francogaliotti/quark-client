@@ -84,12 +84,16 @@ h3 {
 .aboutContainer .fillForms .fillForm {
     display: flex;
     flex-direction: column;
-    width: 29%;
+    width: 160px;
     min-width: 150px;
     gap: 5px;
     padding: 5px;
     text-align: start;
     height: max-content;
+    white-space: nowrap; 
+    overflow:hidden;
+    text-overflow: ellipsis;
+    
 }
 
 .aboutContainer .fillForms .fillForm label {
@@ -128,9 +132,10 @@ h3 {
     text-shadow: 2px 1px 1px #444;
 }
 
+
 @media (max-width: 980px) {
     .aboutContainer .fillForms .fillForm {
-        width: 100%;
+        width: 300px;
     }
 }
 

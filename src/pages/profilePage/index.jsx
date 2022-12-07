@@ -5,6 +5,7 @@ import { PrimaryButton } from '../../styles/styledComponents/Buttons';
 import { selectUser } from '../../features/userSlice';
 import '../../styles/ProfilePage.css'
 import { Countries } from '../../jsons/countries';
+import axios from 'axios';
 
 
 function ProfilePage() {
@@ -20,6 +21,9 @@ function ProfilePage() {
     const [labors, setLabors] = useState([])
     const [currentIndependent, setCurrentIndependent] = useState()
     const [independents, setIndependents] = useState([])
+
+    const [basicData, setBasicData] = useState()
+    const [biography, setBiography] = useState("")
 
     const addLanguage = () => {
         if (currentLanguage && currentLanguage.language && currentLanguage.level) {
@@ -53,19 +57,47 @@ function ProfilePage() {
         }
     }
 
-
+    const handleProfileChange = async () => {
+        const userId = user.id
+        const info = {
+            userId,
+            basicData,
+            languages,
+            academics,
+            labors,
+            independents,
+            biography
+        }
+        console.log(info)
+        try {
+            const res = await axios.post(`https://api-perfil.uc.r.appspot.com/crudPerfil/crear`, info)
+            console.log(JSON.stringify(info))
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     useEffect(() => {
-        if (!user) navigate('/login')
+        if (!localStorage.getItem("sesskey")) navigate('/login')
 
-    }, [user]);
+        setBasicData({
+            firstname: user?.firstname,
+            lastname: user?.lastname,
+            email: user?.email,
+            city: user?.city,
+            phone: user?.phone,
+            country: user?.country
+        })
+
+
+    }, []);
 
     return (
         <div className="profilePageContainer">
             <div className="leftContainer">
                 <div className="basicInfo">
                     <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="" />
-                    <h2 className="name">{user.username}</h2>
+                    <h2 className="name">{user?.username}</h2>
                 </div>
                 <div className="descriptionContainer">
                     <h3>Añade tu CV</h3>
@@ -73,8 +105,8 @@ function ProfilePage() {
                     <input ref={ref} type='file' id="getFile" />
                 </div>
                 <div className="descriptionContainer">
-                    <h3>Mi Descripción</h3>
-                    <textarea value={user.description}></textarea>
+                    <h3>Mi Biografía</h3>
+                    <textarea value={user?.biography} onChange={(event) => setBiography(event.target.value)}></textarea>
                 </div>
             </div>
             <div className="rightContainer">
@@ -83,15 +115,15 @@ function ProfilePage() {
                     <div className="fillForms">
                         <div className="fillForm">
                             <label>Nombre</label>
-                            <input type="text" value={user?.firstname} />
+                            <input type="text" value={basicData?.firstname} onChange={(event) => setBasicData({ ...basicData, firstname: event.target.value })} />
                         </div>
                         <div className="fillForm">
                             <label>Apellido</label>
-                            <input type="text" value={user?.lastname} />
+                            <input type="text" value={basicData?.lastname} onChange={(event) => setBasicData({ ...basicData, lastname: event.target.value })} />
                         </div>
                         <div className="fillForm">
                             <label>Email</label>
-                            <input type="text" value={user?.email} />
+                            <input type="text" value={basicData?.email} onChange={(event) => setBasicData({ ...basicData, email: event.target.value })} />
                         </div>
                         {/*<div className="fillForm">
                             <label>Genero</label>
@@ -108,11 +140,11 @@ function ProfilePage() {
                         </div>*/}
                         <div className="fillForm">
                             <label>Telefono</label>
-                            <input type="text" value={user?.phone} />
+                            <input type="text" value={basicData?.phone} onChange={(event) => setBasicData({ ...basicData, phone: event.target.value })} />
                         </div>
                         <div className="fillForm">
                             <label>Pais</label>
-                            <select name="" id="" value={user?.country}>
+                            <select name="" id="" value={basicData?.country} onChange={(event) => setBasicData({ ...basicData, country: event.target.value })}>
                                 <option value=""></option>
                                 {Countries.map((c) => {
                                     return <option value={c?.iso2}>{c?.nombre}</option>
@@ -121,7 +153,7 @@ function ProfilePage() {
                         </div>
                         <div className="fillForm">
                             <label>Ciudad</label>
-                            <input type="text" value={user?.city} />
+                            <input type="text" value={basicData?.city} onChange={(event) => setBasicData({ ...basicData, city: event.target.value })} />
                         </div>
                     </div>
 
@@ -153,6 +185,10 @@ function ProfilePage() {
                                     <label>Fecha Finalización</label>
                                     <label>{lan?.endDate}</label>
                                 </div>
+                                <div className="fillForm">
+                                    <label>Descripción</label>
+                                    <label id='activityDescription'>{lan?.description}</label>
+                                </div>
                                 <button className='plus' onClick={() => setAcademics(academics.filter(l => l !== lan))}>-</button>
                             </div>
 
@@ -183,7 +219,10 @@ function ProfilePage() {
                             <label>Fecha Finalización</label>
                             <input type="date" onChange={(event) => { setCurrentAcademic({ ...currentAcademic, endDate: event.target.value }) }} />
                         </div>
-
+                        <div className="fillForm">
+                            <label>Descripción</label>
+                            <textarea type="date" onChange={(event) => { setCurrentAcademic({ ...currentAcademic, description: event.target.value }) }} />
+                        </div>
                     </div>
 
                     <button className='plus' onClick={() => addAcademic()}>+</button>
@@ -215,6 +254,10 @@ function ProfilePage() {
                                     <label>Fecha Finalización</label>
                                     <label>{lan?.endDate}</label>
                                 </div>
+                                <div className="fillForm">
+                                    <label>Descripción</label>
+                                    <label>{lan?.description}</label>
+                                </div>
                                 <button className='plus' onClick={() => setLabors(labors.filter(l => l !== lan))}>-</button>
                             </div>
 
@@ -245,6 +288,10 @@ function ProfilePage() {
                             <label>Fecha Finalización</label>
                             <input type="date" onChange={(event) => { setCurrentLabor({ ...currentLabor, endDate: event.target.value }) }} />
                         </div>
+                        <div className="fillForm">
+                            <label>Descripción</label>
+                            <textarea type="date" onChange={(event) => { setCurrentLabor({ ...currentLabor, description: event.target.value }) }} />
+                        </div>
 
                     </div>
 
@@ -273,6 +320,10 @@ function ProfilePage() {
                                     <label>Fecha Finalización</label>
                                     <label>{lan?.endDate}</label>
                                 </div>
+                                <div className="fillForm">
+                                    <label>Descripción</label>
+                                    <label>{lan?.description}</label>
+                                </div>
                                 <button className='plus' onClick={() => setIndependents(independents.filter(l => l !== lan))}>-</button>
                             </div>
 
@@ -298,6 +349,10 @@ function ProfilePage() {
                         <div className="fillForm">
                             <label>Fecha Finalización</label>
                             <input type="date" onChange={(event) => { setCurrentIndependent({ ...currentIndependent, endDate: event.target.value }) }} />
+                        </div>
+                        <div className="fillForm">
+                            <label>Descripción</label>
+                            <textarea type="date" onChange={(event) => { setCurrentIndependent({ ...currentIndependent, description: event.target.value }) }} />
                         </div>
 
                     </div>
@@ -354,7 +409,7 @@ function ProfilePage() {
 
                     <button className='plus' onClick={() => addLanguage()}>+</button>
                 </div>
-                <PrimaryButton>Guardar</PrimaryButton>
+                <PrimaryButton onClick={() => handleProfileChange()}>Guardar</PrimaryButton>
             </div >
         </div >
     )

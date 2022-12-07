@@ -22,8 +22,8 @@ function Home() {
     }, []);*/
 
     useEffect(() => {
-        if (!user) navigate('/login')
-    }, [user]);
+        if (!localStorage.getItem("sesskey")) navigate('/login')
+    }, []);
 
     const handleProfileProgress = () => {
         
