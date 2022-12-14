@@ -51,13 +51,40 @@ function ProfilePage() {
         }
     }
 
-    const addAcademic = () => {
+    const addAcademic = async () => {
         if (currentAcademic && currentAcademic.institution && currentAcademic.title && currentAcademic.state) {
-            setAcademics([...academics, currentAcademic])
             if (!currentAcademic.edited) {
-                console.log("Aca hace el POST")
+                const res = await axios.post(`https://api-perfil.uc.r.appspot.com/actividadesAcademicas/crear`,
+                    {
+                        userid: user.id,
+                        academics: {
+                            institution: currentAcademic.institution,
+                            title: currentAcademic.title,
+                            state: currentAcademic.state,
+                            beginDate: currentAcademic.beginDate,
+                            endDate: currentAcademic.endDate,
+                            description: currentAcademic.description
+                        }
+                    }
+                )
+                setAcademics([...academics, { ...currentAcademic, idActividad: res.data.id }])
+                console.log(res)
             } else {
-                console.log("Aca hace el PUT")
+                const res = await axios.put(`https://api-perfil.uc.r.appspot.com/actividadesAcademicas/actualizar`,
+                    {
+                        idActividad: currentAcademic.idActividad,
+                        academics: {
+                            institution: currentAcademic.institution,
+                            title: currentAcademic.title,
+                            state: currentAcademic.state,
+                            beginDate: currentAcademic.beginDate,
+                            endDate: currentAcademic.endDate,
+                            description: currentAcademic.description
+                        }
+                    }
+                )
+                setAcademics([...academics, currentAcademic])
+                console.log(res)
             }
             setCurrentAcademic({
                 ...currentAcademic,
@@ -74,19 +101,181 @@ function ProfilePage() {
 
     const editAcademic = (ac) => {
         setCurrentAcademic({ ...ac, edited: true })
+        console.log(ac)
         setAcademics(academics.filter(l => l !== ac))
     }
 
-    const addLabor = () => {
+    const deleteAcademic = async (ac) => {
+        Swal.fire({
+            title: 'Deseas eliminar esta actividad?',
+            text: "Esta acción es irreversible",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, eliminar!',
+            cancelButtonText: "Cancelar"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/actividadesAcademicas/borrar/${ac.idActividad}`)
+                Swal.fire(
+                    'Eliminado!',
+                    'Actividad eliminada.',
+                    'success'
+                )
+                setAcademics(academics.filter(l => l !== ac))
+            }
+        })
+
+    }
+
+    const addLabor = async () => {
         if (currentLabor && currentLabor.company && currentLabor.title) {
-            setLabors([...labors, currentLabor])
+            if (!currentLabor.edited) {
+                const res = await axios.post(`https://api-perfil.uc.r.appspot.com/actividadesLaborales/crear`,
+                    {
+                        userid: user.id,
+                        labors: {
+                            company: currentLabor.company,
+                            title: currentLabor.title,
+                            state: currentAcademic.state,
+                            beginDate: currentLabor.beginDate,
+                            endDate: currentLabor.endDate,
+                            description: currentLabor.description
+                        }
+                    }
+                )
+                console.log(res)
+                setLabors([...labors, {...currentLabor, idActividad: res.data.id}])
+            } else {
+                console.log(currentLabor)
+                const res = await axios.put(`https://api-perfil.uc.r.appspot.com/actividadesLaborales/actualizar`,
+                    {
+                        idActividad: currentLabor.idActividad,
+                        labors: {
+                            company: currentLabor.company,
+                            title: currentLabor.title,
+                            state: currentLabor.state,
+                            beginDate: currentLabor.beginDate,
+                            endDate: currentLabor.endDate,
+                            description: currentLabor.description
+                        }
+                    }
+                )
+                setLabors([...labors, currentLabor])
+            }
+            setCurrentLabor({
+                ...currentLabor,
+                company: "",
+                title: "",
+                //state:"",
+                beginDate: "",
+                endDate: "",
+                description: "",
+                edited: false
+            })
         }
     }
 
-    const addIndependent = () => {
+    const editLabor = (lab) => {
+        setCurrentLabor({ ...lab, edited: true })
+        setLabors(labors.filter(l => l !== lab))
+    }
+
+    const deleteLabor = async (lab) => {
+        Swal.fire({
+            title: 'Deseas eliminar esta actividad?',
+            text: "Esta acción es irreversible",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, eliminar!',
+            cancelButtonText: "Cancelar"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/actividadesLaborales/borrar/${lab.idActividad}`)
+                Swal.fire(
+                    'Eliminado!',
+                    'Actividad eliminada.',
+                    'success'
+                )
+                setLabors(labors.filter(l => l !== lab))
+            }
+        })
+
+    }
+
+    const addIndependent = async () => {
         if (currentIndependent && currentIndependent.title) {
+            if (!currentIndependent.edited) {
+                const res = await axios.post(`https://api-perfil.uc.r.appspot.com/actividadesIndependientes/crear`,
+                    {
+                        userid: user.id,
+                        independents: {
+                            title: currentIndependent.title,
+                            state: currentIndependent.state,
+                            beginDate: currentIndependent.beginDate,
+                            endDate: currentIndependent.endDate,
+                            description: currentIndependent.description
+                        }
+                    }
+                )
+                setIndependents([...independents, {...currentIndependent, idActividad: res.data.id}])
+            } else {
+                const res = await axios.put(`https://api-perfil.uc.r.appspot.com/actividadesIndependientes/actualizar`,
+                {
+                    idActividad: currentIndependent.idActividad,
+                    independents: {
+                        title: currentIndependent.title,
+                        state: currentIndependent.state,
+                        beginDate: currentIndependent.beginDate,
+                        endDate: currentIndependent.endDate,
+                        description: currentIndependent.description
+                    }
+                }
+            )
             setIndependents([...independents, currentIndependent])
+            }
+            setCurrentIndependent({
+                ...currentIndependent,
+                title: "",
+                //state:"",
+                beginDate: "",
+                endDate: "",
+                description: "",
+                edited: false
+            })
         }
+    }
+
+    const editIndependent = (ind) => {
+        setCurrentIndependent({ ...ind, edited: true })
+        setIndependents(independents.filter(l => l !== ind))
+    }
+
+    const deleteIndependent = async (ind) => {
+        Swal.fire({
+            title: 'Deseas eliminar esta actividad?',
+            text: "Esta acción es irreversible",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, eliminar!',
+            cancelButtonText: "Cancelar"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/actividadesIndependientes/borrar/${ind.idActividad}`)
+                Swal.fire(
+                    'Eliminado!',
+                    'Actividad eliminada.',
+                    'success'
+                )
+                setIndependents(independents.filter(l => l !== ind))
+            }
+        })
+
     }
 
     const handleProfileChange = async () => {
@@ -110,7 +299,7 @@ function ProfilePage() {
     }
 
     useEffect(() => {
-        if (!localStorage.getItem("sesskey")) navigate('/login')
+        if (!sessionStorage.getItem("sesskey")) navigate('/login')
 
         setBasicData({
             firstname: user?.firstname,
@@ -121,11 +310,62 @@ function ProfilePage() {
             country: user?.country
         })
 
-        const fetchaData = async () => {
-            const languageList = await axios.get('https://api-perfil.uc.r.appspot.com/profileInfo')
+        const fetchData = async () => {
+            //idiomas parametrizados
+            const languageList = await axios.get('https://api-perfil.uc.r.appspot.com/idiomas')
             setLanList(languageList.data)
+            //actividades académicas
+            const resAc = await axios.get(`https://api-perfil.uc.r.appspot.com/actividadesAcademicas/${user.id}`)
+            const academicList = resAc.data
+            const academicArray = []
+            academicList.map((ac) => {
+                academicArray.push({
+                    idActividad: ac.idActividad,
+                    institution: ac.Institucion,
+                    title: ac.Titulo,
+                    beginDate: ac.FechaInicio,
+                    endDate: ac.FechaFin,
+                    state: ac.Estado,
+                    description: ac.Descripcion
+                })
+                
+            })
+            setAcademics(academicArray)
+            //actividades laborales
+            const resLab = await axios.get(`https://api-perfil.uc.r.appspot.com/actividadesLaborales/${user.id}`)
+            const laborList = resLab.data
+            const laborArray = []
+            laborList.map((ac) => {
+                laborArray.push({
+                    idActividad: ac.idActividad,
+                    company: ac.Empresa,
+                    title: ac.Titulo,
+                    beginDate: ac.FechaInicio,
+                    endDate: ac.FechaFin,
+                    state: ac.Estado,
+                    description: ac.Descripcion
+                })
+                
+            })
+            setLabors(laborArray)
+            //actividades independientes
+            const resInd = await axios.get(`https://api-perfil.uc.r.appspot.com/actividadesIndependientes/${user.id}`)
+            const indepList = resInd.data
+            const indepArray = []
+            indepList.map((ac) => {
+                indepArray.push({
+                    idActividad: ac.idActividad,
+                    title: ac.Titulo,
+                    beginDate: ac.FechaInicio,
+                    endDate: ac.FechaFin,
+                    state: ac.Estado,
+                    description: ac.Descripcion
+                })
+                
+            })
+            setIndependents(indepArray)
         }
-        fetchaData()
+        fetchData()
 
     }, []);
 
@@ -216,11 +456,11 @@ function ProfilePage() {
                                 </div>
                                 <div className="fillForm">
                                     <label>Fecha de Inicio</label>
-                                    <label>{lan?.beginDate}</label>
+                                    <label>{new Date(lan?.beginDate).toLocaleDateString("en-AU")}</label>
                                 </div>
                                 <div className="fillForm">
                                     <label>Fecha Finalización</label>
-                                    <label>{lan?.endDate}</label>
+                                    <label>{new Date(lan?.endDate).toLocaleDateString("en-AU")}</label>
                                 </div>
                                 <div className="fillForm">
                                     <label>Descripción</label>
@@ -228,28 +468,7 @@ function ProfilePage() {
                                 </div>
                                 <div className="crudButtons">
                                     <button className='plus' onClick={() => editAcademic(lan)}><FontAwesomeIcon icon={faPenToSquare} /></button>
-                                    <button className='plus' onClick={() => {
-                                        Swal.fire({
-                                            title: 'Deseas eliminar esta actividad?',
-                                            text: "Esta acción es irreversible",
-                                            icon: 'warning',
-                                            showCancelButton: true,
-                                            confirmButtonColor: '#3085d6',
-                                            cancelButtonColor: '#d33',
-                                            confirmButtonText: 'Si, eliminar!',
-                                            cancelButtonText: "Cancelar"
-                                        }).then((result) => {
-                                            if (result.isConfirmed) {
-                                                Swal.fire(
-                                                    'Deleted!',
-                                                    'Your file has been deleted.',
-                                                    'success'
-                                                )
-                                                setAcademics(academics.filter(l => l !== lan))
-                                            }
-                                        })
-
-                                    }}><FontAwesomeIcon icon={faTrashCan} /></button>
+                                    <button className='plus' onClick={() => deleteAcademic(lan)}><FontAwesomeIcon icon={faTrashCan} /></button>
                                 </div>
                             </div>
 
@@ -309,17 +528,18 @@ function ProfilePage() {
                                 </div>
                                 <div className="fillForm">
                                     <label>Fecha de Inicio</label>
-                                    <label>{lan?.beginDate}</label>
+                                    <label>{new Date(lan?.beginDate).toLocaleDateString("en-AU")}</label>
                                 </div>
                                 <div className="fillForm">
                                     <label>Fecha Finalización</label>
-                                    <label>{lan?.endDate}</label>
+                                    <label>{new Date(lan?.endDate).toLocaleDateString("en-AU")}</label>
                                 </div>
                                 <div className="fillForm">
                                     <label>Descripción</label>
                                     <label>{lan?.description}</label>
                                 </div>
-                                <button className='plus' onClick={() => setLabors(labors.filter(l => l !== lan))}>-</button>
+                                <button className='plus' onClick={() => editLabor(lan)}><FontAwesomeIcon icon={faPenToSquare} /></button>
+                                <button className='plus' onClick={() => deleteLabor(lan)}><FontAwesomeIcon icon={faTrashCan} /></button>
                             </div>
 
                         )
@@ -327,11 +547,11 @@ function ProfilePage() {
                     <div className="fillForms">
                         <div className="fillForm">
                             <label>Empresa</label>
-                            <input type="text" onChange={(event) => { setCurrentLabor({ ...currentLabor, company: event.target.value }) }} />
+                            <input type="text" value={currentLabor?.company} onChange={(event) => { setCurrentLabor({ ...currentLabor, company: event.target.value }) }} />
                         </div>
                         <div className="fillForm">
                             <label>Título</label>
-                            <input type="text" onChange={(event) => { setCurrentLabor({ ...currentLabor, title: event.target.value }) }} />
+                            <input type="text" value={currentLabor?.title} onChange={(event) => { setCurrentLabor({ ...currentLabor, title: event.target.value }) }} />
                         </div>
                         <div className="fillForm">
                             <label>Estado</label>
@@ -343,20 +563,20 @@ function ProfilePage() {
                         </div>
                         <div className="fillForm">
                             <label>Fecha de Inicio</label>
-                            <input type="date" onChange={(event) => { setCurrentLabor({ ...currentLabor, beginDate: event.target.value }) }} />
+                            <input type="date" value={currentLabor?.beginDate} onChange={(event) => { setCurrentLabor({ ...currentLabor, beginDate: event.target.value }) }} />
                         </div>
                         <div className="fillForm">
                             <label>Fecha Finalización</label>
-                            <input type="date" onChange={(event) => { setCurrentLabor({ ...currentLabor, endDate: event.target.value }) }} />
+                            <input type="date" value={currentLabor?.endDate} onChange={(event) => { setCurrentLabor({ ...currentLabor, endDate: event.target.value }) }} />
                         </div>
                         <div className="fillForm">
                             <label>Descripción</label>
-                            <textarea type="date" onChange={(event) => { setCurrentLabor({ ...currentLabor, description: event.target.value }) }} />
+                            <textarea type="date" value={currentLabor?.description} onChange={(event) => { setCurrentLabor({ ...currentLabor, description: event.target.value }) }} />
                         </div>
 
                     </div>
 
-                    <button className='plus' onClick={() => addLabor()}>+</button>
+                    <button className='plus' onClick={() => addLabor()}><FontAwesomeIcon icon={faPlus} /></button>
 
                 </div>
 
@@ -375,17 +595,18 @@ function ProfilePage() {
                                 </div>
                                 <div className="fillForm">
                                     <label>Fecha de Inicio</label>
-                                    <label>{lan?.beginDate}</label>
+                                    <label>{new Date(lan?.beginDate).toLocaleDateString("en-AU")}</label>
                                 </div>
                                 <div className="fillForm">
                                     <label>Fecha Finalización</label>
-                                    <label>{lan?.endDate}</label>
+                                    <label>{new Date(lan?.endDate).toLocaleDateString("en-AU")}</label>
                                 </div>
                                 <div className="fillForm">
                                     <label>Descripción</label>
                                     <label>{lan?.description}</label>
                                 </div>
-                                <button className='plus' onClick={() => setIndependents(independents.filter(l => l !== lan))}>-</button>
+                                <button className='plus' onClick={() => editIndependent(lan)}><FontAwesomeIcon icon={faPenToSquare} /></button>
+                                <button className='plus' onClick={() => deleteIndependent(lan)}><FontAwesomeIcon icon={faTrashCan} /></button>
                             </div>
 
                         )
@@ -393,7 +614,7 @@ function ProfilePage() {
                     <div className="fillForms">
                         <div className="fillForm">
                             <label>Título</label>
-                            <input type="text" onChange={(event) => { setCurrentIndependent({ ...currentIndependent, title: event.target.value }) }} />
+                            <input type="text" value={currentIndependent?.title} onChange={(event) => { setCurrentIndependent({ ...currentIndependent, title: event.target.value }) }} />
                         </div>
                         <div className="fillForm">
                             <label>Estado</label>
@@ -405,20 +626,20 @@ function ProfilePage() {
                         </div>
                         <div className="fillForm">
                             <label>Fecha de Inicio</label>
-                            <input type="date" onChange={(event) => { setCurrentIndependent({ ...currentIndependent, beginDate: event.target.value }) }} />
+                            <input type="date" value={currentIndependent?.beginDate} onChange={(event) => { setCurrentIndependent({ ...currentIndependent, beginDate: event.target.value }) }} />
                         </div>
                         <div className="fillForm">
                             <label>Fecha Finalización</label>
-                            <input type="date" onChange={(event) => { setCurrentIndependent({ ...currentIndependent, endDate: event.target.value }) }} />
+                            <input type="date" value={currentIndependent?.endDate} onChange={(event) => { setCurrentIndependent({ ...currentIndependent, endDate: event.target.value }) }} />
                         </div>
                         <div className="fillForm">
                             <label>Descripción</label>
-                            <textarea type="date" onChange={(event) => { setCurrentIndependent({ ...currentIndependent, description: event.target.value }) }} />
+                            <textarea type="date" value={currentIndependent?.description} onChange={(event) => { setCurrentIndependent({ ...currentIndependent, description: event.target.value }) }} />
                         </div>
 
                     </div>
 
-                    <button className='plus' onClick={() => addIndependent()}>+</button>
+                    <button className='plus' onClick={() => addIndependent()}><FontAwesomeIcon icon={faPlus} /></button>
 
                 </div>
 
@@ -438,7 +659,28 @@ function ProfilePage() {
                                     <label>Nivel</label>
                                     <label>{lan?.level}</label>
                                 </div>
-                                <button className='plus' onClick={() => setLanguages(languages.filter(l => l !== lan))}>-</button>
+                                <button className='plus' onClick={() => {
+                                    Swal.fire({
+                                        title: 'Deseas eliminar este idioma?',
+                                        text: "Esta acción es irreversible",
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Si, eliminar!',
+                                        cancelButtonText: "Cancelar"
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            Swal.fire(
+                                                'Eliminado!',
+                                                'Idioma eliminado.',
+                                                'success'
+                                            )
+                                            setLanguages(languages.filter(l => l !== lan))
+                                        }
+                                    })
+
+                                }}><FontAwesomeIcon icon={faTrashCan} /></button>
                             </div>
                         )
                     })}
@@ -472,7 +714,7 @@ function ProfilePage() {
 
                     </div>
 
-                    <button className='plus' onClick={() => addLanguage()}>+</button>
+                    <button className='plus' onClick={() => addLanguage()}><FontAwesomeIcon icon={faPlus} /></button>
                 </div>
                 <PrimaryButton onClick={() => handleProfileChange()}>Guardar</PrimaryButton>
             </div >

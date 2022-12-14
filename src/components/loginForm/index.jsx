@@ -31,7 +31,7 @@ function LoginForm() {
     }
 
     const setSesskeyNull = async () => {
-        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/sesskey/`, {
+        const res = axios.post(`https://api-perfil.uc.r.appspot.com/sesskey/`, {
                 'id': 4, //aca tiene que ir user.id
                 'sesskey': null
         })
@@ -77,7 +77,7 @@ function LoginForm() {
                     text: 'Intenta de nuevo'
                 })
             }
-        }, 1000);
+        }, 2000);
 
     }
 
@@ -103,8 +103,8 @@ function LoginForm() {
             <iframe id="inlineFrameExample"
                 style={{ display: "none" }}
                 title="Inline Frame Example"
-                width="600"
-                height="400"
+                width="1"
+                height="1"
                 src="http://localhost/moodle/my/"
                 name='moodleframe'>
             </iframe>

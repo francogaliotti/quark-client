@@ -22,7 +22,7 @@ function Home() {
     }, []);*/
 
     useEffect(() => {
-        if (!localStorage.getItem("sesskey")) navigate('/login')
+        if (!sessionStorage.getItem("sesskey")) navigate('/login')
     }, []);
 
     const handleProfileProgress = () => {

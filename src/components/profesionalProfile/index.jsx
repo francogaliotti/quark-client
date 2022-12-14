@@ -10,7 +10,7 @@ function ProfesionalProfile() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!localStorage.getItem("sesskey")) navigate('/login')
+        if (!sessionStorage.getItem("sesskey")) navigate('/login')
     }, []);
 
     return (

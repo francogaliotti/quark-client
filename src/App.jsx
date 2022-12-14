@@ -4,7 +4,7 @@ import { login, selectUser } from './features/userSlice'
 import './App.css'
 import Navbar from './components/navbar';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import PublicRoutes from './routes/PublicRoutes';
 import VerticalNavbar from './components/verticalNavbar';
 import axios from 'axios';
@@ -17,13 +17,13 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (localStorage.getItem("sesskey")) {
-        const username = localStorage.getItem("username")
+      if (sessionStorage.getItem("sesskey")) {
+        const username = sessionStorage.getItem("username")
         const res = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${username}`)
         const user = res.data
         dispatch(login({
           ...user,
-          sesskey: localStorage.getItem("sesskey"),
+          sesskey: sessionStorage.getItem("sesskey"),
           LoggedIn: true
         }))
       }
@@ -33,7 +33,7 @@ function App() {
 
   return (
     <div className="app-container">
-      {user && <>
+      {sessionStorage.getItem("sesskey") && <>
         <VerticalNavbar />
       </>}
       <Navbar />
