@@ -127,6 +127,16 @@ h3 {
     border-radius: 5px;
 }
 
+.aboutContainer .fillForms .fillForm .inputRadios input {
+    width: 10%;
+}
+
+.aboutContainer .fillForms .fillForm .inputRadios label {
+    font-size: 70%;
+    position: relative;
+    bottom: 4px;
+}
+
 .aboutContainer .fillForms .crudButtons {
     position: relative;
     float: right;

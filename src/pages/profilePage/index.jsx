@@ -19,14 +19,9 @@ function ProfilePage() {
 
     const [currentLanguage, setCurrentLanguage] = useState()
     const [languages, setLanguages] = useState([]);
-    const [currentAcademic, setCurrentAcademic] = useState({
-        institution: "",
-        title: "",
-        state: "",
-        beginDate: "",
-        endDate: "",
-        description: ""
-    })
+    const [currentSkill, setCurrentSkill] = useState()
+    const [skills, setSkills] = useState([])
+    const [currentAcademic, setCurrentAcademic] = useState()
     const [academics, setAcademics] = useState([])
     const [currentLabor, setCurrentLabor] = useState()
     const [labors, setLabors] = useState([])
@@ -36,8 +31,9 @@ function ProfilePage() {
     const [basicData, setBasicData] = useState()
     const [biography, setBiography] = useState("")
     const [lanList, setLanList] = useState([]);
+    const [skillList, setSkillList] = useState([])
 
-    const addLanguage = () => {
+    const addLanguage = async () => {
         if (currentLanguage && currentLanguage.id_language && currentLanguage.level) {
             var exist = false
             languages.map((l) => {
@@ -46,9 +42,108 @@ function ProfilePage() {
                 }
             })
             if (!exist) {
-                setLanguages([...languages, currentLanguage])
+                const res = await axios.post(`https://api-perfil.uc.r.appspot.com/idiomas/crear`,
+                    {
+                        userid: user.id,
+                        languages: {
+                            id: currentLanguage.id_language,
+                            level: currentLanguage.level
+                        }
+                    })
+                    console.log(res)
+                setLanguages([...languages, {...currentLanguage, id: res.data.id}])
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Idioma existente'
+                })
             }
         }
+    }
+
+    /*const editLanguage = (lan) => {
+        setCurrentLanguage({ ...lan, edited: true })
+        setLanguages(languages.filter(l => l !== lan))
+    }*/
+
+    const deleteLanguage = async (lan) => {
+        console.log(lan)
+        Swal.fire({
+            title: 'Deseas eliminar este idioma?',
+            text: "Esta acción es irreversible",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, eliminar!',
+            cancelButtonText: "Cancelar"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/idiomas/borrar/${lan.id}`)
+                console.log(res)
+                Swal.fire(
+                    'Eliminado!',
+                    'Idioma eliminado.',
+                    'success'
+                )
+                setLanguages(languages.filter(l => l !== lan))
+            }
+        })
+
+    }
+
+    const addSkill = async () => {
+        if (currentSkill && currentSkill.id_skill && currentSkill.score) {
+            var exist = false
+            skills.map((l) => {
+                if (l.id_skill === currentSkill?.id_skill) {
+                    exist = true
+                }
+            })
+            if (!exist) {
+                const res = await axios.post(`https://api-perfil.uc.r.appspot.com/habilidades/crear`,
+                    {
+                        userid: user.id,
+                        skills: {
+                            id_skill: currentSkill.id_skill,
+                            score: currentSkill.score
+                        }
+                    })
+                    console.log(res)
+                setSkills([...skills, {...currentSkill, id: res.data.id}])
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Habilidad existente'
+                })
+            }
+        }
+    }
+
+    const deleteSkill = async (sk) => {
+        console.log(sk)
+        Swal.fire({
+            title: 'Deseas quitar esta habilidad?',
+            text: "Esta acción es irreversible",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, eliminar!',
+            cancelButtonText: "Cancelar"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/habilidades/borrar/${sk.id}`)
+                console.log(res)
+                Swal.fire(
+                    'Eliminado!',
+                    'Habilidad quitada.',
+                    'success'
+                )
+                setSkills(skills.filter(l => l !== sk))
+            }
+        })
+
     }
 
     const addAcademic = async () => {
@@ -101,7 +196,6 @@ function ProfilePage() {
 
     const editAcademic = (ac) => {
         setCurrentAcademic({ ...ac, edited: true })
-        console.log(ac)
         setAcademics(academics.filter(l => l !== ac))
     }
 
@@ -146,7 +240,7 @@ function ProfilePage() {
                     }
                 )
                 console.log(res)
-                setLabors([...labors, {...currentLabor, idActividad: res.data.id}])
+                setLabors([...labors, { ...currentLabor, idActividad: res.data.id }])
             } else {
                 console.log(currentLabor)
                 const res = await axios.put(`https://api-perfil.uc.r.appspot.com/actividadesLaborales/actualizar`,
@@ -221,21 +315,21 @@ function ProfilePage() {
                         }
                     }
                 )
-                setIndependents([...independents, {...currentIndependent, idActividad: res.data.id}])
+                setIndependents([...independents, { ...currentIndependent, idActividad: res.data.id }])
             } else {
                 const res = await axios.put(`https://api-perfil.uc.r.appspot.com/actividadesIndependientes/actualizar`,
-                {
-                    idActividad: currentIndependent.idActividad,
-                    independents: {
-                        title: currentIndependent.title,
-                        state: currentIndependent.state,
-                        beginDate: currentIndependent.beginDate,
-                        endDate: currentIndependent.endDate,
-                        description: currentIndependent.description
+                    {
+                        idActividad: currentIndependent.idActividad,
+                        independents: {
+                            title: currentIndependent.title,
+                            state: currentIndependent.state,
+                            beginDate: currentIndependent.beginDate,
+                            endDate: currentIndependent.endDate,
+                            description: currentIndependent.description
+                        }
                     }
-                }
-            )
-            setIndependents([...independents, currentIndependent])
+                )
+                setIndependents([...independents, currentIndependent])
             }
             setCurrentIndependent({
                 ...currentIndependent,
@@ -314,6 +408,35 @@ function ProfilePage() {
             //idiomas parametrizados
             const languageList = await axios.get('https://api-perfil.uc.r.appspot.com/idiomas')
             setLanList(languageList.data)
+            //habilidades parametrizadas
+            const skillsList = await axios.get('https://api-perfil.uc.r.appspot.com/habilidades')
+            console.log(skillsList)
+            setSkillList(skillsList.data)
+            //idiomas del alumno
+            const resLang = await axios.get(`https://api-perfil.uc.r.appspot.com/idiomas/${user.id}`)
+            const langList = resLang.data
+            const langArray = []
+            langList.map((lan) => {
+                langArray.push({
+                    id_language: lan.idIdioma,
+                    level: lan.nivel,
+                    id: lan.id
+                })
+            })
+            setLanguages(langArray)
+            //habilidades del alumno
+            const resSk = await axios.get(`https://api-perfil.uc.r.appspot.com/habilidades/${user.id}`)
+            const skList = resSk.data
+            const skArray = []
+            console.log(skList)
+            skList.map((sk) => {
+                skArray.push({
+                    id_skill: sk.IdHabilidad,
+                    score: sk.Score,
+                    id: sk.id
+                })
+            })
+            setSkills(skArray)
             //actividades académicas
             const resAc = await axios.get(`https://api-perfil.uc.r.appspot.com/actividadesAcademicas/${user.id}`)
             const academicList = resAc.data
@@ -328,7 +451,7 @@ function ProfilePage() {
                     state: ac.Estado,
                     description: ac.Descripcion
                 })
-                
+
             })
             setAcademics(academicArray)
             //actividades laborales
@@ -345,7 +468,7 @@ function ProfilePage() {
                     state: ac.Estado,
                     description: ac.Descripcion
                 })
-                
+
             })
             setLabors(laborArray)
             //actividades independientes
@@ -361,7 +484,7 @@ function ProfilePage() {
                     state: ac.Estado,
                     description: ac.Descripcion
                 })
-                
+
             })
             setIndependents(indepArray)
         }
@@ -477,11 +600,11 @@ function ProfilePage() {
                     <div className="fillForms">
                         <div className="fillForm">
                             <label>Institución</label>
-                            <input type="text" value={currentAcademic.institution} onChange={(event) => { setCurrentAcademic({ ...currentAcademic, institution: event.target.value }) }} />
+                            <input type="text" value={currentAcademic?.institution} onChange={(event) => { setCurrentAcademic({ ...currentAcademic, institution: event.target.value }) }} />
                         </div>
                         <div className="fillForm">
                             <label>Título</label>
-                            <input type="text" value={currentAcademic.title} onChange={(event) => { setCurrentAcademic({ ...currentAcademic, title: event.target.value }) }} />
+                            <input type="text" value={currentAcademic?.title} onChange={(event) => { setCurrentAcademic({ ...currentAcademic, title: event.target.value }) }} />
                         </div>
                         <div className="fillForm">
                             <label>Estado</label>
@@ -493,15 +616,15 @@ function ProfilePage() {
                         </div>
                         <div className="fillForm">
                             <label>Fecha de Inicio</label>
-                            <input type="date" value={currentAcademic.beginDate} onChange={(event) => { setCurrentAcademic({ ...currentAcademic, beginDate: event.target.value }) }} />
+                            <input type="date" value={currentAcademic?.beginDate} onChange={(event) => { setCurrentAcademic({ ...currentAcademic, beginDate: event.target.value }) }} />
                         </div>
                         <div className="fillForm">
                             <label>Fecha Finalización</label>
-                            <input type="date" value={currentAcademic.endDate} onChange={(event) => { setCurrentAcademic({ ...currentAcademic, endDate: event.target.value }) }} />
+                            <input type="date" value={currentAcademic?.endDate} onChange={(event) => { setCurrentAcademic({ ...currentAcademic, endDate: event.target.value }) }} />
                         </div>
                         <div className="fillForm">
                             <label>Descripción</label>
-                            <textarea type="date" value={currentAcademic.description} onChange={(event) => { setCurrentAcademic({ ...currentAcademic, description: event.target.value }) }} />
+                            <textarea type="date" value={currentAcademic?.description} onChange={(event) => { setCurrentAcademic({ ...currentAcademic, description: event.target.value }) }} />
                         </div>
                     </div>
 
@@ -649,49 +772,29 @@ function ProfilePage() {
                     {languages?.map(lan => {
                         return (
                             <div className="fillForms">
-
                                 <div className="fillForm">
                                     <label>Idioma</label>
-                                    <label >{lan?.language}</label>
-
+                                    <label>{lanList.map((l) => {
+                                        if (l.id_idioma == lan.id_language) {
+                                            return l.nombre
+                                        }
+                                    })}</label>
                                 </div>
                                 <div className="fillForm">
                                     <label>Nivel</label>
                                     <label>{lan?.level}</label>
                                 </div>
-                                <button className='plus' onClick={() => {
-                                    Swal.fire({
-                                        title: 'Deseas eliminar este idioma?',
-                                        text: "Esta acción es irreversible",
-                                        icon: 'warning',
-                                        showCancelButton: true,
-                                        confirmButtonColor: '#3085d6',
-                                        cancelButtonColor: '#d33',
-                                        confirmButtonText: 'Si, eliminar!',
-                                        cancelButtonText: "Cancelar"
-                                    }).then((result) => {
-                                        if (result.isConfirmed) {
-                                            Swal.fire(
-                                                'Eliminado!',
-                                                'Idioma eliminado.',
-                                                'success'
-                                            )
-                                            setLanguages(languages.filter(l => l !== lan))
-                                        }
-                                    })
-
-                                }}><FontAwesomeIcon icon={faTrashCan} /></button>
+                                <button className='plus' onClick={() => deleteLanguage(lan)}><FontAwesomeIcon icon={faTrashCan} /></button>
                             </div>
                         )
                     })}
                     <div className="fillForms">
-
                         <div className="fillForm">
                             <label>Idioma</label>
                             <select onClick={(v) => {
                                 const languagesSelected = lanList.filter((l) => l.id_idioma == v.target.value)
                                 const languageSelected = languagesSelected[0]
-                                setCurrentLanguage({ ...currentLanguage, language: languageSelected.nombre, id_language: languageSelected.id_idioma })
+                                setCurrentLanguage({ ...currentLanguage, language: languageSelected?.nombre, id_language: languageSelected?.id_idioma })
                             }} id="">
                                 <option value=""></option>
                                 {lanList.map((l) => {
@@ -716,7 +819,63 @@ function ProfilePage() {
 
                     <button className='plus' onClick={() => addLanguage()}><FontAwesomeIcon icon={faPlus} /></button>
                 </div>
-                <PrimaryButton onClick={() => handleProfileChange()}>Guardar</PrimaryButton>
+
+                <div className="aboutContainer">
+                    <h3>Habilidades</h3>
+                    {skills?.map(sk => {
+                        return (
+                            <div className="fillForms">
+                                <div className="fillForm">
+                                    <label>Habilidad</label>
+                                    <label>{skillList.map((l) => {
+                                        if (l.id == sk.id_skill) {
+                                            return l.nombre
+                                        }
+                                    })}</label>
+                                </div>
+                                <div className="fillForm">
+                                    <label>Puntaje</label>
+                                    <label>{sk?.score}</label>
+                                </div>
+                                <button className='plus' onClick={() => deleteSkill(sk)}><FontAwesomeIcon icon={faTrashCan} /></button>
+                            </div>
+                        )
+                    })}
+                    <div className="fillForms">
+                        <div className="fillForm">
+                            <label>Habilidad</label>
+                            <select onClick={(v) => {
+                                const skillsSelected = skillList.filter((l) => l.id == v.target.value)
+                                const skillSelected = skillsSelected[0]
+                                setCurrentSkill({ ...currentSkill, skill: skillSelected?.nombre, id_skill: skillSelected?.id })
+                            }} id="">
+                                <option value=""></option>
+                                {skillList.map((l) => {
+                                    return (<option value={l.id}>{l.nombre}</option>)
+                                })}
+                            </select>
+                        </div>
+                        <div className="fillForm">
+                            <label>Puntaje</label>
+                            <div className='inputRadios'>
+                                <input type="radio" value="1" id='1' name='score' onClick={(e)=>setCurrentSkill({...currentSkill, score: e.target.value})}/>
+                                <label for="1">1</label>
+                                <input type="radio" value="2" id='2' name='score' onClick={(e)=>setCurrentSkill({...currentSkill, score: e.target.value})}/>
+                                <label for="2">2</label>
+                                <input type="radio" value="3" id='3' name='score' onClick={(e)=>setCurrentSkill({...currentSkill, score: e.target.value})}/>
+                                <label for="3">3</label>
+                                <input type="radio" value="4" id='4' name='score' onClick={(e)=>setCurrentSkill({...currentSkill, score: e.target.value})}/>
+                                <label for="4">4</label>
+                                <input type="radio" value="5" id='5' name='score' onClick={(e)=>setCurrentSkill({...currentSkill, score: e.target.value})}/>
+                                <label for="5">5</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <button className='plus' onClick={() => addSkill()}><FontAwesomeIcon icon={faPlus} /></button>
+                </div>
+                <PrimaryButton onClick={() => console.log(currentSkill)}>Guardar</PrimaryButton>
             </div >
         </div >
     )
