@@ -13,6 +13,10 @@
     padding: 15px;
 }
 
+.progressBar {
+    width: 90%;
+}
+
 .profesionalDescriptionContainer {
     text-align: start;
     width: 70%;

@@ -32,8 +32,8 @@ function LoginForm() {
 
     const setSesskeyNull = async () => {
         const res = axios.post(`https://api-perfil.uc.r.appspot.com/sesskey/`, {
-                'id': 4, //aca tiene que ir user.id
-                'sesskey': null
+            'id': 3, //aca tiene que ir user.id
+            'sesskey': null
         })
     }
 
@@ -49,15 +49,21 @@ function LoginForm() {
             try {
                 const res = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${email}`)
                 const user = res.data
-                try{
-                    const res = await axios.get("https://api-perfil.uc.r.appspot.com/sesskey/4") //aca tendria que usar user.id
-                    if (res.data[0].sesskey === ""){
+                const loginResponse = await axios.post(`https://api-perfil.uc.r.appspot.com/login`,
+                    {
+                        id: user.id
+                    })
+                console.log(loginResponse.data)
+                try {
+                    const res = await axios.get("https://api-perfil.uc.r.appspot.com/sesskey/3") //aca tendria que usar user.id
+                    if (res.data[0].sesskey === "") {
                         throw "Contraseña incorrecta"
                     }
                     dispatch(login({
                         ...user,
-                        sesskey : res.data[0].sesskey,
+                        sesskey: res.data[0].sesskey,
                         password: password,
+                        token: loginResponse.data.token,
                         LoggedIn: true
                     }))
                 } catch (e) {
@@ -99,7 +105,7 @@ function LoginForm() {
             <div className="login-form-forgotpassword form-group">
                 <a href="http://localhost/moodle/login/forgot_password.php">¿Ha extraviado la contraseña?</a>
             </div>
-            
+
             <iframe id="inlineFrameExample"
                 style={{ display: "none" }}
                 title="Inline Frame Example"

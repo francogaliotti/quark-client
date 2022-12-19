@@ -34,14 +34,14 @@ function MyCourses() {
 
                 {/* Información hardcodeada, borrar después */}
 
-                <div className="basicInfo" id='courseContainer' onClick={()=>navigate('/course/2')}>
+                <div className="basicInfo" id='courseContainer' onClick={()=>window.open(`http://localhost/moodle/course/view.php?id=2`)}>
                     <h3 id='courseTitle'>Curso prueba 1</h3>
                     <img src="https://cdn.cdnlogo.com/logos/c/27/c.svg" id='courseImg' />
                     <h4 id='courseDate'>Fecha de inicio: <p>{new Date().toLocaleDateString("en-AU")}</p></h4>
                     <ProgressBar completed={Math.round(20)} className="bar"/>
                 </div>
 
-                <div className="basicInfo" id='courseContainer' onClick={()=>navigate('/course/3')}>
+                <div className="basicInfo" id='courseContainer' onClick={()=>window.open(`http://localhost/moodle/course/view.php?id=3`)}>
                     <h3 id='courseTitle'>Curso prueba 2</h3>
                     <img src="https://cdn.cdnlogo.com/logos/c/27/c.svg" id='courseImg' />
                     <h4 id='courseDate'>Fecha de inicio: <p>{new Date().toLocaleDateString("en-AU")}</p></h4>

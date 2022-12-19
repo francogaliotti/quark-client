@@ -15,6 +15,7 @@ export const userSlice = createSlice({
         login: (state, action) => {
             sessionStorage.setItem("username", action.payload.username)
             sessionStorage.setItem("sesskey", action.payload.sesskey)
+            sessionStorage.setItem("token", action.payload.token)
             const cookies = new Cookies()
             cookies.set('username', action.payload.username, {path:'/', maxAge: 5000})
             state.user = action.payload
@@ -23,10 +24,11 @@ export const userSlice = createSlice({
         logout: async (state) => {
             sessionStorage.removeItem("username")
             sessionStorage.removeItem("sesskey")
+            sessionStorage.removeItem("token")
             const cookies = new Cookies()
             cookies.remove('username')
             const res = await axios.post(`https://api-perfil.uc.r.appspot.com/sesskey/`, {
-                'id': 4, //aca tiene que ir state.user.id
+                'id': 3, //aca tiene que ir state.user.id
                 'sesskey': null
             })
             await moodleLogout(state.user.sesskey)
