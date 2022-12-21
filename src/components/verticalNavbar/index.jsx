@@ -16,7 +16,7 @@ function VerticalNavbar() {
                 <li><a onClick={()=>navigate('/profile')}>Mi Perfil</a></li>
                 <li><a onClick={()=>navigate('/profesionalProfile')}>Perfil Profesional</a></li>
                 <li><a onClick={()=>navigate('/myCourses')}>Mi Aprendizaje</a></li>
-                <li><a href="#">Eventos</a></li>
+                <li><a onClick={()=>navigate('/events')}>Eventos</a></li>
             </ul>
         </div>)
 

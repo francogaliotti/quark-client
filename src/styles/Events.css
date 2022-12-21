@@ -1,0 +1,98 @@
+.eventPageContainer {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+}
+
+.liveEventsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.liveEventsList {
+    background-color: #bbb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    padding-top: 30px;
+    padding-bottom: 30px;
+    width: 80%;
+}
+
+.singleEvent {
+    display: flex;
+    flex-direction: row;
+    background-color: #eee;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    width: 320px;
+    font-size: 70%;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.seLeftContainer {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+#eventImg{
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+}
+
+.seRightContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    text-align: start;
+}
+
+.pastEventsList {
+    background-color: #bbb;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    width: 80%;
+}
+
+.pastEvContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#pastSingleEvent {
+    width: 180px;
+    justify-content: center;
+}
+
+#evH1{
+    font-size: 150%;
+}
+@media (max-width: 500px) {
+
+    .singleEvent {
+        width: 80%;
+        font-size: 80%;
+    }
+
+    #eventImg{
+        width: 120px;
+        height: 120px;
+    }
+
+    
+}

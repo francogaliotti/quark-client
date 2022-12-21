@@ -5,7 +5,7 @@ import DevRegisterForm from '../components/devRegisterForm';
 import LoginForm from '../components/loginForm';
 import ProfesionalProfile from '../components/profesionalProfile';
 import EditProfesionalProfile from '../components/profesionalProfile/editProfProfile';
-import CourseIFrame from '../pages/courseIframe';
+import Events from '../pages/events';
 import Home from '../pages/home';
 import MyCourses from '../pages/myCourses';
 import ProfilePage from '../pages/profilePage';
@@ -21,7 +21,7 @@ function PublicRoutes() {
         <Route path='/registerDev' element={<DevRegisterForm/>}/>
         <Route path='/registerCom' element={<ComRegisterForm/>}/>
         <Route path='/myCourses' element={<MyCourses/>}/>
-        <Route path='/course/:id' element={<CourseIFrame/>}/>
+        <Route path='/events' element={<Events/>}/>
         <Route path='/' element={<Home/>}/>
     </Routes>
     </>

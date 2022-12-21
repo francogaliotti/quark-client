@@ -53,7 +53,6 @@ function LoginForm() {
                     {
                         id: user.id
                     })
-                console.log(loginResponse.data)
                 try {
                     const res = await axios.get("https://api-perfil.uc.r.appspot.com/sesskey/3") //aca tendria que usar user.id
                     if (res.data[0].sesskey === "") {

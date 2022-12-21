@@ -20,28 +20,28 @@ function ProfesionalProfile() {
                 authorization: sessionStorage.getItem("token")
             }
         })
-        setProfData(res.data)    
+        setProfData(res.data)
     }
 
     const handlePorcentajeProfile = () => {
         let counter = 0
         console.log(profData?.ActividadesAcademicas.length)
-        if(profData?.ActividadesAcademicas.length != 0){
+        if (profData?.ActividadesAcademicas.length != 0) {
             counter += 16.7
         }
-        if(profData?.ActividadesLaborales.length != 0){
+        if (profData?.ActividadesLaborales.length != 0) {
             counter += 16.7
         }
-        if(profData?.ActividadesIndependientes.length != 0){
+        if (profData?.ActividadesIndependientes.length != 0) {
             counter += 16.7
         }
-        if(profData?.idiomas.length != 0){
+        if (profData?.idiomas.length != 0) {
             counter += 16.7
         }
-        if(profData?.habilidades.length != 0){
+        if (profData?.habilidades.length != 0) {
             counter += 16.7
         }
-        if(profData?.biography.length != 0){
+        if (profData?.biography.length != 0) {
             counter += 16.7
         }
         console.log(counter)
@@ -51,14 +51,14 @@ function ProfesionalProfile() {
     useEffect(() => {
         if (!sessionStorage.getItem("sesskey")) navigate('/login')
         fetchData()
-         
+
     }, []);
 
-    useEffect (() => {
+    useEffect(() => {
         //handlePorcentajeProfile()
         console.log(profData)
         console.log("hola")
-        handlePorcentajeProfile() 
+        handlePorcentajeProfile()
     }, [profData])
 
     return (
@@ -66,10 +66,12 @@ function ProfesionalProfile() {
             <div className="basicInfo" id='profesionalInfo'>
                 <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="" />
                 <h2 className="name">{user?.username}</h2>
-                <ProgressBar completed={Math.round(porcentaje)} className="progressBar"/>
+
                 <div className="profesionalDescriptionContainer">
-                    <h3>Descripción:</h3>
-                    <p>{user?.description}</p>
+                    <ProgressBar completed={Math.round(porcentaje)} className="progressBar" />
+                    <p>Tu perfil está un {Math.round(porcentaje)}% completo</p>
+                    <h3>Biografía:</h3>
+                    <p>{profData?.biography}</p>
                 </div>
                 <div className="badgeContainer">
                     <h3>Insignias:</h3>
@@ -83,8 +85,8 @@ function ProfesionalProfile() {
                         }
                     </div>
                 </div>
-                <PrimaryButton onClick={()=>navigate('/profesionalProfile/edit')}>Editar</PrimaryButton>
-            </div> 
+                <PrimaryButton onClick={() => navigate('/profesionalProfile/edit')}>Editar</PrimaryButton>
+            </div>
         </div>
     )
 }

@@ -34,11 +34,11 @@ function ProfilePage() {
     const [skillList, setSkillList] = useState([])
 
     const handleProfileChange = async () => {
-        const res = await axios.put(`https://api-perfil.uc.r.appspot.com/user/actualizar`, 
-        {
-            userid: user.id,
-            biography
-        },{
+        const res = await axios.put(`https://api-perfil.uc.r.appspot.com/user/actualizar`,
+            {
+                userid: user.id,
+                biography
+            }, {
             headers: {
                 authorization: sessionStorage.getItem("token")
             }
@@ -57,9 +57,15 @@ function ProfilePage() {
             phone: user?.phone,
             country: user?.country
         })
-/*
+
         const fetchData = async () => {
-            //idiomas parametrizados
+            const res = await axios.get(`https://api-perfil.uc.r.appspot.com/user/getAllInfo/${user.id}`, {
+                headers: {
+                    authorization: sessionStorage.getItem("token")
+                }
+            })
+            setBiography(res?.data.biography)
+            /*//idiomas parametrizados
             const languageList = await axios.get('https://api-perfil.uc.r.appspot.com/idiomas')
             setLanList(languageList.data)
             //habilidades parametrizadas
@@ -140,9 +146,9 @@ function ProfilePage() {
                 })
 
             })
-            setIndependents(indepArray)
+            setIndependents(indepArray)*/
         }
-        fetchData()*/
+        fetchData() 
 
     }, []);
 
@@ -183,11 +189,11 @@ function ProfilePage() {
                                 <option value="">Femenino</option>
                                 <option value="">No especifica</option>
                             </select>
-                        </div>
+                        </div>*/}
                         <div className="fillForm">
                             <label>Fecha de Nacimiento</label>
                             <input type="date" />
-                        </div>*/}
+                        </div>
                         <div className="fillForm">
                             <label>Telefono</label>
                             <input type="text" value={basicData?.phone} onChange={(event) => setBasicData({ ...basicData, phone: event.target.value })} />
@@ -205,12 +211,20 @@ function ProfilePage() {
                             <label>Ciudad</label>
                             <input type="text" value={basicData?.city} onChange={(event) => setBasicData({ ...basicData, city: event.target.value })} />
                         </div>
+                        <div className="fillForm">
+                            <label>Domicilio</label>
+                            <input type="text"  />
+                        </div>
+                        <div className="fillForm">
+                            <label>Nick Name</label>
+                            <input type="text"  />
+                        </div>
                     </div>
                 </div>
                 <div className="descriptionContainer">
-                        <h3>Mi Biografía</h3>
-                        <textarea value={user?.biography} onChange={(event) => setBiography(event.target.value)}></textarea>
-                    </div>
+                    <h3>Mi Biografía</h3>
+                    <textarea value={biography} onChange={(event) => setBiography(event.target.value)}></textarea>
+                </div>
 
                 <PrimaryButton onClick={() => handleProfileChange()}>Guardar</PrimaryButton>
 

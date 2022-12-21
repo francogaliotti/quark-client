@@ -27,10 +27,10 @@ function Navbar() {
         {user ? <ul className='verticalList' id='verticalResponsive'>
           <li><a onClick={() => navigate('/')}>Inicio</a></li>
           <li><a onClick={() => navigate('/profile')}>Mi Perfil</a></li>
-          <li><a onClick={()=>navigate('/profesionalProfile')}>Perfil Profesional</a></li>
-          <li><a onClick={()=>navigate('/myCourses')}>Mi Aprendizaje</a></li>
-          <li><a href="#">Eventos</a></li>
-          <li><a  onClick={() => handleLogout()}>Logout</a></li>
+          <li><a onClick={() => navigate('/profesionalProfile')}>Perfil Profesional</a></li>
+          <li><a onClick={() => navigate('/myCourses')}>Mi Aprendizaje</a></li>
+          <li><a onClick={() => navigate('/events')}>Eventos</a></li>
+          <li><a onClick={() => handleLogout()}>Logout</a></li>
         </ul> :
           <ul className='verticalList' id='verticalResponsive'>
             <li><a onClick={() => navigate('/registerDev')}>Developer</a></li>
@@ -46,7 +46,7 @@ function Navbar() {
         <img src={quarkLogo} alt="" />
       </div>
       {user ? <ul>
-        <li><a  onClick={() => handleLogout()}>Logout</a></li>
+        <li><a onClick={() => handleLogout()}>Logout</a></li>
       </ul> :
         <ul>
           <li><a onClick={() => navigate('/registerDev')}>Developer</a></li>
