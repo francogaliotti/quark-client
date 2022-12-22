@@ -29,6 +29,7 @@ export default {
       background: "#282c34",
       padding: "2.5em 1.5em 0",
       fontSize: "1.15em",
+      overflowY: "hidden"
     },
     bmMorphShape: {
       fill: "#373a47",

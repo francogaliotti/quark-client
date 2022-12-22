@@ -11,7 +11,6 @@ import axios from 'axios';
 function MyCourses() {
     const user = useSelector(selectUser);
     const navigate = useNavigate();
-    //const [courses, setCourses] = useState([]);
 
     useEffect(() => {
         if (!sessionStorage.getItem("sesskey")) navigate('/login')
@@ -21,6 +20,7 @@ function MyCourses() {
 
     return (
         <div className="myCoursesContainer">
+            <h1>Mis cursos</h1>
             <div className="wrapContainer">
 
                 {user?.listaCurso.map((c)=> {

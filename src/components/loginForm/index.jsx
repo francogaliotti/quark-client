@@ -53,6 +53,11 @@ function LoginForm() {
                     {
                         id: user.id
                     })
+                const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/getAllInfo/${user.id}`, {
+                    headers: {
+                        authorization: loginResponse.data.token
+                    }
+                })
                 try {
                     const res = await axios.get("https://api-perfil.uc.r.appspot.com/sesskey/3") //aca tendria que usar user.id
                     if (res.data[0].sesskey === "") {
@@ -60,8 +65,8 @@ function LoginForm() {
                     }
                     dispatch(login({
                         ...user,
+                        ...profInfo.data,
                         sesskey: res.data[0].sesskey,
-                        password: password,
                         token: loginResponse.data.token,
                         LoggedIn: true
                     }))

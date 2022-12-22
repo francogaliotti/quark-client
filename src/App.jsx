@@ -21,8 +21,11 @@ function App() {
         const username = sessionStorage.getItem("username")
         const res = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${username}`)
         const user = res.data
+        const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/getAllInfo/${user.id}`)
         dispatch(login({
           ...user,
+          ...profInfo.data,
+          token: sessionStorage.getItem('token'),
           sesskey: sessionStorage.getItem("sesskey"),
           LoggedIn: true
         }))
