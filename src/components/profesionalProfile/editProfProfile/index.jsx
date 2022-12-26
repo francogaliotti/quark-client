@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { selectUser } from '../../../features/userSlice';
+import { login, selectUser } from '../../../features/userSlice';
 import '../../../styles/ProfilePage.css'
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 function EditProfesionalProfile() {
 
     const user = useSelector(selectUser);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [currentLanguage, setCurrentLanguage] = useState()
@@ -64,6 +65,7 @@ function EditProfesionalProfile() {
                             'Idioma añadido.',
                             'success'
                         )
+                        await updateState('language')
                         setLanguages([...languages, { ...currentLanguage, id: res.data.id }])
                     }
                 })
@@ -82,11 +84,6 @@ function EditProfesionalProfile() {
             })
         }
     }
-
-    /*const editLanguage = (lan) => {
-        setCurrentLanguage({ ...lan, edited: true })
-        setLanguages(languages.filter(l => l !== lan))
-    }*/
 
     const deleteLanguage = async (lan) => {
         console.log(lan)
@@ -112,6 +109,7 @@ function EditProfesionalProfile() {
                     'Idioma eliminado.',
                     'success'
                 )
+                await updateState('language')
                 setLanguages(languages.filter(l => l !== lan))
             }
         })
@@ -156,6 +154,7 @@ function EditProfesionalProfile() {
                             'Habilidad añadida.',
                             'success'
                         )
+                        await updateState('skill')
                         setSkills([...skills, { ...currentSkill, id: res.data.id }])
                     }
                 })
@@ -200,6 +199,7 @@ function EditProfesionalProfile() {
                     'Habilidad quitada.',
                     'success'
                 )
+                await updateState('skill')
                 setSkills(skills.filter(l => l !== sk))
             }
         })
@@ -243,6 +243,7 @@ function EditProfesionalProfile() {
                             'Actividad académica añadida.',
                             'success'
                         )
+                        await updateState('academic')
                         setAcademics([...academics, { ...currentAcademic, idActividad: res.data.id }])
                         console.log(res)
                     }
@@ -270,6 +271,7 @@ function EditProfesionalProfile() {
                     'Actividad académica actualizada.',
                     'success'
                 )
+                await updateState('academic')
                 setAcademics([...academics, currentAcademic])
                 console.log(res)
             }
@@ -334,6 +336,7 @@ function EditProfesionalProfile() {
                     'Actividad eliminada.',
                     'success'
                 )
+                await updateState('academic')
                 setAcademics(academics.filter(l => l !== ac))
             }
         })
@@ -377,7 +380,7 @@ function EditProfesionalProfile() {
                         'Actividad laboral añadida.',
                         'success'
                     )
-                    console.log(res)
+                    await updateState('labor')
                     setLabors([...labors, { ...currentLabor, idActividad: res.data.id }])
                 }
                 )
@@ -407,6 +410,7 @@ function EditProfesionalProfile() {
                     'Actividad laboral actualizada.',
                     'success'
                 )
+                await updateState('labor')
                 setLabors([...labors, currentLabor])
             }
             setCurrentLabor({
@@ -468,6 +472,7 @@ function EditProfesionalProfile() {
                     'Actividad eliminada.',
                     'success'
                 )
+                await updateState('labor')
                 setLabors(labors.filter(l => l !== lab))
             }
         })
@@ -508,7 +513,7 @@ function EditProfesionalProfile() {
                         'Actividad independiente añadida.',
                         'success'
                     )
-                    console.log(res)
+                    await updateState('independent')
                     setIndependents([...independents, { ...currentIndependent, idActividad: res.data.id }])
                 }
                 )
@@ -534,6 +539,7 @@ function EditProfesionalProfile() {
                     'Actividad independiente actualizada.',
                     'success'
                 )
+                await updateState('independent')
                 setIndependents([...independents, currentIndependent])
             }
             setCurrentIndependent({
@@ -594,6 +600,7 @@ function EditProfesionalProfile() {
                     'Actividad eliminada.',
                     'success'
                 )
+                await updateState('independent')
                 setIndependents(independents.filter(l => l !== ind))
             }
         })
@@ -606,15 +613,12 @@ function EditProfesionalProfile() {
         setLanList(languageList.data)
         //habilidades parametrizadas
         const skillsList = await axios.get('https://api-perfil.uc.r.appspot.com/habilidades')
-        console.log(skillsList)
         setSkillList(skillsList.data)
+    }
+
+    const setData = () => {
         //idiomas del alumno
-        const resLang = await axios.get(`https://api-perfil.uc.r.appspot.com/idiomas/${user.id}`, {
-            headers: {
-                authorization: sessionStorage.getItem("token")
-            }
-        })
-        const langList = resLang.data
+        const langList = user.idiomas
         const langArray = []
         langList.map((lan) => {
             langArray.push({
@@ -625,12 +629,7 @@ function EditProfesionalProfile() {
         })
         setLanguages(langArray)
         //habilidades del alumno
-        const resSk = await axios.get(`https://api-perfil.uc.r.appspot.com/habilidades/${user.id}`, {
-            headers: {
-                authorization: sessionStorage.getItem("token")
-            }
-        })
-        const skList = resSk.data
+        const skList = user.habilidades
         const skArray = []
         console.log(skList)
         skList.map((sk) => {
@@ -642,12 +641,7 @@ function EditProfesionalProfile() {
         })
         setSkills(skArray)
         //actividades académicas
-        const resAc = await axios.get(`https://api-perfil.uc.r.appspot.com/actividadesAcademicas/${user.id}`, {
-            headers: {
-                authorization: sessionStorage.getItem("token")
-            }
-        })
-        const academicList = resAc.data
+        const academicList = user.ActividadesAcademicas
         const academicArray = []
         academicList.map((ac) => {
             academicArray.push({
@@ -663,12 +657,7 @@ function EditProfesionalProfile() {
         })
         setAcademics(academicArray)
         //actividades laborales
-        const resLab = await axios.get(`https://api-perfil.uc.r.appspot.com/actividadesLaborales/${user.id}`, {
-            headers: {
-                authorization: sessionStorage.getItem("token")
-            }
-        })
-        const laborList = resLab.data
+        const laborList = user.ActividadesLaborales
         const laborArray = []
         laborList.map((ac) => {
             laborArray.push({
@@ -684,12 +673,7 @@ function EditProfesionalProfile() {
         })
         setLabors(laborArray)
         //actividades independientes
-        const resInd = await axios.get(`https://api-perfil.uc.r.appspot.com/actividadesIndependientes/${user.id}`, {
-            headers: {
-                authorization: sessionStorage.getItem("token")
-            }
-        })
-        const indepList = resInd.data
+        const indepList = user.ActividadesIndependientes
         const indepArray = []
         indepList.map((ac) => {
             indepArray.push({
@@ -705,10 +689,70 @@ function EditProfesionalProfile() {
         setIndependents(indepArray)
     }
 
+    const updateState = async (act) => {
+        switch (act) {
+            case 'independent':
+                const resInd = await axios.get(`https://api-perfil.uc.r.appspot.com/actividadesIndependientes/${user.id}`, {
+                    headers: {
+                        authorization: sessionStorage.getItem("token")
+                    }
+                })
+                dispatch(login({
+                    ...user,
+                    ActividadesIndependientes: resInd.data
+                }))
+                break
+            case 'academic':
+                const resAc = await axios.get(`https://api-perfil.uc.r.appspot.com/actividadesAcademicas/${user.id}`, {
+                    headers: {
+                        authorization: sessionStorage.getItem("token")
+                    }
+                })
+                dispatch(login({
+                    ...user,
+                    ActividadesAcademicas: resAc.data
+                }))
+                break
+            case 'labor':
+                const resLab = await axios.get(`https://api-perfil.uc.r.appspot.com/actividadesLaborales/${user.id}`, {
+                    headers: {
+                        authorization: sessionStorage.getItem("token")
+                    }
+                })
+                dispatch(login({
+                    ...user,
+                    ActividadesLaborales: resLab.data
+                }))
+                break
+            case 'language':
+                const resLan = await axios.get(`https://api-perfil.uc.r.appspot.com/idiomas/${user.id}`, {
+                    headers: {
+                        authorization: sessionStorage.getItem("token")
+                    }
+                })
+                dispatch(login({
+                    ...user,
+                    idiomas: resLan.data
+                }))
+                break
+            case 'skill':
+                const resSk = await axios.get(`https://api-perfil.uc.r.appspot.com/habilidades/${user.id}`, {
+                    headers: {
+                        authorization: sessionStorage.getItem("token")
+                    }
+                })
+                dispatch(login({
+                    ...user,
+                    habilidades: resSk.data
+                }))
+                break
+        }
+    }
+
     useEffect(() => {
         if (!sessionStorage.getItem("sesskey")) navigate('/login')
         fetchData()
-
+        setData()
     }, []);
 
     return (

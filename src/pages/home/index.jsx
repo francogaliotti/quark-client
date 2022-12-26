@@ -11,6 +11,12 @@ function Home() {
     const user = useSelector(selectUser);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    let cursosOrdenados = []
+    if (user) {
+        const arrayForSort = [...user.listaCurso]
+        cursosOrdenados = arrayForSort.sort((x, y) => x.lastaccess - y.lastaccess).reverse().splice(0, 3)
+    }
+
 
     useEffect(() => {
         if (!sessionStorage.getItem("sesskey")) navigate('/login')
@@ -26,7 +32,7 @@ function Home() {
             <div className="homeEvent">
                 <h2>Tus últimos cursos</h2>
                 <div className="wrapContainer" id='homeEvents'>
-                    {user?.listaCurso.map((c) => {
+                    {cursosOrdenados && cursosOrdenados?.map((c) => {
 
                         return (<div className="basicInfo" id='courseContainer'>
                             <h3 id='courseTitle'>{c.fullName}</h3>
@@ -34,7 +40,7 @@ function Home() {
                             <h4 id='courseDate'>Fecha de inicio: <p>{new Date(c.timestarted).toLocaleDateString("en-AU")}</p></h4>
                             <ProgressBar completed={Math.round(c.progress)} className="bar" />
                         </div>)
-                    }).splice(0, 3)}
+                    })}
                 </div>
             </div>
             <div className="homeEvent">

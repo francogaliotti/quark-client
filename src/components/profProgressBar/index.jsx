@@ -2,6 +2,7 @@ import ProgressBar from '@ramonak/react-progress-bar';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
+import '../../styles/ProgressBar.css'
 
 function ProfProgressBar(props) {
 
@@ -68,7 +69,11 @@ function ProfProgressBar(props) {
 
     return (
         <div className='progressBarContainer'>
-            <ProgressBar completed={Math.round(porcentaje)} className="progressBar" />
+            <ProgressBar completed={Math.round(porcentaje)} className="wrapper"
+                barContainerClassName="container"
+                //completedClassName="barCompleted"
+                labelClassName="label"
+                labelAlignment='center' />
             <p>Tu perfil{props.type == "profesional" && <> profesional</>} está un {Math.round(porcentaje)}% completo</p>
         </div>
     )

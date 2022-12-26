@@ -1,0 +1,23 @@
+.wrapper {
+    border: none;
+    border-radius: 20px;
+    background-color: #aaa;
+}
+
+.container {
+    background-color: #aaa;
+    border: none;
+    border-radius: 20px;
+}
+
+.barCompleted {
+    background-color: aqua;
+    width: 80%;
+    border-radius: 20px;
+}
+
+.label {
+    font-size: 18px;
+    color: #ccc;
+    margin-left: 50px;
+}
