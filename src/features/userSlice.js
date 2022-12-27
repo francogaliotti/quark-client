@@ -28,7 +28,7 @@ export const userSlice = createSlice({
             const cookies = new Cookies()
             cookies.remove('username')
             const res = await axios.post(`https://api-perfil.uc.r.appspot.com/sesskey/`, {
-                'id': 3, //aca tiene que ir state.user.id
+                'id': state.user.id, //aca tiene que ir state.user.id
                 'sesskey': null
             })
             await moodleLogout(state.user.sesskey)

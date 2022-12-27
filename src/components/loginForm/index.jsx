@@ -14,6 +14,7 @@ function LoginForm() {
     const ref = useRef(null);
     const params = useParams()
     const user = useSelector(selectUser);
+    let moodleData
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -25,6 +26,7 @@ function LoginForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        await getMoodleData()
         await setSesskeyNull()
         await handleMoodleIFrame()
         await goHome()
@@ -32,7 +34,7 @@ function LoginForm() {
 
     const setSesskeyNull = async () => {
         const res = axios.post(`https://api-perfil.uc.r.appspot.com/sesskey/`, {
-            'id': 3, //aca tiene que ir user.id
+            'id': moodleData.id, //aca tiene que ir user.id
             'sesskey': null
         })
     }
@@ -44,29 +46,35 @@ function LoginForm() {
 
     }
 
+    const getMoodleData = async () => {
+        const res = await axios.get(`https://api-perfil.uc.r.appspot.com/user/getMoodleData/${email}`)
+        moodleData = res.data
+    }
+
     const goHome = async () => {
         setTimeout(async () => {
             try {
-                const res = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${email}`)
-                const user = res.data
+                //const res = await axios.get(`https://api-perfil.uc.r.appspot.com/user/getMoodleData/${email}`)
+                const user = moodleData
                 const loginResponse = await axios.post(`https://api-perfil.uc.r.appspot.com/login`,
                     {
                         id: user.id
                     })
-                const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/getAllInfo/${user.id}`, {
+                const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${user.id}`, {
                     headers: {
                         authorization: loginResponse.data.token
                     }
                 })
                 try {
-                    const res = await axios.get("https://api-perfil.uc.r.appspot.com/sesskey/3") //aca tendria que usar user.id
-                    if (res.data[0].sesskey === "") {
+                    const res = await axios.get(`https://api-perfil.uc.r.appspot.com/sesskey/${user.id}`) //aca tendria que usar user.id
+                    console.log(res)
+                    if (res.data.sesskey === "") {
                         throw "Contraseña incorrecta"
                     }
                     dispatch(login({
                         ...user,
                         ...profInfo.data,
-                        sesskey: res.data[0].sesskey,
+                        sesskey: res.data.sesskey,
                         token: loginResponse.data.token,
                         LoggedIn: true
                     }))

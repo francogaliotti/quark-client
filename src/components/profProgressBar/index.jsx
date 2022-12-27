@@ -12,29 +12,29 @@ function ProfProgressBar(props) {
     const handlePorcentajeProfile = (type) => {
         let counter = 0
         if (type) {
-            if (user?.ActividadesAcademicas.length != 0) {
+            if (user?.academics.length != 0) {
                 counter += 16.7
             }
-            if (user?.ActividadesLaborales.length != 0) {
+            if (user?.labors.length != 0) {
                 counter += 16.7
             }
-            if (user?.ActividadesIndependientes.length != 0) {
+            if (user?.independents.length != 0) {
                 counter += 16.7
             }
-            if (user?.idiomas.length != 0) {
+            if (user?.languages?.length != 0) {
                 counter += 16.7
             }
-            if (user?.habilidades.length != 0) {
+            if (user?.skills.length != 0) {
                 counter += 16.7
             }
-            if (user?.nickname?.length != 0) {
+            if (user?.profile.nickname?.length != 0) {
                 counter += 16.7
             }
         } else {
-            if (user?.biography.length != 0) {
+            if (user?.profile.biography?.length != 0) {
                 counter += 12.5
             }
-            if (user?.birthdate?.length != (0 || undefined)) {
+            if (user?.profile.birthdate?.length != (0 || undefined)) {
                 counter += 12.5
             }
             if (user?.firstname?.length != 0) {
@@ -71,7 +71,7 @@ function ProfProgressBar(props) {
         <div className='progressBarContainer'>
             <ProgressBar completed={Math.round(porcentaje)} className="wrapper"
                 barContainerClassName="container"
-                //completedClassName="barCompleted"
+                bgColor='rgb(24, 27, 32)'
                 labelClassName="label"
                 labelAlignment='center' />
             <p>Tu perfil{props.type == "profesional" && <> profesional</>} está un {Math.round(porcentaje)}% completo</p>

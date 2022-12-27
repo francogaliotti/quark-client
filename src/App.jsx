@@ -19,9 +19,9 @@ function App() {
     const fetchData = async () => {
       if (sessionStorage.getItem("sesskey")) {
         const username = sessionStorage.getItem("username")
-        const res = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${username}`)
+        const res = await axios.get(`https://api-perfil.uc.r.appspot.com/user/getMoodleData/${username}`)
         const user = res.data
-        const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/getAllInfo/${user.id}`)
+        const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${user.id}`)
         dispatch(login({
           ...user,
           ...profInfo.data,

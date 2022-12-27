@@ -29,10 +29,10 @@ function EditProfesionalProfile() {
     const [skillList, setSkillList] = useState([])
 
     const addLanguage = async () => {
-        if (currentLanguage && currentLanguage.id_language && currentLanguage.level) {
+        if (currentLanguage && currentLanguage.languageId && currentLanguage.level) {
             var exist = false
             languages.map((l) => {
-                if (l.id_language === currentLanguage.id_language) {
+                if (l.languageId === currentLanguage.languageId) {
                     exist = true
                 }
             })
@@ -46,11 +46,11 @@ function EditProfesionalProfile() {
                     cancelButtonText: "Cancelar"
                 }).then(async (result) => {
                     if (result.isConfirmed) {
-                        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/idiomas/crear`,
+                        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/languages/create`,
                             {
                                 userid: user.id,
                                 languages: {
-                                    id: currentLanguage.id_language,
+                                    id: currentLanguage.languageId,
                                     level: currentLanguage.level
                                 }
                             }, {
@@ -98,7 +98,7 @@ function EditProfesionalProfile() {
             cancelButtonText: "Cancelar"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/idiomas/borrar/${lan.id}`, {
+                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/languages/delete/${lan.id}`, {
                     headers: {
                         authorization: sessionStorage.getItem("token")
                     }
@@ -117,10 +117,10 @@ function EditProfesionalProfile() {
     }
 
     const addSkill = async () => {
-        if (currentSkill && currentSkill.id_skill && currentSkill.score) {
+        if (currentSkill && currentSkill.skillId && currentSkill.score) {
             var exist = false
             skills.map((l) => {
-                if (l.id_skill === currentSkill?.id_skill) {
+                if (l.skillId === currentSkill?.skillId) {
                     exist = true
                 }
             })
@@ -135,11 +135,11 @@ function EditProfesionalProfile() {
                     cancelButtonText: "Cancelar"
                 }).then(async (result) => {
                     if (result.isConfirmed) {
-                        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/habilidades/crear`,
+                        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/skills/create`,
                             {
                                 userid: user.id,
                                 skills: {
-                                    id_skill: currentSkill.id_skill,
+                                    id: currentSkill.skillId,
                                     score: currentSkill.score
                                 }
                             }, {
@@ -188,7 +188,7 @@ function EditProfesionalProfile() {
             cancelButtonText: "Cancelar"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/habilidades/borrar/${sk.id}`, {
+                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/skills/delete/${sk.id}`, {
                     headers: {
                         authorization: sessionStorage.getItem("token")
                     }
@@ -220,7 +220,7 @@ function EditProfesionalProfile() {
                     cancelButtonText: "Cancelar"
                 }).then(async (result) => {
                     if (result.isConfirmed) {
-                        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/actividadesAcademicas/crear`,
+                        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/academics/create`,
                             {
                                 userid: user.id,
                                 academics: {
@@ -244,14 +244,14 @@ function EditProfesionalProfile() {
                             'success'
                         )
                         await updateState('academic')
-                        setAcademics([...academics, { ...currentAcademic, idActividad: res.data.id }])
+                        setAcademics([...academics, { ...currentAcademic, id: res.data.id }])
                         console.log(res)
                     }
                 })
             } else {
-                const res = await axios.put(`https://api-perfil.uc.r.appspot.com/actividadesAcademicas/actualizar`,
+                const res = await axios.put(`https://api-perfil.uc.r.appspot.com/academics/update`,
                     {
-                        idActividad: currentAcademic.idActividad,
+                        id: currentAcademic.id,
                         academics: {
                             institution: currentAcademic.institution,
                             title: currentAcademic.title,
@@ -326,7 +326,7 @@ function EditProfesionalProfile() {
             cancelButtonText: "Cancelar"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/actividadesAcademicas/borrar/${ac.idActividad}`, {
+                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/academics/delete/${ac.id}`, {
                     headers: {
                         authorization: sessionStorage.getItem("token")
                     }
@@ -356,7 +356,7 @@ function EditProfesionalProfile() {
                     confirmButtonText: 'Añadir',
                     cancelButtonText: "Cancelar"
                 }).then(async (result) => {
-                    const res = await axios.post(`https://api-perfil.uc.r.appspot.com/actividadesLaborales/crear`,
+                    const res = await axios.post(`https://api-perfil.uc.r.appspot.com/labors/create`,
                         {
                             userid: user.id,
                             labors: {
@@ -381,16 +381,16 @@ function EditProfesionalProfile() {
                         'success'
                     )
                     await updateState('labor')
-                    setLabors([...labors, { ...currentLabor, idActividad: res.data.id }])
+                    setLabors([...labors, { ...currentLabor, id: res.data.id }])
                 }
                 )
 
 
             } else {
                 console.log(currentLabor)
-                const res = await axios.put(`https://api-perfil.uc.r.appspot.com/actividadesLaborales/actualizar`,
+                const res = await axios.put(`https://api-perfil.uc.r.appspot.com/labors/update`,
                     {
-                        idActividad: currentLabor.idActividad,
+                        id: currentLabor.id,
                         labors: {
                             company: currentLabor.company,
                             title: currentLabor.title,
@@ -462,7 +462,7 @@ function EditProfesionalProfile() {
             cancelButtonText: "Cancelar"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/actividadesLaborales/borrar/${lab.idActividad}`, {
+                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/labors/delete/${lab.id}`, {
                     headers: {
                         authorization: sessionStorage.getItem("token")
                     }
@@ -491,7 +491,7 @@ function EditProfesionalProfile() {
                     confirmButtonText: 'Añadir',
                     cancelButtonText: "Cancelar"
                 }).then(async (result) => {
-                    const res = await axios.post(`https://api-perfil.uc.r.appspot.com/actividadesIndependientes/crear`,
+                    const res = await axios.post(`https://api-perfil.uc.r.appspot.com/independents/create`,
                         {
                             userid: user.id,
                             independents: {
@@ -514,13 +514,13 @@ function EditProfesionalProfile() {
                         'success'
                     )
                     await updateState('independent')
-                    setIndependents([...independents, { ...currentIndependent, idActividad: res.data.id }])
+                    setIndependents([...independents, { ...currentIndependent, id: res.data.id }])
                 }
                 )
             } else {
-                const res = await axios.put(`https://api-perfil.uc.r.appspot.com/actividadesIndependientes/actualizar`,
+                const res = await axios.put(`https://api-perfil.uc.r.appspot.com/independents/update`,
                     {
-                        idActividad: currentIndependent.idActividad,
+                        id: currentIndependent.id,
                         independents: {
                             title: currentIndependent.title,
                             state: currentIndependent.state,
@@ -590,7 +590,7 @@ function EditProfesionalProfile() {
             cancelButtonText: "Cancelar"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/actividadesIndependientes/borrar/${ind.idActividad}`, {
+                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/independents/delete/${ind.id}`, {
                     headers: {
                         authorization: sessionStorage.getItem("token")
                     }
@@ -609,141 +609,86 @@ function EditProfesionalProfile() {
 
     const fetchData = async () => {
         //idiomas parametrizados
-        const languageList = await axios.get('https://api-perfil.uc.r.appspot.com/idiomas')
+        const languageList = await axios.get('https://api-perfil.uc.r.appspot.com/parameters/languages')
         setLanList(languageList.data)
         //habilidades parametrizadas
-        const skillsList = await axios.get('https://api-perfil.uc.r.appspot.com/habilidades')
+        const skillsList = await axios.get('https://api-perfil.uc.r.appspot.com/parameters/skills')
         setSkillList(skillsList.data)
     }
 
     const setData = () => {
         //idiomas del alumno
-        const langList = user.idiomas
-        const langArray = []
-        langList.map((lan) => {
-            langArray.push({
-                id_language: lan.idIdioma,
-                level: lan.nivel,
-                id: lan.id
-            })
-        })
-        setLanguages(langArray)
+        const langList = user.languages
+        setLanguages(langList)
         //habilidades del alumno
-        const skList = user.habilidades
-        const skArray = []
-        console.log(skList)
-        skList.map((sk) => {
-            skArray.push({
-                id_skill: sk.IdHabilidad,
-                score: sk.Score,
-                id: sk.id
-            })
-        })
-        setSkills(skArray)
+        const skList = user.skills
+        setSkills(skList)
         //actividades académicas
-        const academicList = user.ActividadesAcademicas
-        const academicArray = []
-        academicList.map((ac) => {
-            academicArray.push({
-                idActividad: ac.idActividad,
-                institution: ac.Institucion,
-                title: ac.Titulo,
-                beginDate: ac.FechaInicio,
-                endDate: ac.FechaFin,
-                state: ac.Estado,
-                description: ac.Descripcion
-            })
-
-        })
-        setAcademics(academicArray)
+        const academicList = user.academics
+        setAcademics(academicList)
         //actividades laborales
-        const laborList = user.ActividadesLaborales
-        const laborArray = []
-        laborList.map((ac) => {
-            laborArray.push({
-                idActividad: ac.idActividad,
-                company: ac.Empresa,
-                title: ac.Titulo,
-                beginDate: ac.FechaInicio,
-                endDate: ac.FechaFin,
-                state: ac.Estado,
-                description: ac.Descripcion
-            })
-
-        })
-        setLabors(laborArray)
+        const laborList = user.labors
+        setLabors(laborList)
         //actividades independientes
-        const indepList = user.ActividadesIndependientes
-        const indepArray = []
-        indepList.map((ac) => {
-            indepArray.push({
-                idActividad: ac.idActividad,
-                title: ac.Titulo,
-                beginDate: ac.FechaInicio,
-                endDate: ac.FechaFin,
-                state: ac.Estado,
-                description: ac.Descripcion
-            })
-
-        })
-        setIndependents(indepArray)
+        const indepList = user.independents
+        setIndependents(indepList)
     }
 
     const updateState = async (act) => {
         switch (act) {
             case 'independent':
-                const resInd = await axios.get(`https://api-perfil.uc.r.appspot.com/actividadesIndependientes/${user.id}`, {
+                const resInd = await axios.get(`https://api-perfil.uc.r.appspot.com/independents/${user.id}`, {
                     headers: {
                         authorization: sessionStorage.getItem("token")
                     }
                 })
                 dispatch(login({
                     ...user,
-                    ActividadesIndependientes: resInd.data
+                    independents: resInd.data
                 }))
                 break
             case 'academic':
-                const resAc = await axios.get(`https://api-perfil.uc.r.appspot.com/actividadesAcademicas/${user.id}`, {
+                const resAc = await axios.get(`https://api-perfil.uc.r.appspot.com/academics/${user.id}`, {
                     headers: {
                         authorization: sessionStorage.getItem("token")
                     }
                 })
                 dispatch(login({
                     ...user,
-                    ActividadesAcademicas: resAc.data
+                    academics: resAc.data
                 }))
                 break
             case 'labor':
-                const resLab = await axios.get(`https://api-perfil.uc.r.appspot.com/actividadesLaborales/${user.id}`, {
+                const resLab = await axios.get(`https://api-perfil.uc.r.appspot.com/labors/${user.id}`, {
                     headers: {
                         authorization: sessionStorage.getItem("token")
                     }
                 })
                 dispatch(login({
                     ...user,
-                    ActividadesLaborales: resLab.data
+                    labors: resLab.data
                 }))
                 break
             case 'language':
-                const resLan = await axios.get(`https://api-perfil.uc.r.appspot.com/idiomas/${user.id}`, {
+                const resLan = await axios.get(`https://api-perfil.uc.r.appspot.com/languages/${user.id}`, {
                     headers: {
                         authorization: sessionStorage.getItem("token")
                     }
                 })
                 dispatch(login({
                     ...user,
-                    idiomas: resLan.data
+                    languages: resLan.data
                 }))
                 break
             case 'skill':
-                const resSk = await axios.get(`https://api-perfil.uc.r.appspot.com/habilidades/${user.id}`, {
+                const resSk = await axios.get(`https://api-perfil.uc.r.appspot.com/skills/${user.id}`, {
                     headers: {
                         authorization: sessionStorage.getItem("token")
                     }
                 })
                 dispatch(login({
                     ...user,
-                    habilidades: resSk.data
+                    skills: resSk.data
                 }))
                 break
         }
@@ -974,8 +919,8 @@ function EditProfesionalProfile() {
                                 <div className="fillForm">
                                     <label>Idioma</label>
                                     <label>{lanList.map((l) => {
-                                        if (l.id_idioma == lan.id_language) {
-                                            return l.nombre
+                                        if (l.id == lan.languageId) {
+                                            return l.name
                                         }
                                     })}</label>
                                 </div>
@@ -991,13 +936,13 @@ function EditProfesionalProfile() {
                         <div className="fillForm">
                             <label>Idioma</label>
                             <select onChange={(v) => {
-                                const languagesSelected = lanList.filter((l) => l.id_idioma == v.target.value)
+                                const languagesSelected = lanList.filter((l) => l.id == v.target.value)
                                 const languageSelected = languagesSelected[0]
-                                setCurrentLanguage({ ...currentLanguage, language: languageSelected?.nombre, id_language: languageSelected?.id_idioma })
+                                setCurrentLanguage({ ...currentLanguage, language: languageSelected?.name, languageId: languageSelected?.id })
                             }} id="">
                                 <option value=""></option>
                                 {lanList.map((l) => {
-                                    return (<option value={l.id_idioma}>{l.nombre}</option>)
+                                    return (<option value={l.id}>{l.name}</option>)
                                 })}
                             </select>
                         </div>
@@ -1027,8 +972,8 @@ function EditProfesionalProfile() {
                                 <div className="fillForm">
                                     <label>Habilidad</label>
                                     <label>{skillList.map((l) => {
-                                        if (l.id == sk.id_skill) {
-                                            return l.nombre
+                                        if (l.id == sk.skillId) {
+                                            return l.name
                                         }
                                     })}</label>
                                 </div>
@@ -1046,11 +991,11 @@ function EditProfesionalProfile() {
                             <select onChange={(v) => {
                                 const skillsSelected = skillList.filter((l) => l.id == v.target.value)
                                 const skillSelected = skillsSelected[0]
-                                setCurrentSkill({ ...currentSkill, skill: skillSelected?.nombre, id_skill: skillSelected?.id })
+                                setCurrentSkill({ ...currentSkill, skill: skillSelected?.name, skillId: skillSelected?.id })
                             }} id="">
                                 <option value=""></option>
                                 {skillList.map((l) => {
-                                    return (<option value={l.id}>{l.nombre}</option>)
+                                    return (<option value={l.id}>{l.name}</option>)
                                 })}
                             </select>
                         </div>
