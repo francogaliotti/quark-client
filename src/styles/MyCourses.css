@@ -32,21 +32,21 @@
 
 }
 
-.bar{
+.bar {
     margin-top: -18px;
 }
 
-#courseContainer{
+#courseContainer {
     width: 25%;
     padding-bottom: 20px;
     cursor: pointer;
     font-size: 100%;
-    
+
 }
 
 #courseContainer h3 {
-    white-space: nowrap; 
-    overflow:hidden;
+    white-space: nowrap;
+    overflow: hidden;
     text-overflow: ellipsis;
     font-size: 80%;
 }
@@ -54,6 +54,8 @@
 #courseImg {
     width: 100px;
     height: 90px;
+    object-fit: cover;
+    mask-image: radial-gradient(circle, black 30%, transparent 70%)
 }
 
 #courseTitle {
@@ -94,17 +96,18 @@
     .bar {
         margin-top: 20px;
     }
-    #courseContainer{
+
+    #courseContainer {
         width: 35%;
         padding-bottom: 10px;
-        
+
     }
+
     .wrapContainer {
         width: 100%;
         gap: 10px;
         padding-top: 15px;
         padding-bottom: 15px;
-    
+
     }
 }
-

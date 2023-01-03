@@ -7,22 +7,26 @@ import { PrimaryInput } from '../../styles/styledComponents/Inputs';
 import '../../styles/Login.css'
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import Cookies from 'universal-cookie'
 
 function LoginForm() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const ref = useRef(null);
+    const cookieRef = useRef(null)
     const params = useParams()
     const user = useSelector(selectUser);
+    const cookies = new Cookies()
     let moodleData
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
 
     useEffect(() => {
         if (user) navigate('/')
-
     }, [user]);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -54,28 +58,26 @@ function LoginForm() {
     const goHome = async () => {
         setTimeout(async () => {
             try {
-                //const res = await axios.get(`https://api-perfil.uc.r.appspot.com/user/getMoodleData/${email}`)
-                const user = moodleData
-                const loginResponse = await axios.post(`https://api-perfil.uc.r.appspot.com/login`,
-                    {
-                        id: user.id
-                    })
-                const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${user.id}`, {
-                    headers: {
+                /*const loginResponse = await axios.get(`http://localhost:3030/login`,
+                    //{ withCredentials: "include" }
+                    )*/
+                cookieRef.current.src = `http://localhost:3030/login`
+                const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${moodleData.id}`, {
+                   /* headers: {
                         authorization: loginResponse.data.token
-                    }
+                    }*/
                 })
                 try {
-                    const res = await axios.get(`https://api-perfil.uc.r.appspot.com/sesskey/${user.id}`) //aca tendria que usar user.id
+                    const res = await axios.get(`https://api-perfil.uc.r.appspot.com/sesskey/${moodleData.id}`) //aca tendria que usar user.id
                     console.log(res)
                     if (res.data.sesskey === "") {
                         throw "Contraseña incorrecta"
                     }
                     dispatch(login({
-                        ...user,
+                        ...moodleData,
                         ...profInfo.data,
                         sesskey: res.data.sesskey,
-                        token: loginResponse.data.token,
+                        //token: loginResponse.data.token,
                         LoggedIn: true
                     }))
                 } catch (e) {
@@ -125,6 +127,15 @@ function LoginForm() {
                 height="1"
                 src="http://localhost/moodle/my/"
                 name='moodleframe'>
+            </iframe>
+            <iframe id="inlineFrameExample"
+                style={{ display: "none" }}
+                title="cookieFrame"
+                width="1"
+                height="1"
+                ref={cookieRef}
+                src=""
+                name='cookieFrame'>
             </iframe>
         </form>
     )

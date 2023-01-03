@@ -19,8 +19,8 @@ function Home() {
 
 
     useEffect(() => {
-        if (!sessionStorage.getItem("sesskey")) navigate('/login')
-    }, []);
+        if (!user) navigate('/login')
+    }, [user]);
 
     return (
         <div className='homePageContainer'>

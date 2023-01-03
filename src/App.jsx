@@ -8,17 +8,21 @@ import { useEffect, useState } from 'react';
 import PublicRoutes from './routes/PublicRoutes';
 import VerticalNavbar from './components/verticalNavbar';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
+
 
 
 function App() {
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const cookies = new Cookies()
 
   useEffect(() => {
     const fetchData = async () => {
-      if (sessionStorage.getItem("sesskey")) {
-        const username = sessionStorage.getItem("username")
+      if (cookies.get("myCookieName")) {
+        console.log("asd")
+        const username = cookies.get("username")
         const res = await axios.get(`https://api-perfil.uc.r.appspot.com/user/getMoodleData/${username}`)
         const user = res.data
         const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${user.id}`)
@@ -36,12 +40,13 @@ function App() {
 
   return (
     <div className="app-container">
-      {sessionStorage.getItem("sesskey") && <>
+      {cookies.get("myCookieName") && <>
         <VerticalNavbar />
       </>}
       <Navbar />
       <div className="content-container">
         <PublicRoutes />
+        
       </div>
     </div>
   );

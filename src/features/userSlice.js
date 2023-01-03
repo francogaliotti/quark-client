@@ -19,13 +19,15 @@ export const userSlice = createSlice({
             const cookies = new Cookies()
             cookies.set('username', action.payload.username, {path:'/', maxAge: 5000})
             state.user = action.payload
-            console.log(state.user)
+            console.log(cookies.getAll())
+            
         },
         logout: async (state) => {
             sessionStorage.removeItem("username")
             sessionStorage.removeItem("sesskey")
             sessionStorage.removeItem("token")
             const cookies = new Cookies()
+            cookies.remove('myCookieName')
             cookies.remove('username')
             const res = await axios.post(`https://api-perfil.uc.r.appspot.com/sesskey/`, {
                 'id': state.user.id, //aca tiene que ir state.user.id

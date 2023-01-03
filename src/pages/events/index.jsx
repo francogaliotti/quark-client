@@ -6,7 +6,7 @@ function Events() {
     <div className="eventPageContainer">
       <h1 id='evH1'>Próximos Eventos</h1>
       <div className="liveEventsContainer">
-        <h2>Eventos en vivo</h2>
+        <h2>Webinars en vivo</h2>
         <div className="liveEventsList">
 
 {/*Información hardcodeada*/}
@@ -59,7 +59,7 @@ function Events() {
 
       </div>
 
-      <h1 id='evH1'>Historial de Eventos</h1>
+      <h1 id='evH1'>Webinars grabadas</h1>
 
       <div className="liveEventsContainer">
         <div className="pastEventsList">

@@ -5,6 +5,7 @@ import DevRegisterForm from '../components/devRegisterForm';
 import LoginForm from '../components/loginForm';
 import ProfesionalProfile from '../components/profesionalProfile';
 import EditProfesionalProfile from '../components/profesionalProfile/editProfProfile';
+import Configuration from '../pages/configuration';
 import Events from '../pages/events';
 import Home from '../pages/home';
 import MyCourses from '../pages/myCourses';
@@ -23,6 +24,7 @@ function PublicRoutes() {
         <Route path='/myCourses' element={<MyCourses/>}/>
         <Route path='/events' element={<Events/>}/>
         <Route path='/' element={<Home/>}/>
+        <Route path='/config' element={<Configuration/>}/>
     </Routes>
     </>
   )

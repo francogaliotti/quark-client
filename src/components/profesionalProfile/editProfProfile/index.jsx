@@ -206,94 +206,157 @@ function EditProfesionalProfile() {
 
     }
 
+    const addActivity = async (type) => {
+        switch (type) {
+            case "academic":
+                if (currentAcademic && currentAcademic.institution && currentAcademic.title && currentAcademic.state && currentAcademic.beginDate) {
+                    if (currentAcademic.state == "Finalizado") {
+                        if (!currentAcademic.endDate) {
+                            Swal.fire(
+                                'Error!',
+                                'Ingresar fecha de finalización.',
+                                'error'
+                            )
+                        } else {
+                            await addAcademic()
+                        }
+                    } else {
+                        await addAcademic()
+                    }
+                } else {
+                    Swal.fire(
+                        'Error!',
+                        'Faltan datos por ingresar.',
+                        'error'
+                    )
+                }
+                break
+            case "labor":
+                if (currentLabor && currentLabor.company && currentLabor.title && currentLabor.state && currentLabor.beginDate) {
+                    if (currentLabor.state == "Finalizado") {
+                        if (!currentLabor.endDate) {
+                            Swal.fire(
+                                'Error!',
+                                'Ingresar fecha de finalización.',
+                                'error'
+                            )
+                        } else {
+                            await addLabor()
+                        }
+                    } else {
+                        await addLabor()
+                    }
+                } else {
+                    Swal.fire(
+                        'Error!',
+                        'Faltan datos por ingresar.',
+                        'error'
+                    )
+                }
+                break
+            case "independent":
+                if (currentIndependent && currentIndependent.title && currentIndependent.state && currentIndependent.beginDate) {
+                    if (currentIndependent.state == "Finalizado") {
+                        if (!currentIndependent.endDate) {
+                            Swal.fire(
+                                'Error!',
+                                'Ingresar fecha de finalización.',
+                                'error'
+                            )
+                        } else {
+                            await addIndependent()
+                        }
+                    } else {
+                        await addIndependent()
+                    }
+                } else {
+                    Swal.fire(
+                        'Error!',
+                        'Faltan datos por ingresar.',
+                        'error'
+                    )
+                }
+                break
+        }
+    }
+
     //Métodos de actividades académicas
     const addAcademic = async () => {
-        if (currentAcademic && currentAcademic.institution && currentAcademic.title && currentAcademic.state) {
-            if (!currentAcademic.edited) {
-
-                Swal.fire({
-                    title: 'Añadir actividad académica?',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Añadir',
-                    cancelButtonText: "Cancelar"
-                }).then(async (result) => {
-                    if (result.isConfirmed) {
-                        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/academics/create`,
-                            {
-                                userid: user.id,
-                                academics: {
-                                    institution: currentAcademic.institution,
-                                    title: currentAcademic.title,
-                                    state: currentAcademic.state,
-                                    beginDate: currentAcademic.beginDate,
-                                    endDate: currentAcademic.endDate,
-                                    description: currentAcademic.description
-                                }
-                            }, {
-                            headers: {
-                                authorization: sessionStorage.getItem("token")
+        if (!currentAcademic.edited) {
+            Swal.fire({
+                title: 'Añadir actividad académica?',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Añadir',
+                cancelButtonText: "Cancelar"
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    const res = await axios.post(`https://api-perfil.uc.r.appspot.com/academics/create`,
+                        {
+                            userid: user.id,
+                            academics: {
+                                institution: currentAcademic.institution,
+                                title: currentAcademic.title,
+                                state: currentAcademic.state,
+                                beginDate: currentAcademic.beginDate,
+                                endDate: currentAcademic.endDate,
+                                description: currentAcademic.description
                             }
+                        }, {
+                        headers: {
+                            authorization: sessionStorage.getItem("token")
                         }
-                        )
+                    }
+                    )
 
-                        Swal.fire(
-                            'Añadido!',
-                            'Actividad académica añadida.',
-                            'success'
-                        )
-                        await updateState('academic')
-                        setAcademics([...academics, { ...currentAcademic, id: res.data.id }])
-                        console.log(res)
-                    }
-                })
-            } else {
-                const res = await axios.put(`https://api-perfil.uc.r.appspot.com/academics/update`,
-                    {
-                        id: currentAcademic.id,
-                        academics: {
-                            institution: currentAcademic.institution,
-                            title: currentAcademic.title,
-                            state: currentAcademic.state,
-                            beginDate: currentAcademic.beginDate,
-                            endDate: currentAcademic.endDate,
-                            description: currentAcademic.description
-                        }
-                    }, {
-                    headers: {
-                        authorization: sessionStorage.getItem("token")
-                    }
+                    Swal.fire(
+                        'Añadido!',
+                        'Actividad académica añadida.',
+                        'success'
+                    )
+                    await updateState('academic')
+                    setAcademics([...academics, { ...currentAcademic, id: res.data.id }])
+                    console.log(res)
                 }
-                )
-                Swal.fire(
-                    'Actualizado!',
-                    'Actividad académica actualizada.',
-                    'success'
-                )
-                await updateState('academic')
-                setAcademics([...academics, currentAcademic])
-                console.log(res)
-            }
-            setCurrentAcademic({
-                ...currentAcademic,
-                institution: "",
-                title: "",
-                //state:"",
-                beginDate: "",
-                endDate: "",
-                description: "",
-                edited: false
             })
         } else {
-            Swal.fire(
-                'Error!',
-                'Faltan datos por ingresar.',
-                'error'
+            const res = await axios.put(`https://api-perfil.uc.r.appspot.com/academics/update`,
+                {
+                    id: currentAcademic.id,
+                    academics: {
+                        institution: currentAcademic.institution,
+                        title: currentAcademic.title,
+                        state: currentAcademic.state,
+                        beginDate: currentAcademic.beginDate,
+                        endDate: currentAcademic.endDate,
+                        description: currentAcademic.description
+                    }
+                }, {
+                headers: {
+                    authorization: sessionStorage.getItem("token")
+                }
+            }
             )
+            Swal.fire(
+                'Actualizado!',
+                'Actividad académica actualizada.',
+                'success'
+            )
+            await updateState('academic')
+            setAcademics([...academics, currentAcademic])
+            console.log(res)
         }
-
-
+        setCurrentAcademic({
+            ...currentAcademic,
+            institution: "",
+            title: "",
+            //state:"",
+            beginDate: "",
+            endDate: "",
+            description: "",
+            edited: false
+        })
     }
 
     const editAcademic = (ac) => {
@@ -326,11 +389,11 @@ function EditProfesionalProfile() {
             cancelButtonText: "Cancelar"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/academics/delete/${ac.id}`, {
+                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/academics/delete/${ac.id}`/*, {
                     headers: {
                         authorization: sessionStorage.getItem("token")
                     }
-                })
+                }*/)
                 Swal.fire(
                     'Eliminado!',
                     'Actividad eliminada.',
@@ -345,9 +408,7 @@ function EditProfesionalProfile() {
 
     //Métodos de actividades laborales
     const addLabor = async () => {
-        if (currentLabor && currentLabor.company && currentLabor.title) {
             if (!currentLabor.edited) {
-
                 Swal.fire({
                     title: 'Añadir actividad laboral?',
                     showCancelButton: true,
@@ -423,13 +484,6 @@ function EditProfesionalProfile() {
                 description: "",
                 edited: false
             })
-        } else {
-            Swal.fire(
-                'Error!',
-                'Faltan datos por ingresar.',
-                'error'
-            )
-        }
     }
 
     const editLabor = (lab) => {
@@ -480,11 +534,10 @@ function EditProfesionalProfile() {
     }
 
     const addIndependent = async () => {
-        if (currentIndependent && currentIndependent.title) {
             if (!currentIndependent.edited) {
 
                 Swal.fire({
-                    title: 'Añadir actividad laboral?',
+                    title: 'Añadir actividad independiente?',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -551,13 +604,6 @@ function EditProfesionalProfile() {
                 description: "",
                 edited: false
             })
-        } else {
-            Swal.fire(
-                'Error!',
-                'Faltan datos por ingresar.',
-                'error'
-            )
-        }
     }
 
     const editIndependent = (ind) => {
@@ -725,14 +771,17 @@ function EditProfesionalProfile() {
                                     <label>Fecha de Inicio</label>
                                     <label>{new Date(lan?.beginDate).toLocaleDateString("en-AU")}</label>
                                 </div>
-                                <div className="fillForm">
-                                    <label>Fecha Finalización</label>
-                                    <label>{new Date(lan?.endDate).toLocaleDateString("en-AU")}</label>
-                                </div>
-                                <div className="fillForm">
-                                    <label>Descripción</label>
-                                    <label id='activityDescription'>{lan?.description}</label>
-                                </div>
+                                {lan?.endDate &&
+                                    <div className="fillForm">
+                                        <label>Fecha Finalización</label>
+                                        <label>{lan.endDate && new Date(lan?.endDate).toLocaleDateString("en-AU")}</label>
+                                    </div>}
+                                {lan?.description &&
+                                    <div className="fillForm">
+                                        <label>Descripción</label>
+                                        <label id='activityDescription'>{lan?.description}</label>
+                                    </div>}
+
                                 <div className="crudButtons">
                                     <button className='plus' onClick={() => editAcademic(lan)}><FontAwesomeIcon icon={faPenToSquare} /></button>
                                     <button className='plus' onClick={() => deleteAcademic(lan)}><FontAwesomeIcon icon={faTrashCan} /></button>
@@ -772,7 +821,7 @@ function EditProfesionalProfile() {
                         </div>
                     </div>
 
-                    <button className='plus' onClick={() => addAcademic()}><FontAwesomeIcon icon={faPlus} /></button>
+                    <button className='plus' onClick={() => addActivity("academic")}><FontAwesomeIcon icon={faPlus} /></button>
 
                 </div>
 
@@ -797,14 +846,16 @@ function EditProfesionalProfile() {
                                     <label>Fecha de Inicio</label>
                                     <label>{new Date(lan?.beginDate).toLocaleDateString("en-AU")}</label>
                                 </div>
-                                <div className="fillForm">
-                                    <label>Fecha Finalización</label>
-                                    <label>{new Date(lan?.endDate).toLocaleDateString("en-AU")}</label>
-                                </div>
-                                <div className="fillForm">
-                                    <label>Descripción</label>
-                                    <label>{lan?.description}</label>
-                                </div>
+                                {lan?.endDate &&
+                                    <div className="fillForm">
+                                        <label>Fecha Finalización</label>
+                                        <label>{lan.endDate && new Date(lan?.endDate).toLocaleDateString("en-AU")}</label>
+                                    </div>}
+                                {lan?.description &&
+                                    <div className="fillForm">
+                                        <label>Descripción</label>
+                                        <label id='activityDescription'>{lan?.description}</label>
+                                    </div>}
                                 <button className='plus' onClick={() => editLabor(lan)}><FontAwesomeIcon icon={faPenToSquare} /></button>
                                 <button className='plus' onClick={() => deleteLabor(lan)}><FontAwesomeIcon icon={faTrashCan} /></button>
                             </div>
@@ -843,7 +894,7 @@ function EditProfesionalProfile() {
 
                     </div>
 
-                    <button className='plus' onClick={() => addLabor()}><FontAwesomeIcon icon={faPlus} /></button>
+                    <button className='plus' onClick={() => addActivity("labor")}><FontAwesomeIcon icon={faPlus} /></button>
 
                 </div>
 
@@ -864,14 +915,16 @@ function EditProfesionalProfile() {
                                     <label>Fecha de Inicio</label>
                                     <label>{new Date(lan?.beginDate).toLocaleDateString("en-AU")}</label>
                                 </div>
-                                <div className="fillForm">
-                                    <label>Fecha Finalización</label>
-                                    <label>{new Date(lan?.endDate).toLocaleDateString("en-AU")}</label>
-                                </div>
-                                <div className="fillForm">
-                                    <label>Descripción</label>
-                                    <label>{lan?.description}</label>
-                                </div>
+                                {lan?.endDate &&
+                                    <div className="fillForm">
+                                        <label>Fecha Finalización</label>
+                                        <label>{lan.endDate && new Date(lan?.endDate).toLocaleDateString("en-AU")}</label>
+                                    </div>}
+                                {lan?.description &&
+                                    <div className="fillForm">
+                                        <label>Descripción</label>
+                                        <label id='activityDescription'>{lan?.description}</label>
+                                    </div>}
                                 <button className='plus' onClick={() => editIndependent(lan)}><FontAwesomeIcon icon={faPenToSquare} /></button>
                                 <button className='plus' onClick={() => deleteIndependent(lan)}><FontAwesomeIcon icon={faTrashCan} /></button>
                             </div>
@@ -906,7 +959,7 @@ function EditProfesionalProfile() {
 
                     </div>
 
-                    <button className='plus' onClick={() => addIndependent()}><FontAwesomeIcon icon={faPlus} /></button>
+                    <button className='plus' onClick={() => addActivity("independent")}><FontAwesomeIcon icon={faPlus} /></button>
 
                 </div>
 
