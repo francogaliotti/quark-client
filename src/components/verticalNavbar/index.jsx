@@ -20,7 +20,7 @@ function VerticalNavbar() {
                 <li><a onClick={() => navigate('/profesionalProfile')}>Perfil Profesional</a></li>
                 <li><a onClick={() => navigate('/myCourses')}>Mi Aprendizaje</a></li>
                 <li><a onClick={() => navigate('/events')}>Eventos</a></li>
-                {user.profile.role == 1 &&
+                {user?.profile.role == 1 &&
                     <li><a onClick={() => navigate('/config')}>Configuración</a></li>
                 }
             </ul>

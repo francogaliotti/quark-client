@@ -6,6 +6,8 @@ import LoginForm from '../components/loginForm';
 import ProfesionalProfile from '../components/profesionalProfile';
 import EditProfesionalProfile from '../components/profesionalProfile/editProfProfile';
 import Configuration from '../pages/configuration';
+import { EventsAdmin } from '../pages/configuration/eventsAdmin';
+import { NewsAdmin } from '../pages/configuration/newsAdmin';
 import Events from '../pages/events';
 import Home from '../pages/home';
 import MyCourses from '../pages/myCourses';
@@ -24,7 +26,11 @@ function PublicRoutes() {
         <Route path='/myCourses' element={<MyCourses/>}/>
         <Route path='/events' element={<Events/>}/>
         <Route path='/' element={<Home/>}/>
+
+        {/*Admin routes*/}
         <Route path='/config' element={<Configuration/>}/>
+        <Route path='/config/events' element={<EventsAdmin/>}/>
+        <Route path='/config/news' element={<NewsAdmin/>}/>
     </Routes>
     </>
   )

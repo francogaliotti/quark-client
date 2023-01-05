@@ -14,7 +14,7 @@ function MyCourses() {
 
     useEffect(() => {
         if (!sessionStorage.getItem("sesskey")) navigate('/login')
-        
+
     }, []);
 
 
@@ -23,16 +23,20 @@ function MyCourses() {
             <h1>Mis cursos</h1>
             <div className="wrapContainer">
 
-                {user?.listaCurso.map((c)=> {
+                {user?.listaCurso.map((c) => {
                     return (<div className="basicInfo" id='courseContainer'>
-                    <h3 id='courseTitle'>{c.fullName}</h3>
-                    <img src={c.url} id='courseImg' />
-                    <h4 id='courseDate'>Fecha de inicio: <p>{new Date(c.timestarted).toLocaleDateString("en-AU")}</p></h4>
-                    <ProgressBar completed={Math.round(c.progress)} className="bar"/>
-                </div>)
+                        <h3 id='courseTitle'>{c.fullName}</h3>
+                        <img src={c.url} id='courseImg' />
+                        <h4 id='courseDate'>Fecha de inicio: <p>{new Date(c.timestarted).toLocaleDateString("en-AU")}</p></h4>
+                        <ProgressBar completed={Math.round(c.progress)} className="wrapper"
+                            barContainerClassName="container"
+                            bgColor='rgb(24, 27, 32)'
+                            labelClassName="label"
+                            labelAlignment='center' />
+                    </div>)
                 })}
 
-                {/* Información hardcodeada, borrar después */}
+                {/* Información hardcodeada, borrar después 
 
                 <div className="basicInfo" id='courseContainer' onClick={()=>window.open(`http://localhost/moodle/course/view.php?id=2`)}>
                     <h3 id='courseTitle'>Curso prueba 1</h3>
@@ -46,7 +50,7 @@ function MyCourses() {
                     <img src="https://cdn.cdnlogo.com/logos/c/27/c.svg" id='courseImg' />
                     <h4 id='courseDate'>Fecha de inicio: <p>{new Date().toLocaleDateString("en-AU")}</p></h4>
                     <ProgressBar completed={Math.round(30)} className="bar"/>
-                </div>
+                </div>*/}
 
             </div>
         </div>

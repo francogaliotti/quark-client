@@ -38,7 +38,11 @@ function Home() {
                             <h3 id='courseTitle'>{c.fullName}</h3>
                             <img src={c.url} id='courseImg' />
                             <h4 id='courseDate'>Fecha de inicio: <p>{new Date(c.timestarted).toLocaleDateString("en-AU")}</p></h4>
-                            <ProgressBar completed={Math.round(c.progress)} className="bar" />
+                            <ProgressBar completed={Math.round(c.progress)} className="wrapper"
+                                barContainerClassName="container"
+                                bgColor='rgb(24, 27, 32)'
+                                labelClassName="label"
+                                labelAlignment='center' />
                         </div>)
                     })}
                 </div>

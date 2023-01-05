@@ -21,7 +21,7 @@ function LoginForm() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
 
     useEffect(() => {
         if (user) navigate('/')
@@ -51,8 +51,18 @@ function LoginForm() {
     }
 
     const getMoodleData = async () => {
-        const res = await axios.get(`https://api-perfil.uc.r.appspot.com/user/getMoodleData/${email}`)
-        moodleData = res.data
+        try {
+            const res = await axios.get(`https://api-perfil.uc.r.appspot.com/user/getMoodleData/${email}`)
+            moodleData = res.data
+        }
+        catch (e) {
+            console.log(e)
+            Swal.fire({
+                icon: 'error',
+                title: "Usuario no encontrado",
+                text: 'Intenta de nuevo'
+            })
+        }
     }
 
     const goHome = async () => {
@@ -63,9 +73,9 @@ function LoginForm() {
                     )*/
                 cookieRef.current.src = `http://localhost:3030/login`
                 const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${moodleData.id}`, {
-                   /* headers: {
-                        authorization: loginResponse.data.token
-                    }*/
+                    /* headers: {
+                         authorization: loginResponse.data.token
+                     }*/
                 })
                 try {
                     const res = await axios.get(`https://api-perfil.uc.r.appspot.com/sesskey/${moodleData.id}`) //aca tendria que usar user.id

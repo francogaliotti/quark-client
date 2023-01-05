@@ -22,8 +22,8 @@ function Configuration() {
   return (
     <div className='configContainer'>
         <div className="basicInfo" id='configButtonContainer'>
-            <PrimaryButton>Administrar eventos</PrimaryButton>
-            <PrimaryButton>Opcion 2</PrimaryButton>
+            <PrimaryButton onClick={()=>navigate('/config/events')}>Administrar eventos</PrimaryButton>
+            <PrimaryButton onClick={()=>navigate('/config/news')}>Administrar novedades</PrimaryButton>
             <PrimaryButton>Opcion 3</PrimaryButton>
             <PrimaryButton>Opcion 4</PrimaryButton>
             <PrimaryButton>Opcion 5</PrimaryButton>
