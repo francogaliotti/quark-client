@@ -1,7 +1,12 @@
 .configContainer {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.configContainer h1 {
+    font-size: 150%;
 }
 
 #configButtonContainer {
@@ -11,8 +16,39 @@
     width: 70%;
     justify-content: center;
     align-items: center;
-    margin-top: 5%;
     padding-top: 30px;
     padding-bottom: 30px;
 
+}
+
+.crudAdminContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+.tableContainer {
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid;
+}
+
+th, td {
+    padding: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+#crudButtons {
+    padding-left: 8px;
+    padding-right: 8px;
 }

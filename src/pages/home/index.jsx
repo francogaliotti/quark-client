@@ -17,6 +17,18 @@ function Home() {
         cursosOrdenados = arrayForSort.sort((x, y) => x.lastaccess - y.lastaccess).reverse().splice(0, 3)
     }
 
+    useEffect(() => {
+        const fetchNews = async () => {
+            const res = await axios.post(`https://api-perfil.uc.r.appspot.com/news/platformNews`,
+            {listaCurso})
+            console.log(res.data)
+        }
+        const listaCurso = user.listaCurso.map(c => {
+            return (c.idCurso)
+        })
+        console.log(listaCurso)
+        fetchNews()
+    }, []);
 
     useEffect(() => {
         if (!user) navigate('/login')

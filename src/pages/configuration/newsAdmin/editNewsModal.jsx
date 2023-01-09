@@ -4,16 +4,14 @@ import '../../../styles/Modal.css'
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-export const EditNewsModal = ({ open, onClose }) => {
+export const EditNewsModal = ({ open, onClose, fetch, update, setUpdate, current, setCurrent }) => {
 
     const [moodleCourses, setMoodleCourses] = useState([])
-    const [currentNews, setCurrentNews] = useState({
-        title: "",
-        content: "",
-        endDate: "",
-        courseList: [],
+    const [currentNews, setCurrentNews] = useState(current)
 
-    })
+    useEffect(() => {
+        setCurrentNews(current)
+    }, [current]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -24,13 +22,25 @@ export const EditNewsModal = ({ open, onClose }) => {
     }, []);
 
     const handleSubmit = async () => {
-        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/news/create`, { new: currentNews })
-        Swal.fire(
-            'Añadido!',
-            'Novedad añadida.',
-            'success'
-        )
+        if (!update) {
+            const res = await axios.post(`https://api-perfil.uc.r.appspot.com/news/create`, { news: currentNews })
+            Swal.fire(
+                'Añadido!',
+                'Novedad añadida.',
+                'success'
+            )
+        } else {
+            const res = await axios.put(`https://api-perfil.uc.r.appspot.com/news/update`, { newsId: current.id, news: currentNews })
+            Swal.fire(
+                'Actualizado!',
+                'Novedad actualizada.',
+                'success'
+            )
+            setUpdate(false)
+            setCurrent({})
+        }
         onClose()
+        fetch()
     }
 
     if (!open) return null;
@@ -40,15 +50,15 @@ export const EditNewsModal = ({ open, onClose }) => {
                 <p className="closeBtn" onClick={onClose}>X</p>
                 <div className="modalCamp">
                     <label for="title">Título</label>
-                    <input id='title' className='modalInput' onChange={(e) => setCurrentNews({ ...currentNews, title: e.target.value })} />
+                    <input id='title' className='modalInput' value={currentNews?.title} onChange={(e) => setCurrentNews({ ...currentNews, title: e.target.value })} />
                 </div>
                 <div className="modalCamp">
                     <label for="content">Contenido</label>
-                    <textarea id="content" className='modalTextArea' onChange={(e) => setCurrentNews({ ...currentNews, content: e.target.value })} />
+                    <textarea id="content" className='modalTextArea' value={currentNews?.content} onChange={(e) => setCurrentNews({ ...currentNews, content: e.target.value })} />
                 </div>
                 <div className="modalCamp">
                     <label for="validity">Vencimiento</label>
-                    <input type="date" id='validity' className='modalInput' onChange={(e) => setCurrentNews({ ...currentNews, endDate: e.target.value })} />
+                    <input type="date" id='validity' className='modalInput' value={currentNews?.endDate} onChange={(e) => setCurrentNews({ ...currentNews, endDate: e.target.value })} />
                 </div>
                 <div className="modalCamp">
                     <label for="filter">Filtros <p>(Mantener Ctrl.)</p></label>
@@ -61,7 +71,7 @@ export const EditNewsModal = ({ open, onClose }) => {
                         })}
                     </select>
                 </div>
-                <PrimaryButton id='createButton' onClick={() => handleSubmit()}>Crear</PrimaryButton>
+                <PrimaryButton id='createButton' onClick={() => handleSubmit()}>{update ? <>Actualizar</> : <>Crear</>}</PrimaryButton>
             </div>
         </div>
     )

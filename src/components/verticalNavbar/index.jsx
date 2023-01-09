@@ -21,7 +21,7 @@ function VerticalNavbar() {
                 <li><a onClick={() => navigate('/myCourses')}>Mi Aprendizaje</a></li>
                 <li><a onClick={() => navigate('/events')}>Eventos</a></li>
                 {user?.profile.role == 1 &&
-                    <li><a onClick={() => navigate('/config')}>Configuración</a></li>
+                    <li><a onClick={() => navigate('/config')}>Administración del Sitio</a></li>
                 }
             </ul>
         </div>)
