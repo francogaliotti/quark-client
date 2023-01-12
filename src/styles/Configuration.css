@@ -83,14 +83,17 @@ th, td {
     cursor: default;
 }
 
+.paginationDisabled {
+    cursor: default;
+}
+
 .paginationDisabled a {
     color: #222;
-    background-color: #ddd;
     border: none;
 }
 .paginationDisabled a:hover {
     color: #222;
-    background-color: #ddd;
     border: none;
     cursor: default;
+    text-decoration: none;
 }

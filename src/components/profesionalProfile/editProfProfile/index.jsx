@@ -535,7 +535,16 @@ function EditProfesionalProfile() {
 
     const addIndependent = async () => {
             if (!currentIndependent.edited) {
-
+                console.log(JSON.stringify({
+                    userid: user.id,
+                    independents: {
+                        title: currentIndependent.title,
+                        state: currentIndependent.state,
+                        beginDate: currentIndependent.beginDate,
+                        endDate: currentIndependent.endDate,
+                        description: currentIndependent.description
+                    }
+                }))
                 Swal.fire({
                     title: 'Añadir actividad independiente?',
                     showCancelButton: true,

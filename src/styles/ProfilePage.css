@@ -151,6 +151,13 @@ h3 {
     float: right;
 }
 
+#ppAbout {
+    text-align: start;
+    box-shadow: none;
+    width: fit-content;
+    max-width: 70%;
+}
+
 .plus {
     background-color: transparent;
     border: none;

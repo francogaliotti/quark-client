@@ -66,18 +66,20 @@ function Events() {
               </div>
             </div>
           })}
+          <ReactPaginate
+            previousLabel={"<"}
+            nextLabel={">"}
+            pageCount={pageCountFuture}
+            onPageChange={changePageFuture}
+            containerClassName={"eventPaginationBttns"}
+            previousLinkClassName={"eventPreviousBttn"}
+            pageClassName={"pageBttn"}
+            nextLinkClassName={"eventNextBttn"}
+            disabledClassName={"paginationDisabled"}
+            activeClassName={"paginationActive"}
+          />
         </div>
-        <ReactPaginate
-          previousLabel={"<"}
-          nextLabel={">"}
-          pageCount={pageCountFuture}
-          onPageChange={changePageFuture}
-          containerClassName={"paginationBttns"}
-          previousLinkClassName={"previousBttn"}
-          nextLinkClassName={"nextBttn"}
-          disabledClassName={"paginationDisabled"}
-          activeClassName={"paginationActive"}
-        />
+
       </div>
 
       <div className="liveEventsContainer">
@@ -116,19 +118,20 @@ function Events() {
               </div>
             </div>
           })}
-
+          <ReactPaginate
+            previousLabel={"<"}
+            nextLabel={">"}
+            pageCount={pageCountFuture}
+            onPageChange={changePageFuture}
+            containerClassName={"pastEventPaginationBttns"}
+            previousLinkClassName={"eventPreviousBttn"}
+            pageClassName={"pageBttn"}
+            nextLinkClassName={"eventNextBttn"}
+            disabledClassName={"paginationDisabled"}
+            activeClassName={"paginationActive"}
+          />
         </div>
-        <ReactPaginate
-          previousLabel={"<"}
-          nextLabel={">"}
-          pageCount={pageCountPast}
-          onPageChange={changePagePast}
-          containerClassName={"paginationBttns"}
-          previousLinkClassName={"previousBttn"}
-          nextLinkClassName={"nextBttn"}
-          disabledClassName={"paginationDisabled"}
-          activeClassName={"paginationActive"}
-        />
+
 
       </div>
 
