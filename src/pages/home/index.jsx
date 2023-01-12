@@ -6,24 +6,32 @@ import { login, selectUser } from '../../features/userSlice';
 import '../../styles/Home.css'
 import axios from 'axios';
 import ProfProgressBar from '../../components/profProgressBar';
+import Cookies from 'universal-cookie';
+import { useState } from 'react';
 
 function Home() {
     const user = useSelector(selectUser);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const cookies = new Cookies()
     let cursosOrdenados = []
     if (user) {
         const arrayForSort = [...user.listaCurso]
         cursosOrdenados = arrayForSort.sort((x, y) => x.lastaccess - y.lastaccess).reverse().splice(0, 3)
     }
 
+    const [newsList, setNewsList] = useState([])
+
     useEffect(() => {
+        if (!user) {
+            navigate('/login')
+        }
         const fetchNews = async () => {
             const res = await axios.post(`https://api-perfil.uc.r.appspot.com/news/platformNews`,
-            {listaCurso})
-            console.log(res.data)
+                { listaCurso })
+            setNewsList(res.data)
         }
-        const listaCurso = user.listaCurso.map(c => {
+        const listaCurso = user?.listaCurso.map(c => {
             return (c.idCurso)
         })
         console.log(listaCurso)
@@ -40,6 +48,17 @@ function Home() {
             <div className="homeProgBars">
                 <ProfProgressBar type='normal' />
                 <ProfProgressBar type='profesional' />
+            </div>
+            <div className="homeEvent">
+                <h2>Novedades</h2>
+                <div className="homeNewsContainer">
+                    {newsList?.map(n => {
+                        return <div className="singleNews">
+                            <h3>{n.title}</h3>
+                            <p>{n.content}</p>
+                        </div>
+                    })}
+                </div>
             </div>
             <div className="homeEvent">
                 <h2>Tus últimos cursos</h2>

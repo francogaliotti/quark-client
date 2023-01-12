@@ -5,6 +5,7 @@ import { EditNewsModal } from './editNewsModal'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faCircleInfo, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import Swal from 'sweetalert2';
+import ReactPaginate from 'react-paginate'
 import '../../../styles/Configuration.css'
 
 export const NewsAdmin = () => {
@@ -14,9 +15,20 @@ export const NewsAdmin = () => {
     const [update, setUpdate] = useState(false);
     const [current, setCurrent] = useState({})
 
+    const [elementCount, setElementCount] = useState(0)
+    const [pageNumber, setPageNumber] = useState(0)
+    const itemsPerPage = 10
+
+    const pageCount = Math.ceil(elementCount / itemsPerPage)
+
+    const changePage = ({ selected }) => {
+        setPageNumber(selected);
+    };
+
     const fetchData = async () => {
-        const res = await axios.get(`https://api-perfil.uc.r.appspot.com/news/getAllNews/`)
-        setNewsList(res.data)
+        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/news/getAllNews/`, {page: pageNumber, size: itemsPerPage})
+        setNewsList(res.data.data)
+        setElementCount(res.data.amount)
     }
 
     const openForUpdate = (n) => {
@@ -56,9 +68,8 @@ export const NewsAdmin = () => {
     }, [openModal]);
 
     useEffect(() => {
-
         fetchData()
-    }, []);
+    }, [pageNumber]);
 
     return (
         <div className='crudAdminContainer'>
@@ -85,7 +96,7 @@ export const NewsAdmin = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {newsList.map(n => (
+                        {newsList?.map(n => (
                             <tr key={n.id}>
                                 <td>{n.title}</td>
                                 <td>{new Date(n.createdAt).toLocaleDateString("en-AU")}</td>
@@ -100,6 +111,17 @@ export const NewsAdmin = () => {
                     </tbody>
                 </table>
             </div>
+            <ReactPaginate
+                previousLabel={"anterior"}
+                nextLabel={"siguiente"}
+                pageCount={pageCount}
+                onPageChange={changePage}
+                containerClassName={"paginationBttns"}
+                previousLinkClassName={"previousBttn"}
+                nextLinkClassName={"nextBttn"}
+                disabledClassName={"paginationDisabled"}
+                activeClassName={"paginationActive"}
+            />
 
         </div>
     )

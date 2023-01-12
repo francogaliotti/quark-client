@@ -24,6 +24,7 @@ const EditEventModal = ({ open, onClose, fetch, update, setUpdate, current, setC
   const handleSubmit = async () => {
 
     if (!update) {
+      console.log( { event: actualEvent })
       const res = await axios.post(`https://api-perfil.uc.r.appspot.com/events/create`, { event: actualEvent })
       Swal.fire(
         'Añadido!',
@@ -63,14 +64,14 @@ const EditEventModal = ({ open, onClose, fetch, update, setUpdate, current, setC
         </div>
         <div className="modalCamp">
           <label for="visibility">Visibilidad</label>
-          <select id="visibility" className='modalInput' value={actualEvent?.visibility} onChange={(e) => setActualEvent({ ...actualEvent, visibility: e.target.value })} >
+          <select id="visibility" className='modalInput' value={actualEvent?.visibility} onChange={(e) => setActualEvent({ ...actualEvent, visibility: Number(e.target.value) })} >
             <option value="0">Visible</option>
             <option value="1">Oculto</option>
           </select>
         </div>
         <div className="modalCamp">
           <label for="isSaved">Guardado</label>
-          <select id="isSaved" className='modalInput' value={actualEvent?.isSaved} onChange={(e) => setActualEvent({ ...actualEvent, isSaved: e.target.value })} >
+          <select id="isSaved" className='modalInput' value={actualEvent?.isSaved} onChange={(e) => setActualEvent({ ...actualEvent, isSaved: Number(e.target.value) })} >
             <option value="0">No</option>
             <option value="1">Si</option>
           </select>
@@ -82,7 +83,7 @@ const EditEventModal = ({ open, onClose, fetch, update, setUpdate, current, setC
         <div className="modalCamp">
           <label for="tagList">Etiquetas</label>
           <select id="tagList" className='modalInput selectMultiple' multiple onChange={(e) => {
-                        const selectedOptions = Array.from(e.target.selectedOptions).map(option => option.value);
+                        const selectedOptions = Array.from(e.target.selectedOptions).map(option => Number(option.value));
                         setActualEvent({ ...actualEvent, tagList: selectedOptions })
                     }}>
             {

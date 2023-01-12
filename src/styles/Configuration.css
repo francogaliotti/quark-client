@@ -52,3 +52,45 @@ th, td {
     padding-left: 8px;
     padding-right: 8px;
 }
+
+.paginationBttns {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    width: 80%;
+    height: 40px;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+.paginationBttns a {
+    padding: 10px;
+    margin: 8px;
+    border-radius: 5px;
+    border: 1px solid #222;
+    color: #222;
+    cursor: pointer;
+}
+
+.paginationBttns a:hover {
+    color: white;
+    background-color: #444;
+}
+
+.paginationActive a {
+    color: white;
+    background-color: #222;
+    cursor: default;
+}
+
+.paginationDisabled a {
+    color: #222;
+    background-color: #ddd;
+    border: none;
+}
+.paginationDisabled a:hover {
+    color: #222;
+    background-color: #ddd;
+    border: none;
+    cursor: default;
+}
