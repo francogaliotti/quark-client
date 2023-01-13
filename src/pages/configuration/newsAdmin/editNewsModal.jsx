@@ -22,25 +22,34 @@ export const EditNewsModal = ({ open, onClose, fetch, update, setUpdate, current
     }, []);
 
     const handleSubmit = async () => {
-        if (!update) {
-            const res = await axios.post(`https://api-perfil.uc.r.appspot.com/news/create`, { news: currentNews })
+        try {
+            if (!update) {
+                const res = await axios.post(`https://api-perfil.uc.r.appspot.com/news/create`, { news: currentNews })
+                Swal.fire(
+                    'Añadido!',
+                    'Novedad añadida.',
+                    'success'
+                )
+            } else {
+                const res = await axios.put(`https://api-perfil.uc.r.appspot.com/news/update`, { newsId: current.id, news: currentNews })
+                Swal.fire(
+                    'Actualizado!',
+                    'Novedad actualizada.',
+                    'success'
+                )
+                setUpdate(false)
+                setCurrent({})
+            }
+            onClose()
+            fetch()
+        } catch (e) {
+            console.log(e)
             Swal.fire(
-                'Añadido!',
-                'Novedad añadida.',
-                'success'
+                'Error!',
+                e.response.data.msg,
+                'error'
             )
-        } else {
-            const res = await axios.put(`https://api-perfil.uc.r.appspot.com/news/update`, { newsId: current.id, news: currentNews })
-            Swal.fire(
-                'Actualizado!',
-                'Novedad actualizada.',
-                'success'
-            )
-            setUpdate(false)
-            setCurrent({})
         }
-        onClose()
-        fetch()
     }
 
     if (!open) return null;

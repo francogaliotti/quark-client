@@ -147,16 +147,12 @@ function ProfesionalProfile() {
                 </div>
                 <div className="aboutContainer" id='ppAbout'>
                     <h3>Idiomas:</h3>
-                    {/*user.languages?.map(lan => {
+                    {user.languages?.map(lan => {
                         return (
                             <div className="fillForms">
                                 <div className="fillForm">
                                     <label>Idioma</label>
-                                    <label>{lanList.map((l) => {
-                                        if (l.id == lan.languageId) {
-                                            return l.name
-                                        }
-                                    })}</label>
+                                    <label>{lan?.language.name}</label>
                                 </div>
                                 <div className="fillForm">
                                     <label>Nivel</label>
@@ -165,29 +161,24 @@ function ProfesionalProfile() {
                                 
                             </div>
                         )
-                    })*/}
+                    })}
                 </div>
                 <div className="aboutContainer" id='ppAbout'>
                     <h3>Habilidades:</h3>
-                    {/*user.skills?.map(sk => {
+                    {user.skills?.map(sk => {
                         return (
                             <div className="fillForms">
                                 <div className="fillForm">
                                     <label>Habilidad</label>
-                                    <label>{skillList.map((l) => {
-                                        if (l.id == sk.skillId) {
-                                            return l.name
-                                        }
-                                    })}</label>
+                                    <label>{sk?.skill.name}</label>
                                 </div>
                                 <div className="fillForm">
                                     <label>Puntaje</label>
                                     <label>{sk?.score}</label>
                                 </div>
-                                <button className='plus' onClick={() => deleteSkill(sk)}><FontAwesomeIcon icon={faTrashCan} /></button>
                             </div>
                         )
-                    })*/}
+                    })}
                 </div>
                 <PrimaryButton onClick={() => navigate('/profesionalProfile/edit')}>Editar</PrimaryButton>
             </div>

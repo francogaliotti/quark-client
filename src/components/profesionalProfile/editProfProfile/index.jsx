@@ -207,6 +207,7 @@ function EditProfesionalProfile() {
     }
 
     const addActivity = async (type) => {
+        try{
         switch (type) {
             case "academic":
                 if (currentAcademic && currentAcademic.institution && currentAcademic.title && currentAcademic.state && currentAcademic.beginDate) {
@@ -278,85 +279,99 @@ function EditProfesionalProfile() {
                 }
                 break
         }
+    } catch (e) {
+        console.log(e)
+        Swal.fire(
+            'Error!',
+            e.response.data.msg,
+            'error'
+        )
+    }
     }
 
     //Métodos de actividades académicas
     const addAcademic = async () => {
-        if (!currentAcademic.edited) {
-            Swal.fire({
-                title: 'Añadir actividad académica?',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Añadir',
-                cancelButtonText: "Cancelar"
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    const res = await axios.post(`https://api-perfil.uc.r.appspot.com/academics/create`,
-                        {
-                            userid: user.id,
-                            academics: {
-                                institution: currentAcademic.institution,
-                                title: currentAcademic.title,
-                                state: currentAcademic.state,
-                                beginDate: currentAcademic.beginDate,
-                                endDate: currentAcademic.endDate,
-                                description: currentAcademic.description
+            if (!currentAcademic.edited) {
+                Swal.fire({
+                    title: 'Añadir actividad académica?',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Añadir',
+                    cancelButtonText: "Cancelar"
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/academics/create`,
+                            {
+                                userid: user.id,
+                                academics: {
+                                    institution: currentAcademic.institution,
+                                    title: currentAcademic.title,
+                                    state: currentAcademic.state,
+                                    beginDate: currentAcademic.beginDate,
+                                    endDate: currentAcademic.endDate,
+                                    description: currentAcademic.description
+                                }
+                            }, {
+                            headers: {
+                                authorization: sessionStorage.getItem("token")
                             }
-                        }, {
-                        headers: {
-                            authorization: sessionStorage.getItem("token")
                         }
-                    }
-                    )
+                        )
 
-                    Swal.fire(
-                        'Añadido!',
-                        'Actividad académica añadida.',
-                        'success'
-                    )
-                    await updateState('academic')
-                    setAcademics([...academics, { ...currentAcademic, id: res.data.id }])
-                    console.log(res)
-                }
-            })
-        } else {
-            const res = await axios.put(`https://api-perfil.uc.r.appspot.com/academics/update`,
-                {
-                    id: currentAcademic.id,
-                    academics: {
-                        institution: currentAcademic.institution,
-                        title: currentAcademic.title,
-                        state: currentAcademic.state,
-                        beginDate: currentAcademic.beginDate,
-                        endDate: currentAcademic.endDate,
-                        description: currentAcademic.description
+                        Swal.fire(
+                            'Añadido!',
+                            'Actividad académica añadida.',
+                            'success'
+                        )
+                        await updateState('academic')
+                        setAcademics([...academics, { ...currentAcademic, id: res.data.id }])
+                        console.log(res)
                     }
-                }, {
-                headers: {
-                    authorization: sessionStorage.getItem("token")
+                }).catch(e => {
+                    Swal.fire(
+                        'Error!',
+                        e.response.data.msg,
+                        'error'
+                    )
+                })
+            } else {
+                const res = await axios.put(`https://api-perfil.uc.r.appspot.com/academics/update`,
+                    {
+                        id: currentAcademic.id,
+                        academics: {
+                            institution: currentAcademic.institution,
+                            title: currentAcademic.title,
+                            state: currentAcademic.state,
+                            beginDate: currentAcademic.beginDate,
+                            endDate: currentAcademic.endDate,
+                            description: currentAcademic.description
+                        }
+                    }, {
+                    headers: {
+                        authorization: sessionStorage.getItem("token")
+                    }
                 }
+                )
+                Swal.fire(
+                    'Actualizado!',
+                    'Actividad académica actualizada.',
+                    'success'
+                )
+                await updateState('academic')
+                setAcademics([...academics, currentAcademic])
+                console.log(res)
             }
-            )
-            Swal.fire(
-                'Actualizado!',
-                'Actividad académica actualizada.',
-                'success'
-            )
-            await updateState('academic')
-            setAcademics([...academics, currentAcademic])
-            console.log(res)
-        }
-        setCurrentAcademic({
-            ...currentAcademic,
-            institution: "",
-            title: "",
-            //state:"",
-            beginDate: "",
-            endDate: "",
-            description: "",
-            edited: false
-        })
+            setCurrentAcademic({
+                ...currentAcademic,
+                institution: "",
+                title: "",
+                //state:"",
+                beginDate: "",
+                endDate: "",
+                description: "",
+                edited: false
+            })
     }
 
     const editAcademic = (ac) => {
@@ -408,6 +423,7 @@ function EditProfesionalProfile() {
 
     //Métodos de actividades laborales
     const addLabor = async () => {
+        try {
             if (!currentLabor.edited) {
                 Swal.fire({
                     title: 'Añadir actividad laboral?',
@@ -444,7 +460,13 @@ function EditProfesionalProfile() {
                     await updateState('labor')
                     setLabors([...labors, { ...currentLabor, id: res.data.id }])
                 }
-                )
+                ).catch(e => {
+                    Swal.fire(
+                        'Error!',
+                        e.response.data.msg,
+                        'error'
+                    )
+                })
 
 
             } else {
@@ -484,6 +506,14 @@ function EditProfesionalProfile() {
                 description: "",
                 edited: false
             })
+        } catch (e) {
+            console.log(e)
+            Swal.fire(
+                'Error!',
+                e.response.data.msg,
+                'error'
+            )
+        }
     }
 
     const editLabor = (lab) => {
@@ -534,55 +564,28 @@ function EditProfesionalProfile() {
     }
 
     const addIndependent = async () => {
-            if (!currentIndependent.edited) {
-                console.log(JSON.stringify({
-                    userid: user.id,
-                    independents: {
-                        title: currentIndependent.title,
-                        state: currentIndependent.state,
-                        beginDate: currentIndependent.beginDate,
-                        endDate: currentIndependent.endDate,
-                        description: currentIndependent.description
-                    }
-                }))
-                Swal.fire({
-                    title: 'Añadir actividad independiente?',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Añadir',
-                    cancelButtonText: "Cancelar"
-                }).then(async (result) => {
-                    const res = await axios.post(`https://api-perfil.uc.r.appspot.com/independents/create`,
-                        {
-                            userid: user.id,
-                            independents: {
-                                title: currentIndependent.title,
-                                state: currentIndependent.state,
-                                beginDate: currentIndependent.beginDate,
-                                endDate: currentIndependent.endDate,
-                                description: currentIndependent.description
-                            }
-                        }, {
-                        headers: {
-                            authorization: sessionStorage.getItem("token")
-                        }
-                    }
-                    )
-
-                    Swal.fire(
-                        'Añadido!',
-                        'Actividad independiente añadida.',
-                        'success'
-                    )
-                    await updateState('independent')
-                    setIndependents([...independents, { ...currentIndependent, id: res.data.id }])
+        if (!currentIndependent.edited) {
+            console.log(JSON.stringify({
+                userid: user.id,
+                independents: {
+                    title: currentIndependent.title,
+                    state: currentIndependent.state,
+                    beginDate: currentIndependent.beginDate,
+                    endDate: currentIndependent.endDate,
+                    description: currentIndependent.description
                 }
-                )
-            } else {
-                const res = await axios.put(`https://api-perfil.uc.r.appspot.com/independents/update`,
+            }))
+            Swal.fire({
+                title: 'Añadir actividad independiente?',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Añadir',
+                cancelButtonText: "Cancelar"
+            }).then(async (result) => {
+                const res = await axios.post(`https://api-perfil.uc.r.appspot.com/independents/create`,
                     {
-                        id: currentIndependent.id,
+                        userid: user.id,
                         independents: {
                             title: currentIndependent.title,
                             state: currentIndependent.state,
@@ -596,23 +599,56 @@ function EditProfesionalProfile() {
                     }
                 }
                 )
+
                 Swal.fire(
-                    'Actualizado!',
-                    'Actividad independiente actualizada.',
+                    'Añadido!',
+                    'Actividad independiente añadida.',
                     'success'
                 )
                 await updateState('independent')
-                setIndependents([...independents, currentIndependent])
+                setIndependents([...independents, { ...currentIndependent, id: res.data.id }])
             }
-            setCurrentIndependent({
-                ...currentIndependent,
-                title: "",
-                //state:"",
-                beginDate: "",
-                endDate: "",
-                description: "",
-                edited: false
+            ).catch(e => {
+                Swal.fire(
+                    'Error!',
+                    e.response.data.msg,
+                    'error'
+                )
             })
+        } else {
+            const res = await axios.put(`https://api-perfil.uc.r.appspot.com/independents/update`,
+                {
+                    id: currentIndependent.id,
+                    independents: {
+                        title: currentIndependent.title,
+                        state: currentIndependent.state,
+                        beginDate: currentIndependent.beginDate,
+                        endDate: currentIndependent.endDate,
+                        description: currentIndependent.description
+                    }
+                }, {
+                headers: {
+                    authorization: sessionStorage.getItem("token")
+                }
+            }
+            )
+            Swal.fire(
+                'Actualizado!',
+                'Actividad independiente actualizada.',
+                'success'
+            )
+            await updateState('independent')
+            setIndependents([...independents, currentIndependent])
+        }
+        setCurrentIndependent({
+            ...currentIndependent,
+            title: "",
+            //state:"",
+            beginDate: "",
+            endDate: "",
+            description: "",
+            edited: false
+        })
     }
 
     const editIndependent = (ind) => {
@@ -980,11 +1016,7 @@ function EditProfesionalProfile() {
                             <div className="fillForms">
                                 <div className="fillForm">
                                     <label>Idioma</label>
-                                    <label>{lanList.map((l) => {
-                                        if (l.id == lan.languageId) {
-                                            return l.name
-                                        }
-                                    })}</label>
+                                    <label>{lan?.language.name}</label>
                                 </div>
                                 <div className="fillForm">
                                     <label>Nivel</label>
@@ -1033,11 +1065,7 @@ function EditProfesionalProfile() {
                             <div className="fillForms">
                                 <div className="fillForm">
                                     <label>Habilidad</label>
-                                    <label>{skillList.map((l) => {
-                                        if (l.id == sk.skillId) {
-                                            return l.name
-                                        }
-                                    })}</label>
+                                    <label>{sk?.skill.name}</label>
                                 </div>
                                 <div className="fillForm">
                                     <label>Puntaje</label>

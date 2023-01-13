@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { PrimaryButton } from '../../styles/styledComponents/Buttons';
-import { selectUser } from '../../features/userSlice';
+import { login, selectUser } from '../../features/userSlice';
 import '../../styles/ProfilePage.css'
 import { Countries } from '../../jsons/countries';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import Swal from 'sweetalert2';
+import Cookies from 'universal-cookie';
 
 
 
@@ -16,28 +17,40 @@ function ProfilePage() {
     const user = useSelector(selectUser);
     const navigate = useNavigate();
     const ref = useRef(null);
+    const dispatch = useDispatch();
+    const cookies = new Cookies()
 
     const [userGeneralData, setUserGeneralData] = useState({})
 
     const handleProfileChange = async () => {
-        console.log(JSON.stringify({
-            userid: user.id,
-            userGeneralData
-        }))
-        const res = await axios.put(`https://api-perfil.uc.r.appspot.com/user/update`,
-            {
-                userid: user.id,
-                userGeneralData
-            }, {
-            headers: {
-                authorization: sessionStorage.getItem("token")
-            }
-        })
-        Swal.fire(
-            'Actualizado!',
-            'Perfil actualizado.',
-            'success'
-          )
+        try {
+            const res = await axios.put(`https://api-perfil.uc.r.appspot.com/user/update`,
+                {
+                    userid: user.id,
+                    userGeneralData
+                }, {
+                headers: {
+                    authorization: sessionStorage.getItem("token")
+                }
+            })
+            Swal.fire(
+                'Actualizado!',
+                'Perfil actualizado.',
+                'success'
+            )
+            const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${user.id}`)
+            dispatch(login({
+                ...user,
+                ...profInfo.data,
+            }))
+        } catch (e) {
+            console.log(e)
+            Swal.fire(
+                'Error!',
+                e.response.data.msg,
+                'error'
+            )
+        }
     }
 
     useEffect(() => {
@@ -77,27 +90,27 @@ function ProfilePage() {
                     <div className="fillForms">
                         <div className="fillForm">
                             <label>Nombre</label>
-                            <input type="text" value={userGeneralData?.firstname} onChange={(event) => setUserGeneralData({...userGeneralData, firstname: event.target.value })} />
+                            <input type="text" value={userGeneralData?.firstname} onChange={(event) => setUserGeneralData({ ...userGeneralData, firstname: event.target.value })} />
                         </div>
                         <div className="fillForm">
                             <label>Apellido</label>
-                            <input type="text" value={userGeneralData?.lastname} onChange={(event) => setUserGeneralData({...userGeneralData, lastname: event.target.value })} />
+                            <input type="text" value={userGeneralData?.lastname} onChange={(event) => setUserGeneralData({ ...userGeneralData, lastname: event.target.value })} />
                         </div>
                         <div className="fillForm">
                             <label>Email</label>
-                            <input type="text" value={userGeneralData?.email} onChange={(event) => setUserGeneralData({...userGeneralData, email: event.target.value })} />
+                            <input type="text" value={userGeneralData?.email} onChange={(event) => setUserGeneralData({ ...userGeneralData, email: event.target.value })} />
                         </div>
                         <div className="fillForm">
                             <label>Fecha de Nacimiento</label>
-                            <input type="date" value={userGeneralData?.birthdate} onChange={(e) => setUserGeneralData({...userGeneralData, birthdate: e.target.value})}/>
+                            <input type="date" value={userGeneralData?.birthdate} onChange={(e) => setUserGeneralData({ ...userGeneralData, birthdate: e.target.value })} />
                         </div>
                         <div className="fillForm">
                             <label>Telefono</label>
-                            <input type="text" value={userGeneralData?.phone} onChange={(event) => setUserGeneralData({...userGeneralData, phone: event.target.value })} />
+                            <input type="text" value={userGeneralData?.phone} onChange={(event) => setUserGeneralData({ ...userGeneralData, phone: event.target.value })} />
                         </div>
                         <div className="fillForm">
                             <label>Pais</label>
-                            <select name="" id="" value={userGeneralData?.country} onChange={(event) => setUserGeneralData({...userGeneralData, country: event.target.value })}>
+                            <select name="" id="" value={userGeneralData?.country} onChange={(event) => setUserGeneralData({ ...userGeneralData, country: event.target.value })}>
                                 <option value=""></option>
                                 {Countries.map((c) => {
                                     return <option value={c?.iso2}>{c?.nombre}</option>
@@ -106,17 +119,17 @@ function ProfilePage() {
                         </div>
                         <div className="fillForm">
                             <label>Ciudad</label>
-                            <input type="text" value={userGeneralData?.city} onChange={(event) => setUserGeneralData({...userGeneralData, city: event.target.value })} />
+                            <input type="text" value={userGeneralData?.city} onChange={(event) => setUserGeneralData({ ...userGeneralData, city: event.target.value })} />
                         </div>
                         <div className="fillForm">
                             <label>Nick Name</label>
-                            <input type="text" value={userGeneralData?.nickname} onChange={(e) => setUserGeneralData({...userGeneralData, nickname: e.target.value})} />
+                            <input type="text" value={userGeneralData?.nickname} onChange={(e) => setUserGeneralData({ ...userGeneralData, nickname: e.target.value })} />
                         </div>
                     </div>
                 </div>
                 <div className="descriptionContainer">
                     <h3>Mi Biografía</h3>
-                    <textarea value={userGeneralData?.biography} onChange={(e) => setUserGeneralData({...userGeneralData, biography: e.target.value})}></textarea>
+                    <textarea value={userGeneralData?.biography} onChange={(e) => setUserGeneralData({ ...userGeneralData, biography: e.target.value })}></textarea>
                 </div>
 
                 <PrimaryButton onClick={() => handleProfileChange()}>Guardar</PrimaryButton>

@@ -13,8 +13,8 @@ const EditEventModal = ({ open, onClose, fetch, update, setUpdate, current, setC
     const fetchData = async () => {
       const res = await axios.get(`https://api-perfil.uc.r.appspot.com/tags/`)
       setTagList(res.data)
-  }
-  fetchData()
+    }
+    fetchData()
   }, []);
 
   useEffect(() => {
@@ -22,27 +22,35 @@ const EditEventModal = ({ open, onClose, fetch, update, setUpdate, current, setC
   }, [current]);
 
   const handleSubmit = async () => {
-
-    if (!update) {
-      console.log( { event: actualEvent })
-      const res = await axios.post(`https://api-perfil.uc.r.appspot.com/events/create`, { event: actualEvent })
+    try {
+      if (!update) {
+        console.log({ event: actualEvent })
+        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/events/create`, { event: actualEvent })
+        Swal.fire(
+          'Añadido!',
+          'Evento añadido.',
+          'success'
+        )
+      } else {
+        const res = await axios.put(`https://api-perfil.uc.r.appspot.com/events/update`, { eventid: current.id, event: actualEvent })
+        Swal.fire(
+          'Actualizado!',
+          'Evento actualizado.',
+          'success'
+        )
+        setUpdate(false)
+        setCurrent({})
+      }
+      onClose()
+      fetch()
+    } catch (e) {
+      console.log(e)
       Swal.fire(
-        'Añadido!',
-        'Evento añadido.',
-        'success'
+        'Error!',
+        e.response.data.msg,
+        'error'
       )
-    } else {
-      const res = await axios.put(`https://api-perfil.uc.r.appspot.com/events/update`, { eventid: current.id, event: actualEvent })
-      Swal.fire(
-        'Actualizado!',
-        'Evento actualizado.',
-        'success'
-      )
-      setUpdate(false)
-      setCurrent({})
     }
-    onClose()
-    fetch()
   }
 
   if (!open) return null;
@@ -83,11 +91,11 @@ const EditEventModal = ({ open, onClose, fetch, update, setUpdate, current, setC
         <div className="modalCamp">
           <label for="tagList">Etiquetas</label>
           <select id="tagList" className='modalInput selectMultiple' multiple onChange={(e) => {
-                        const selectedOptions = Array.from(e.target.selectedOptions).map(option => Number(option.value));
-                        setActualEvent({ ...actualEvent, tagList: selectedOptions })
-                    }}>
+            const selectedOptions = Array.from(e.target.selectedOptions).map(option => Number(option.value));
+            setActualEvent({ ...actualEvent, tagList: selectedOptions })
+          }}>
             {
-              tagList.map(t=>{
+              tagList.map(t => {
                 return (
                   <option value={t.id}>{t.name}</option>
                 )
