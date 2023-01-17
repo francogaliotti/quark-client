@@ -21,13 +21,35 @@
     border-radius: 10px;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.imgContainer {
+  /* Centramos la imagen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Aplicamos un borde redondo */
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid black;
+
+  /* Establecemos el tamaño de la imagen */
+  width: 200px;
+  height: 200px;
 }
 
 .basicInfo img {
+    object-fit: cover;
     height: 200px;
     width: 200px;
-    border-radius: 100px;
+    border-radius: 50%;
 }
+
+
 
 .descriptionContainer {
     background-color: #eee;

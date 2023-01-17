@@ -703,7 +703,7 @@ function EditProfesionalProfile() {
         const languageList = await axios.get('https://api-perfil.uc.r.appspot.com/parameters/languages')
         setLanList(languageList.data)
         //habilidades parametrizadas
-        const skillsList = await axios.get(`https://api-perfil.uc.r.appspot.com/parameters/skills/${user.profile.career}`)
+        const skillsList = await axios.get(`https://api-perfil.uc.r.appspot.com/parameters/skills/${user.career}`)
         setSkillList(skillsList.data)
     }
 

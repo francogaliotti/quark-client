@@ -117,11 +117,11 @@ function Events() {
               </div>
             </div>
           })}
-          {pastEventsList.length > 6 && <ReactPaginate
+          {elementCountPast > 6 && <ReactPaginate
             previousLabel={"<"}
             nextLabel={">"}
-            pageCount={pageCountFuture}
-            onPageChange={changePageFuture}
+            pageCount={pageCountPast}
+            onPageChange={changePagePast}
             containerClassName={"pastEventPaginationBttns"}
             previousLinkClassName={"eventPreviousBttn"}
             pageClassName={"pageBttn"}

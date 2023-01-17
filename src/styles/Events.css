@@ -89,13 +89,17 @@
     flex-direction: column;
     align-items: center;
     width: 80%;
-    height: 90%;
+    height: fit-content;
+}
+
+.pastEvContainer p {
+    margin-top: -10px;
 }
 
 #pastSingleEvent {
     width: 100%;
-    height: max-content;
-    max-width: 180px;
+    height: 245px;
+    max-width: 145px;
     justify-content: center;
 }
 
@@ -136,27 +140,27 @@
 
 @media (max-width: 732px) {
     
-    .pastEvContainer {
-        width: 90%;
-        height: 80%;
-    }
-
-    .pastEvContainer p {
-        margin-top: -10px;
-    }
-    
     #pastSingleEvent {
         width: 100%;
-        height: max-content;
-        max-width: 140px;
+        height: 230px;
+        max-width: 130px;
         justify-content: center;
     }
 }
 
 @media (max-width: 602px) {
 
+    .eventPageContainer {
+        width: 98%;
+        margin: 5px;
+    }
+
     .liveEventsList {
         width: 130%;
+    }
+
+    .pastEventsList {
+        width: 140%;
     }
 
     .eventPaginationBttns {
@@ -165,9 +169,17 @@
     
     #pastSingleEvent {
         width: 100%;
-        height: max-content;
-        max-width: 120px;
+        height: 200px;
+        max-width: 110px;
         justify-content: center;
     }
 
+    .pastEvContainer {
+        width: 80%;
+    }
+
+    #eventDescription {
+        max-width: 120px; /* Tamaño máximo del parrafo */
+        max-height: 65px;
+    }
 }

@@ -16,7 +16,8 @@ import Cookies from 'universal-cookie';
 function ProfilePage() {
     const user = useSelector(selectUser);
     const navigate = useNavigate();
-    const ref = useRef(null);
+    const refCV = useRef(null);
+    const refImg = useRef(null);
     const dispatch = useDispatch();
     const cookies = new Cookies()
 
@@ -71,17 +72,30 @@ function ProfilePage() {
 
     }, []);
 
+    const handleProfileImg = (file) => {
+        console.log(file)
+        const formData = new FormData();
+        formData.append("file", file)
+        formData.append("userid", user.id);
+        const res = axios.post(`https://api-perfil.uc.r.appspot.com/userImg/upload`, formData)
+        console.log(formData)
+    }
+
     return (
         <div className="profilePageContainer">
             <div className="leftContainer">
                 <div className="basicInfo">
-                    <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="" />
+                   
+                        <img src={user.userImage} />
+                  
+                    <PrimaryButton onClick={() => refImg.current.click()}>Cambiar Imagen</PrimaryButton>
+                    <input ref={refImg} type='file' id="getFile" onChange={(e) => handleProfileImg(e.target.files[0])} />
                     <h2 className="name">{user?.username}</h2>
                 </div>
                 <div className="descriptionContainer">
                     <h3>Añade tu CV</h3>
-                    <PrimaryButton onClick={() => ref.current.click()}>Añadir CV</PrimaryButton>
-                    <input ref={ref} type='file' id="getFile" />
+                    <PrimaryButton onClick={() => refCV.current.click()}>Añadir CV</PrimaryButton>
+                    <input ref={refCV} type='file' id="getFile" />
                 </div>
             </div>
             <div className="rightContainer">
