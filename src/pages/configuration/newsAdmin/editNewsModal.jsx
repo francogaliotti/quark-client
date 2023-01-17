@@ -4,6 +4,7 @@ import '../../../styles/Modal.css'
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
+
 export const EditNewsModal = ({ open, onClose, fetch, update, setUpdate, current, setCurrent }) => {
 
     const [moodleCourses, setMoodleCourses] = useState([])

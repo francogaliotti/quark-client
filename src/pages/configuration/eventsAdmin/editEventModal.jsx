@@ -89,7 +89,7 @@ const EditEventModal = ({ open, onClose, fetch, update, setUpdate, current, setC
           <textarea id="descripcion" className='modalTextArea' value={actualEvent?.description} onChange={(e) => setActualEvent({ ...actualEvent, description: e.target.value })} />
         </div>
         <div className="modalCamp">
-          <label for="tagList">Etiquetas</label>
+          <label for="tagList">Etiquetas <p>(Mantener Ctrl.)</p></label>
           <select id="tagList" className='modalInput selectMultiple' multiple onChange={(e) => {
             const selectedOptions = Array.from(e.target.selectedOptions).map(option => Number(option.value));
             setActualEvent({ ...actualEvent, tagList: selectedOptions })

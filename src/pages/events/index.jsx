@@ -55,18 +55,18 @@ function Events() {
         <h2>Webinars en vivo</h2>
         <div className="liveEventsList">
           {futureEventsList.map(e => {
-            return <div className="singleEvent" onClick={() => window.location.href = e.link}>
+            return <div className="singleEvent" onClick={() => window.open("http://" + e.link, "_blank", "noopener noreferrer")}>
               <div className="seLeftContainer">
                 <img id='eventImg' src="https://img.freepik.com/free-vector/joystick-game-sport-technology_138676-2045.jpg?w=2000" alt="" />
               </div>
               <div className="seRightContainer">
                 <h3>{e.title}</h3>
-                <p>{e.description}</p>
+                <p id='eventDescription'>{e.description}</p>
                 <p>{new Date(e.eventDate).toLocaleDateString("en-AU")}</p>
               </div>
             </div>
           })}
-          <ReactPaginate
+          {futureEventsList.length > 2 && <ReactPaginate
             previousLabel={"<"}
             nextLabel={">"}
             pageCount={pageCountFuture}
@@ -77,7 +77,7 @@ function Events() {
             nextLinkClassName={"eventNextBttn"}
             disabledClassName={"paginationDisabled"}
             activeClassName={"paginationActive"}
-          />
+          />}
         </div>
 
       </div>
@@ -108,17 +108,16 @@ function Events() {
       <div className="liveEventsContainer">
         <div className="pastEventsList">
 
-          {/*Información hardcodeada*/}
           {pastEventsList.map(e => {
-            return <div className="singleEvent" id='pastSingleEvent'>
+            return <div className="singleEvent" id='pastSingleEvent' onClick={() => window.open("http://" + e.link, "_blank", "noopener noreferrer")}>
               <div className="pastEvContainer">
                 <img id='eventImg' src="https://img.freepik.com/free-vector/joystick-game-sport-technology_138676-2045.jpg?w=2000" alt="" />
                 <h3>{e.title}</h3>
-                <p>{e.description}</p>
+                <p id='eventDescription'>{e.description}</p>
               </div>
             </div>
           })}
-          <ReactPaginate
+          {pastEventsList.length > 6 && <ReactPaginate
             previousLabel={"<"}
             nextLabel={">"}
             pageCount={pageCountFuture}
@@ -129,7 +128,7 @@ function Events() {
             nextLinkClassName={"eventNextBttn"}
             disabledClassName={"paginationDisabled"}
             activeClassName={"paginationActive"}
-          />
+          />}
         </div>
 
 

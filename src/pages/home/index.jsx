@@ -49,7 +49,7 @@ function Home() {
                 <ProfProgressBar type='normal' />
                 <ProfProgressBar type='profesional' />
             </div>
-            <div className="homeEvent">
+            {newsList.length !== 0 && <div className="homeEvent">
                 <h2>Novedades</h2>
                 <div className="homeNewsContainer">
                     {newsList?.map(n => {
@@ -59,7 +59,7 @@ function Home() {
                         </div>
                     })}
                 </div>
-            </div>
+            </div>}
             <div className="homeEvent">
                 <h2>Tus últimos cursos</h2>
                 <div className="wrapContainer" id='homeEvents'>

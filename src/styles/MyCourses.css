@@ -21,7 +21,7 @@
 .wrapContainer {
     display: flex;
     flex-wrap: wrap;
-    width: 90%;
+    max-width: 90%;
     gap: 25px;
     justify-content: center;
     background-color: #666;

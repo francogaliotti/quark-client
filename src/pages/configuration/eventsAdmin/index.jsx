@@ -115,7 +115,7 @@ export const EventsAdmin = () => {
                             <tr key={n.id}>
                                 <td>{n.title}</td>
                                 <td>{new Date(n.eventDate).toLocaleDateString("en-AU")}</td>
-                                <td><a href={n.link}>{n.link}</a></td>
+                                <td><a href="#" onClick={() => window.open("http://" + n.link, "_blank", "noopener noreferrer")}>{n.link}</a></td>
                                 <td id='crudButtons'>
                                     <button className='plus' onClick={() => openForUpdate(n)}><FontAwesomeIcon icon={faPenToSquare} /></button>
                                     <button className='plus' onClick={() => handleDelete(n)}><FontAwesomeIcon icon={faTrashCan} /></button>
