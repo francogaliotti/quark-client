@@ -12,13 +12,13 @@ function ProfProgressBar(props) {
     const handlePorcentajeProfile = (type) => {
         let counter = 0
         if (type) {
-            if (user?.academics.length != 0) {
+            if (user?.academicActivities.length != 0) {
                 counter += 16.7
             }
-            if (user?.labors.length != 0) {
+            if (user?.laborActivities.length != 0) {
                 counter += 16.7
             }
-            if (user?.independents.length != 0) {
+            if (user?.independentActivities.length != 0) {
                 counter += 16.7
             }
             if (user?.languages?.length != 0) {
@@ -27,32 +27,32 @@ function ProfProgressBar(props) {
             if (user?.skills.length != 0) {
                 counter += 16.7
             }
-            if (user?.profile.nickname?.length != 0) {
+            if (user?.userBasicDatum.nickname?.length != 0) {
                 counter += 16.7
             }
         } else {
-            if (user?.profile.biography?.length != 0) {
+            if (user?.userBasicDatum.biography?.length != 0) {
                 counter += 12.5
             }
-            if (user?.profile.birthdate?.length != (0 || undefined)) {
+            if (user?.userBasicDatum.birthdate?.length != (0 || undefined)) {
                 counter += 12.5
             }
-            if (user?.firstname?.length != 0) {
+            if (user?.moodleUserData.firstname?.length != 0) {
                 counter += 12.5
             }
-            if (user?.lastname?.length != 0) {
+            if (user?.moodleUserData.lastname?.length != 0) {
                 counter += 12.5
             }
-            if (user?.email?.length != 0) {
+            if (user?.moodleUserData.email?.length != 0) {
                 counter += 12.5
             }
-            if (user?.country?.length != 0) {
+            if (user?.moodleUserData.country?.length != 0) {
                 counter += 12.5
             }
-            if (user?.city?.length != 0) {
+            if (user?.moodleUserData.city?.length != 0) {
                 counter += 12.5
             }
-            if (user?.phone?.length != 0) {
+            if (user?.moodleUserData.phone?.length != 0) {
                 counter += 12.5
             }
         }

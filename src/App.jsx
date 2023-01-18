@@ -25,7 +25,7 @@ function App() {
         const username = cookies.get("username")
         const res = await axios.get(`https://api-perfil.uc.r.appspot.com/user/getMoodleData/${username}`)
         const user = res.data
-        const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${user.id}`)
+        const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${user.moodleUserData.id}`)
         dispatch(login({
           ...user,
           ...profInfo.data,

@@ -39,11 +39,7 @@ function ProfilePage() {
                 'Perfil actualizado.',
                 'success'
             )
-            const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${user.id}`)
-            dispatch(login({
-                ...user,
-                ...profInfo.data,
-            }))
+            await updateData()
         } catch (e) {
             console.log(e)
             Swal.fire(
@@ -55,30 +51,55 @@ function ProfilePage() {
     }
 
     useEffect(() => {
-        if (!sessionStorage.getItem("sesskey")) navigate('/login')
+        if (!cookies.get('myCookieName')) navigate('/login')
 
         setUserGeneralData({
-            biography: user?.profile.biography,
-            nickname: user?.profile.nickname,
-            birthdate: user?.profile.birthdate,
-            firstname: user?.firstname,
-            lastname: user?.lastname,
-            email: user?.email,
-            city: user?.city,
-            phone: user?.phone,
-            country: user?.country
+            biography: user?.userBasicDatum.biography,
+            nickname: user?.userBasicDatum.nickname,
+            birthdate: user?.userBasicDatum.birthdate,
+            firstname: user?.moodleUserData.firstname,
+            lastname: user?.moodleUserData.lastname,
+            email: user?.moodleUserData.email,
+            city: user?.moodleUserData.city,
+            phone: user?.moodleUserData.phone,
+            country: user?.moodleUserData.country
         })
 
 
     }, []);
 
-    const handleProfileImg = (file) => {
-        console.log(file)
+    const handleProfileImg = async (file) => {
+        try{
         const formData = new FormData();
         formData.append("file", file)
         formData.append("userid", user.id);
-        const res = axios.post(`https://api-perfil.uc.r.appspot.com/userImg/upload`, formData)
-        console.log(formData)
+        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/userImg/upload`, formData)
+        console.log(res)
+
+        Swal.fire(
+            'Actualizado!',
+            'Imagen actualizada.',
+            'success'
+        )
+        await updateData()
+
+        } catch (e) {
+            console.log(e)
+            Swal.fire(
+                'Error!',
+                e.response.data.msg,
+                'error'
+            )
+
+        }
+    }
+
+    const updateData = async () => {
+        const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${user.id}`)
+        dispatch(login({
+            ...user,
+            ...profInfo.data,
+        }))
     }
 
     return (
@@ -86,16 +107,16 @@ function ProfilePage() {
             <div className="leftContainer">
                 <div className="basicInfo">
                    
-                        <img src={user.userImage} />
+                        <img src={user?.userBasicDatum[0].imgUrl} />
                   
                     <PrimaryButton onClick={() => refImg.current.click()}>Cambiar Imagen</PrimaryButton>
-                    <input ref={refImg} type='file' id="getFile" onChange={(e) => handleProfileImg(e.target.files[0])} />
+                    <input ref={refImg} type='file' id="getFile" accept="image/png, image/jpeg, image/jpg" onChange={(e) => handleProfileImg(e.target.files[0])} />
                     <h2 className="name">{user?.username}</h2>
                 </div>
                 <div className="descriptionContainer">
                     <h3>Añade tu CV</h3>
                     <PrimaryButton onClick={() => refCV.current.click()}>Añadir CV</PrimaryButton>
-                    <input ref={refCV} type='file' id="getFile" />
+                    <input ref={refCV} type='file' accept='.pdf' id="getFile" />
                 </div>
             </div>
             <div className="rightContainer">

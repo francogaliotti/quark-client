@@ -13,17 +13,14 @@ export const userSlice = createSlice({
     },
     reducers: {
         login: (state, action) => {
-            sessionStorage.setItem("username", action.payload.username)
             sessionStorage.setItem("sesskey", action.payload.sesskey)
             sessionStorage.setItem("token", action.payload.token)
             const cookies = new Cookies()
-            cookies.set('username', action.payload.username, {path:'/', maxAge: 5000})
+            cookies.set('username', action.payload.moodleUserData.username)
             state.user = action.payload
-            console.log(cookies.getAll())
-            
+            console.log(action.payload)           
         },
         logout: async (state) => {
-            sessionStorage.removeItem("username")
             sessionStorage.removeItem("sesskey")
             sessionStorage.removeItem("token")
             const cookies = new Cookies()

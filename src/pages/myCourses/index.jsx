@@ -23,7 +23,7 @@ function MyCourses() {
             <h1>Mis cursos</h1>
             <div className="wrapContainer">
 
-                {user?.listaCurso.map((c) => {
+                {user?.moodleUserData.listaCurso.map((c) => {
                     return (<div className="basicInfo" id='courseContainer'>
                         <h3 id='courseTitle'>{c.fullName}</h3>
                         <img src={c.url} id='courseImg' />

@@ -38,7 +38,7 @@ function LoginForm() {
 
     const setSesskeyNull = async () => {
         const res = axios.post(`https://api-perfil.uc.r.appspot.com/sesskey/`, {
-            'id': moodleData.id, //aca tiene que ir user.id
+            'id': moodleData.moodleUserData.id, //aca tiene que ir user.id
             'sesskey': null
         })
     }
@@ -72,13 +72,13 @@ function LoginForm() {
                     //{ withCredentials: "include" }
                     )*/
                 cookieRef.current.src = `http://localhost:3031/login`
-                const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${moodleData.id}`, {
+                const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${moodleData.moodleUserData.id}`, {
                     /* headers: {
                          authorization: loginResponse.data.token
                      }*/
                 })
                 try {
-                    const res = await axios.get(`https://api-perfil.uc.r.appspot.com/sesskey/${moodleData.id}`) //aca tendria que usar user.id
+                    const res = await axios.get(`https://api-perfil.uc.r.appspot.com/sesskey/${moodleData.moodleUserData.id}`) //aca tendria que usar user.id
                     console.log(res)
                     if (res.data.sesskey === "") {
                         throw "Contraseña incorrecta"

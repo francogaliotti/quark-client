@@ -14,25 +14,25 @@ function ProfesionalProfile() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!sessionStorage.getItem("sesskey")) navigate('/login')
+        if (!user) navigate('/login')
     }, []);
 
     return (
         <div className="profesionalProfileContainer">
             <div className="basicInfo" id='profesionalInfo'>
-                <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="" />
-                <h2 className="name">{user?.profile.nickname}</h2>
+                <img src={user?.userBasicDatum.imgUrl} alt="" />
+                <h2 className="name">{user?.userBasicDatum.nickname}</h2>
 
                 <div className="profesionalDescriptionContainer">
                     <ProfProgressBar type='profesional'/>
                     <h3>Biografía:</h3>
-                    <p>{user?.profile.biography}</p>
+                    <p>{user?.userBasicDatum.biography}</p>
                 </div>
                 <div className="badgeContainer">
                     <h3>Insignias:</h3>
                     <div className="badges">
                         {
-                            user?.badgesList.map((b) => {
+                            user?.moodleUserData.badgesList.map((b) => {
                                 return (<div className="badge">
                                     <img id='badgeImg' src={b.badgeUrl} alt="" />
                                 </div>)
@@ -42,7 +42,7 @@ function ProfesionalProfile() {
                 </div>
                 <div className="aboutContainer" id='ppAbout'>
                     <h3>Actividades Académicas:</h3>
-                    {user.academics?.map(lan => {
+                    {user.academicActivities?.map(lan => {
                         return (
                             <div className="fillForms">
                                 <div className="fillForm">
@@ -78,7 +78,7 @@ function ProfesionalProfile() {
                 </div>
                 <div className="aboutContainer" id='ppAbout'>
                     <h3>Actividades Laborales:</h3>
-                    {user.labors?.map(lan => {
+                    {user.laborActivities?.map(lan => {
                         return (
                             <div className="fillForms">
                                 <div className="fillForm">
@@ -114,7 +114,7 @@ function ProfesionalProfile() {
                 </div>
                 <div className="aboutContainer" id='ppAbout'>
                     <h3>Actividades Independientes:</h3>
-                    {user.independents?.map(lan => {
+                    {user.independentActivities?.map(lan => {
                         return (
                             <div className="fillForms">
 
@@ -147,7 +147,7 @@ function ProfesionalProfile() {
                 </div>
                 <div className="aboutContainer" id='ppAbout'>
                     <h3>Idiomas:</h3>
-                    {user.languages?.map(lan => {
+                    {user.studentLanguages?.map(lan => {
                         return (
                             <div className="fillForms">
                                 <div className="fillForm">
@@ -165,7 +165,7 @@ function ProfesionalProfile() {
                 </div>
                 <div className="aboutContainer" id='ppAbout'>
                     <h3>Habilidades:</h3>
-                    {user.skills?.map(sk => {
+                    {user.studentSkills?.map(sk => {
                         return (
                             <div className="fillForms">
                                 <div className="fillForm">

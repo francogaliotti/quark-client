@@ -458,7 +458,7 @@ function EditProfesionalProfile() {
                         'success'
                     )
                     await updateState('labor')
-                    setLabors([...labors, { ...currentLabor, id: res.data.id }])
+                    setLabors([...labors, { ...currentLabor, id: res.data.labors.id }])
                 }
                 ).catch(e => {
                     Swal.fire(
@@ -606,7 +606,7 @@ function EditProfesionalProfile() {
                     'success'
                 )
                 await updateState('independent')
-                setIndependents([...independents, { ...currentIndependent, id: res.data.id }])
+                setIndependents([...independents, { ...currentIndependent, id: res.data.independent.id }])
             }
             ).catch(e => {
                 Swal.fire(
@@ -709,19 +709,19 @@ function EditProfesionalProfile() {
 
     const setData = () => {
         //idiomas del alumno
-        const langList = user.languages
+        const langList = user.studentLanguages
         setLanguages(langList)
         //habilidades del alumno
-        const skList = user.skills
+        const skList = user.studentSkills
         setSkills(skList)
         //actividades académicas
-        const academicList = user.academics
+        const academicList = user.academicActivities
         setAcademics(academicList)
         //actividades laborales
-        const laborList = user.labors
+        const laborList = user.laborActivities
         setLabors(laborList)
         //actividades independientes
-        const indepList = user.independents
+        const indepList = user.independentActivities
         setIndependents(indepList)
     }
 
@@ -735,7 +735,7 @@ function EditProfesionalProfile() {
                 })
                 dispatch(login({
                     ...user,
-                    independents: resInd.data
+                    independentActivities: resInd.data
                 }))
                 break
             case 'academic':
@@ -746,7 +746,7 @@ function EditProfesionalProfile() {
                 })
                 dispatch(login({
                     ...user,
-                    academics: resAc.data
+                    academicActivities: resAc.data
                 }))
                 break
             case 'labor':
@@ -757,7 +757,7 @@ function EditProfesionalProfile() {
                 })
                 dispatch(login({
                     ...user,
-                    labors: resLab.data
+                    laborActivities: resLab.data
                 }))
                 break
             case 'language':
@@ -768,7 +768,7 @@ function EditProfesionalProfile() {
                 })
                 dispatch(login({
                     ...user,
-                    languages: resLan.data
+                    studentLanguages: resLan.data
                 }))
                 break
             case 'skill':
@@ -779,7 +779,7 @@ function EditProfesionalProfile() {
                 })
                 dispatch(login({
                     ...user,
-                    skills: resSk.data
+                    studentSkills: resSk.data
                 }))
                 break
         }

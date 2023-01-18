@@ -16,7 +16,7 @@ function Home() {
     const cookies = new Cookies()
     let cursosOrdenados = []
     if (user) {
-        const arrayForSort = [...user.listaCurso]
+        const arrayForSort = [...user.moodleUserData.listaCurso]
         cursosOrdenados = arrayForSort.sort((x, y) => x.lastaccess - y.lastaccess).reverse().splice(0, 3)
     }
 
@@ -31,7 +31,7 @@ function Home() {
                 { listaCurso })
             setNewsList(res.data)
         }
-        const listaCurso = user?.listaCurso.map(c => {
+        const listaCurso = user?.moodleUserData.listaCurso.map(c => {
             return (c.idCurso)
         })
         console.log(listaCurso)
