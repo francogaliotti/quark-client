@@ -5,6 +5,7 @@ import DevRegisterForm from '../components/devRegisterForm';
 import LoginForm from '../components/loginForm';
 import ProfesionalProfile from '../components/profesionalProfile';
 import EditProfesionalProfile from '../components/profesionalProfile/editProfProfile';
+import { ConfirmRegisterDev } from '../pages/auth/confirmRegisterDev';
 import Configuration from '../pages/configuration';
 import { EventsAdmin } from '../pages/configuration/eventsAdmin';
 import { NewsAdmin } from '../pages/configuration/newsAdmin';
@@ -17,12 +18,17 @@ function PublicRoutes() {
   return (
     <>
     <Routes>
+
+        {/*Public routes */}
         <Route path='/login' element={<LoginForm/>}/>
+        <Route path='/registerDev' element={<DevRegisterForm/>}/>
+        <Route path='/registerCom' element={<ComRegisterForm/>}/>
+        <Route path='/confirmRegisterDev/:id' element={<ConfirmRegisterDev/>}/>
+
+        {/*User routes */}
         <Route path='/profile' element={<ProfilePage/>}/>
         <Route path='/profesionalProfile' element={<ProfesionalProfile/>}/>
         <Route path='/profesionalProfile/edit' element={<EditProfesionalProfile/>}/>
-        <Route path='/registerDev' element={<DevRegisterForm/>}/>
-        <Route path='/registerCom' element={<ComRegisterForm/>}/>
         <Route path='/myCourses' element={<MyCourses/>}/>
         <Route path='/events' element={<Events/>}/>
         <Route path='/' element={<Home/>}/>

@@ -6,6 +6,7 @@ import { PrimaryButton } from '../../styles/styledComponents/Buttons'
 import { login } from '../../features/userSlice'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 function DevRegisterForm() {
 
@@ -14,7 +15,7 @@ function DevRegisterForm() {
 
     const initialValues = {
         username: "",
-        name: "",
+        firstName: "",
         lastName: "",
         password: "",
         password2: "",
@@ -22,26 +23,46 @@ function DevRegisterForm() {
     }
 
     const validationSchema = Yup.object().shape({
-        username: Yup.string().min(3, "El minimo de caracteres es 3").max(20, "El máximo de caracteres es 20").required("Campo requerido"),
-        name: Yup.string().min(3, "El minimo de caracteres es 3").max(20, "El máximo de caracteres es 20").required("Campo requerido"),
-        lastName: Yup.string().min(3, "El minimo de caracteres es 3").max(20, "El máximo de caracteres es 20").required("Campo requerido"),
-        password: Yup.string().min(4, "El minimo de caracteres es 4").max(20, "El máximo de caracteres es 20").required("Campo requerido"),
-        password2: Yup.string().required('Debes confirmar la contraseña').oneOf([Yup.ref('password'), null], "Las contraseñas no coinciden"),
-        email: Yup.string().email("Email invalido").required("Campo requerido")
+        username: Yup.string()
+            .min(3, "El minimo de caracteres es 3")
+            .max(20, "El máximo de caracteres es 20")
+            .lowercase("Solo puede llevar minúsculas")
+            .required("Campo requerido"),
+        firstName: Yup.string()
+            .min(3, "El minimo de caracteres es 3")
+            .max(20, "El máximo de caracteres es 20")
+            .required("Campo requerido"),
+        lastName: Yup.string()
+            .min(3, "El minimo de caracteres es 3")
+            .max(20, "El máximo de caracteres es 20")
+            .required("Campo requerido"),
+        password: Yup.string()
+            .min(8, "El minimo de caracteres es 8")
+            .max(20, "El máximo de caracteres es 20")
+            .matches(/[A-Z]/, 'Debe tener al menos una letra en mayúscula')
+            .matches(/\d/, 'Debe tener al menos un número')
+            .matches(/[a-z]/, 'Debe tener al menos una letra en minúscula')
+            .matches(/\W/, 'Debe tener al menos un caracter alfanumérico')
+            .required("Campo requerido"),
+        password2: Yup.string()
+            .required('Debes confirmar la contraseña')
+            .oneOf([Yup.ref('password'), null], "Las contraseñas no coinciden"),
+        email: Yup.string()
+            .email("Email invalido")
+            .required("Campo requerido")
     })
 
 
-    const onSubmit = (data) => {
-
-        dispatch(login({
+    const onSubmit = async (data) => {
+        const user = {
             username: data.username,
-            password: data.password,
-            name: data.name,
+            firstName: data.firstName,
             lastName: data.lastName,
-            email: data.email,
-            LoggedIn: true
-        }))
-        navigate("/")
+            password: data.password,
+            email: data.email
+        }
+        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/register`, { user })
+        console.log(res)
     }
 
     return (
@@ -67,9 +88,9 @@ function DevRegisterForm() {
                             <Field
                                 autoComplete="off"
                                 id="fieldAddRecord"
-                                name="name"
+                                name="firstName"
                                 placeholder="Tu nombre" />
-                            <ErrorMessage name='name' component='span' />
+                            <ErrorMessage name='firstName' component='span' />
                         </div>
                     </div>
                     <div className="singleField">

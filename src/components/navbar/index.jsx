@@ -23,50 +23,50 @@ function Navbar() {
   }
 
   if (isMovile) return (
-      <Menu right styles={menuStyle} isOpen={isMenuOpen} onOpen={() => setMenuOpen(true)} onClose={() => setMenuOpen(false)} >
-        <div>
-          {user ? <ul className='verticalList' id='verticalResponsive'>
+    <Menu right styles={menuStyle} isOpen={isMenuOpen} onOpen={() => setMenuOpen(true)} onClose={() => setMenuOpen(false)} >
+      <div>
+        {user ? <ul className='verticalList' id='verticalResponsive'>
+          <li><a onClick={() => {
+            navigate('/')
+            setMenuOpen(!isMenuOpen)
+          }}>Inicio</a></li>
+          <li><a onClick={() => {
+            navigate('/profile')
+            setMenuOpen(!isMenuOpen)
+          }}>Mi Perfil</a></li>
+          <li><a onClick={() => {
+            navigate('/profesionalProfile')
+            setMenuOpen(!isMenuOpen)
+          }}>Perfil Profesional</a></li>
+          <li><a onClick={() => {
+            navigate('/myCourses')
+            setMenuOpen(!isMenuOpen)
+          }}>Mi Aprendizaje</a></li>
+          <li><a onClick={() => {
+            navigate('/events')
+            setMenuOpen(!isMenuOpen)
+          }}>Eventos</a></li>
+          {user?.professionalprofile.role == 1 &&
             <li><a onClick={() => {
-              navigate('/')
+              navigate('/config')
               setMenuOpen(!isMenuOpen)
-            }}>Inicio</a></li>
+            }}>Administración del Sitio</a></li>
+          }
+          <li><a onClick={() => handleLogout()}>Logout</a></li>
+        </ul> :
+          <ul className='verticalList' id='verticalResponsive'>
             <li><a onClick={() => {
-              navigate('/profile')
+              navigate('/registerDev')
               setMenuOpen(!isMenuOpen)
-            }}>Mi Perfil</a></li>
+            }}>Developer</a></li>
             <li><a onClick={() => {
-              navigate('/profesionalProfile')
+              navigate('/registerCom')
               setMenuOpen(!isMenuOpen)
-            }}>Perfil Profesional</a></li>
-            <li><a onClick={() => {
-              navigate('/myCourses')
-              setMenuOpen(!isMenuOpen)
-            }}>Mi Aprendizaje</a></li>
-            <li><a onClick={() => {
-              navigate('/events')
-              setMenuOpen(!isMenuOpen)
-            }}>Eventos</a></li>
-            {user.role == 1 &&
-              <li><a onClick={() => {
-                navigate('/config')
-                setMenuOpen(!isMenuOpen)
-              }}>Administración del Sitio</a></li>
-            }
-            <li><a onClick={() => handleLogout()}>Logout</a></li>
-          </ul> :
-            <ul className='verticalList' id='verticalResponsive'>
-              <li><a onClick={() => {
-                navigate('/registerDev')
-                setMenuOpen(!isMenuOpen)
-              }}>Developer</a></li>
-              <li><a onClick={() => {
-                navigate('/registerCom')
-                setMenuOpen(!isMenuOpen)
-              }}>Empresa</a></li>
-              <li><a href="/login">Login</a></li>
-            </ul>}
-        </div>
-      </Menu>
+            }}>Empresa</a></li>
+            <li><a href="/login">Login</a></li>
+          </ul>}
+      </div>
+    </Menu>
   )
   return (
     <div className="navbarContainer">
@@ -74,7 +74,10 @@ function Navbar() {
         <img src={quarkLogo} alt="" />
       </div>
       {user ? <ul>
-        <li><a onClick={() => handleLogout()}>Logout</a></li>
+        <li><a onClick={() => {
+          handleLogout()
+          setMenuOpen(!isMenuOpen)
+        }}>Logout</a></li>
       </ul> :
         <ul>
           <li><a onClick={() => navigate('/registerDev')}>Developer</a></li>

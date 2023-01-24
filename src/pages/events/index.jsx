@@ -25,7 +25,7 @@ function Events() {
   const pageCountPast = Math.ceil(elementCountPast / 4)
 
   useEffect(() => {
-    if (!cookies.get("myCookieName")) {
+    if (!user) {
       navigate('/login')
     }
     const fetchEvents = async () => {

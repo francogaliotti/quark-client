@@ -15,9 +15,7 @@ function EditProfesionalProfile() {
     const navigate = useNavigate();
 
     const [currentLanguage, setCurrentLanguage] = useState()
-    const [languages, setLanguages] = useState([]);
     const [currentSkill, setCurrentSkill] = useState()
-    const [skills, setSkills] = useState([])
     const [currentAcademic, setCurrentAcademic] = useState()
     const [academics, setAcademics] = useState([])
     const [currentLabor, setCurrentLabor] = useState()
@@ -31,7 +29,7 @@ function EditProfesionalProfile() {
     const addLanguage = async () => {
         if (currentLanguage && currentLanguage.languageId && currentLanguage.level) {
             var exist = false
-            languages.map((l) => {
+            user.languages.map((l) => {
                 if (l.languageId === currentLanguage.languageId) {
                     exist = true
                 }
@@ -66,7 +64,7 @@ function EditProfesionalProfile() {
                             'success'
                         )
                         await updateState('language')
-                        setLanguages([...languages, { ...currentLanguage, id: res.data.id }])
+                        //setLanguages([...languages, { ...currentLanguage, id: res.data.id }])
                     }
                 })
 
@@ -110,7 +108,7 @@ function EditProfesionalProfile() {
                     'success'
                 )
                 await updateState('language')
-                setLanguages(languages.filter(l => l !== lan))
+                //setLanguages(languages.filter(l => l !== lan))
             }
         })
 
@@ -119,7 +117,7 @@ function EditProfesionalProfile() {
     const addSkill = async () => {
         if (currentSkill && currentSkill.skillId && currentSkill.score) {
             var exist = false
-            skills.map((l) => {
+            user.skills.map((l) => {
                 if (l.skillId === currentSkill?.skillId) {
                     exist = true
                 }
@@ -147,20 +145,15 @@ function EditProfesionalProfile() {
                                 authorization: sessionStorage.getItem("token")
                             }
                         })
-
-
                         Swal.fire(
                             'Añadido!',
                             'Habilidad añadida.',
                             'success'
                         )
                         await updateState('skill')
-                        setSkills([...skills, { ...currentSkill, id: res.data.id }])
+                        //setSkills([...skills, { ...currentSkill, id: res.data.id }])
                     }
                 })
-
-
-
             } else {
                 Swal.fire({
                     icon: 'error',
@@ -200,7 +193,7 @@ function EditProfesionalProfile() {
                     'success'
                 )
                 await updateState('skill')
-                setSkills(skills.filter(l => l !== sk))
+                //setSkills(skills.filter(l => l !== sk))
             }
         })
 
@@ -703,17 +696,17 @@ function EditProfesionalProfile() {
         const languageList = await axios.get('https://api-perfil.uc.r.appspot.com/parameters/languages')
         setLanList(languageList.data)
         //habilidades parametrizadas
-        const skillsList = await axios.get(`https://api-perfil.uc.r.appspot.com/parameters/skills/${user.career}`)
+        const skillsList = await axios.get(`https://api-perfil.uc.r.appspot.com/parameters/skills/${user.professionalprofile.career}`)
         setSkillList(skillsList.data)
     }
 
-    const setData = () => {
-        //idiomas del alumno
-        const langList = user.studentLanguages
+    const setActivities = () => {
+        /*//idiomas del alumno
+        const langList = user.languages
         setLanguages(langList)
         //habilidades del alumno
-        const skList = user.studentSkills
-        setSkills(skList)
+        const skList = user.skills
+        setSkills(skList)*/
         //actividades académicas
         const academicList = user.academicActivities
         setAcademics(academicList)
@@ -768,7 +761,7 @@ function EditProfesionalProfile() {
                 })
                 dispatch(login({
                     ...user,
-                    studentLanguages: resLan.data
+                    languages: resLan.data.language
                 }))
                 break
             case 'skill':
@@ -779,16 +772,17 @@ function EditProfesionalProfile() {
                 })
                 dispatch(login({
                     ...user,
-                    studentSkills: resSk.data
+                    skills: resSk.data
                 }))
                 break
         }
+        setActivities()
     }
 
     useEffect(() => {
         if (!sessionStorage.getItem("sesskey")) navigate('/login')
         fetchData()
-        setData()
+        setActivities()
     }, []);
 
     return (
@@ -1011,7 +1005,7 @@ function EditProfesionalProfile() {
 
                 <div className="aboutContainer">
                     <h3>Idiomas</h3>
-                    {languages?.map(lan => {
+                    {user.languages?.map(lan => {
                         return (
                             <div className="fillForms">
                                 <div className="fillForm">
@@ -1060,7 +1054,7 @@ function EditProfesionalProfile() {
 
                 <div className="aboutContainer">
                     <h3>Habilidades</h3>
-                    {skills?.map(sk => {
+                    {user.skills?.map(sk => {
                         return (
                             <div className="fillForms">
                                 <div className="fillForm">

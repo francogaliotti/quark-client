@@ -21,6 +21,7 @@ function Home() {
     }
 
     const [newsList, setNewsList] = useState([])
+    const [closestEvent, setClosestEvent] = useState()
 
     useEffect(() => {
         if (!user) {
@@ -31,11 +32,15 @@ function Home() {
                 { listaCurso })
             setNewsList(res.data)
         }
+        const fetchEvent = async () => {
+            const res = await axios.get(`https://api-perfil.uc.r.appspot.com/events/closestEvent`)
+            setClosestEvent(res.data)
+        }
         const listaCurso = user?.moodleUserData.listaCurso.map(c => {
             return (c.idCurso)
         })
-        console.log(listaCurso)
         fetchNews()
+        fetchEvent()
     }, []);
 
     useEffect(() => {
@@ -44,7 +49,7 @@ function Home() {
 
     return (
         <div className='homePageContainer'>
-            <h1>Bienvenido/a {user?.firstname}!</h1>
+            <h1>Bienvenido/a {user?.moodleUserData.firstname}!</h1>
             <div className="homeProgBars">
                 <ProfProgressBar type='normal' />
                 <ProfProgressBar type='profesional' />
@@ -81,7 +86,7 @@ function Home() {
             <div className="homeEvent">
                 <h2>Siguiente evento</h2>
                 <div className="liveEventsList" id='homeEvents'>
-                    <div className="singleEvent">
+                    {/*<div className="singleEvent">
                         <div className="seLeftContainer">
                             <img id='eventImg' src="https://img.freepik.com/free-vector/joystick-game-sport-technology_138676-2045.jpg?w=2000" alt="" />
                         </div>
@@ -91,8 +96,20 @@ function Home() {
                             <p>fecha</p>
                             <a href="#">Link</a>
                         </div>
+                    </div>*/}
+                    <div className="singleEvent" onClick={() => window.open("http://" + closestEvent?.link, "_blank", "noopener noreferrer")}>
+                        <div className="seLeftContainer">
+                            <img id='eventImg' src="https://img.freepik.com/free-vector/joystick-game-sport-technology_138676-2045.jpg?w=2000" alt="" />
+                        </div>
+                        <div className="seRightContainer">
+                            <h3>{closestEvent?.title}</h3>
+                            <p id='eventDescription'>{closestEvent?.description}</p>
+                            <p>{new Date(closestEvent?.eventDate).toLocaleDateString("en-AU")}</p>
+                        </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
     )

@@ -147,7 +147,7 @@ function ProfesionalProfile() {
                 </div>
                 <div className="aboutContainer" id='ppAbout'>
                     <h3>Idiomas:</h3>
-                    {user.studentLanguages?.map(lan => {
+                    {user.languages?.map(lan => {
                         return (
                             <div className="fillForms">
                                 <div className="fillForm">
@@ -165,7 +165,7 @@ function ProfesionalProfile() {
                 </div>
                 <div className="aboutContainer" id='ppAbout'>
                     <h3>Habilidades:</h3>
-                    {user.studentSkills?.map(sk => {
+                    {user.skills?.map(sk => {
                         return (
                             <div className="fillForms">
                                 <div className="fillForm">

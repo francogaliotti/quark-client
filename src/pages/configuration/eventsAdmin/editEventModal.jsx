@@ -32,6 +32,7 @@ const EditEventModal = ({ open, onClose, fetch, update, setUpdate, current, setC
           'success'
         )
       } else {
+        console.log( { eventid: current.id, event: actualEvent })
         const res = await axios.put(`https://api-perfil.uc.r.appspot.com/events/update`, { eventid: current.id, event: actualEvent })
         Swal.fire(
           'Actualizado!',
@@ -92,7 +93,7 @@ const EditEventModal = ({ open, onClose, fetch, update, setUpdate, current, setC
           <label for="tagList">Etiquetas <p>(Mantener Ctrl.)</p></label>
           <select id="tagList" className='modalInput selectMultiple' multiple onChange={(e) => {
             const selectedOptions = Array.from(e.target.selectedOptions).map(option => Number(option.value));
-            setActualEvent({ ...actualEvent, tagList: selectedOptions })
+            setActualEvent({ ...actualEvent, eventTags: selectedOptions })
           }}>
             {
               tagList.map(t => {

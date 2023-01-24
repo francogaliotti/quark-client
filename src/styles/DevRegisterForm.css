@@ -1,9 +1,14 @@
 .devRegisterForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin-top: 10px;
+   
 }
 
 #devFormId {
-    width: 100%;
+    width: 80%;
 }
 
 .singleField label {
@@ -33,9 +38,6 @@
 
 @media (max-width: 800px) {
 
-    #devFormId {
-        width: 90%;
-    }
 
     #fieldAddRecord {
         height: 25px;
@@ -60,7 +62,7 @@
         font-size: 13px;
     }
     #devFormId {
-        width: 80%;
+        width: 70%;
     }
 
 }
@@ -68,7 +70,7 @@
 @media (max-width: 420px) {
 
     #devFormId {
-        width: 70%;
+        width: 60%;
         margin-left: 0px;
     }
 

@@ -69,19 +69,19 @@ function ProfilePage() {
     }, []);
 
     const handleProfileImg = async (file) => {
-        try{
-        const formData = new FormData();
-        formData.append("file", file)
-        formData.append("userid", user.id);
-        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/userImg/upload`, formData)
-        console.log(res)
+        try {
+            const formData = new FormData();
+            formData.append("file", file)
+            formData.append("userid", user.id);
+            const res = await axios.post(`https://api-perfil.uc.r.appspot.com/userImg/upload`, formData)
+            console.log(res)
 
-        Swal.fire(
-            'Actualizado!',
-            'Imagen actualizada.',
-            'success'
-        )
-        await updateData()
+            Swal.fire(
+                'Actualizado!',
+                'Imagen actualizada.',
+                'success'
+            )
+            await updateData()
 
         } catch (e) {
             console.log(e)
@@ -106,18 +106,18 @@ function ProfilePage() {
         <div className="profilePageContainer">
             <div className="leftContainer">
                 <div className="basicInfo">
-                   
-                        <img src={user?.userBasicDatum[0].imgUrl} />
-                  
+
+                    <img src={user?.userBasicDatum.imgUrl} />
+
                     <PrimaryButton onClick={() => refImg.current.click()}>Cambiar Imagen</PrimaryButton>
                     <input ref={refImg} type='file' id="getFile" accept="image/png, image/jpeg, image/jpg" onChange={(e) => handleProfileImg(e.target.files[0])} />
                     <h2 className="name">{user?.username}</h2>
                 </div>
-                <div className="descriptionContainer">
+                {/*<div className="descriptionContainer">
                     <h3>Añade tu CV</h3>
                     <PrimaryButton onClick={() => refCV.current.click()}>Añadir CV</PrimaryButton>
                     <input ref={refCV} type='file' accept='.pdf' id="getFile" />
-                </div>
+    </div>*/}
             </div>
             <div className="rightContainer">
                 <div className="aboutContainer">
