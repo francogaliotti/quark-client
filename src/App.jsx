@@ -9,6 +9,7 @@ import PublicRoutes from './routes/PublicRoutes';
 import VerticalNavbar from './components/verticalNavbar';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import env from "react-dotenv";
 
 
 
@@ -36,6 +37,7 @@ function App() {
       }
     }
     fetchData()
+    console.log(env?.SERVER_URL)
   }, []);
 
   return (
