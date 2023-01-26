@@ -6,7 +6,7 @@ import Cookies from 'universal-cookie';
 axios.defaults.baseURL = env.SERVER_URL
 const cookies = new Cookies()
 
-export function getPrivate(path) {
+export async function getPrivate(path) {
     const token = localStorage.getItem("token")
     console.log(token)
     return axios.get(path, {
@@ -14,14 +14,14 @@ export function getPrivate(path) {
     });
 }
 
-export function postPrivate(path, body) {
+export async function postPrivate(path, body) {
     const token = localStorage.getItem("token")
     return axios.post(path, body, {
         headers: { Authorization: `Bearer ${token}` },
     });
 }
 
-export function putPrivate(path, id, data) {
+export async function putPrivate(path, id, data) {
     const token = localStorage.getItem("token")
     return axios.put(path + id, data, {
         headers: {
@@ -30,11 +30,11 @@ export function putPrivate(path, id, data) {
     });
 }
 
-export function getPublic(path) {
+export async function getPublic(path) {
     return axios.get(path);
 }
 
-export function postPublic(path, body) {
+export async function postPublic(path, body) {
     console.log(path)
     return axios.post(path, body);
 }
