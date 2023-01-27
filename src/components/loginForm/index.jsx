@@ -8,6 +8,9 @@ import '../../styles/Login.css'
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Cookies from 'universal-cookie'
+import { getPublic, postPublic } from '../../services/apiService';
+import Alert from '../../services/alertService';
+
 
 function LoginForm() {
     const [email, setEmail] = useState("")
@@ -37,7 +40,8 @@ function LoginForm() {
     }
 
     const setSesskeyNull = async () => {
-        const res = axios.post(`https://api-perfil.uc.r.appspot.com/sesskey/`, {
+
+        const res = await postPublic(`/sesskey/`, {
             'id': moodleData.moodleUserData.id, //aca tiene que ir user.id
             'sesskey': null
         })
@@ -52,7 +56,7 @@ function LoginForm() {
 
     const getMoodleData = async () => {
         try {
-            const res = await axios.get(`https://api-perfil.uc.r.appspot.com/user/getMoodleData/${email}`)
+            const res = await getPublic(`user/getMoodleData/${email}`)
             moodleData = res.data
         }
         catch (e) {
@@ -71,14 +75,10 @@ function LoginForm() {
                 /*const loginResponse = await axios.get(`http://localhost:3030/login`,
                     //{ withCredentials: "include" }
                     )*/
-                cookieRef.current.src = `http://localhost:3031/login`
-                const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${moodleData.moodleUserData.id}`, {
-                    /* headers: {
-                         authorization: loginResponse.data.token
-                     }*/
-                })
+                cookieRef.current.src = `http://localhost:8080/login`
+                const profInfo = await getPublic(`/user/${moodleData.moodleUserData.id}`)
                 try {
-                    const res = await axios.get(`https://api-perfil.uc.r.appspot.com/sesskey/${moodleData.moodleUserData.id}`) //aca tendria que usar user.id
+                    const res = await getPublic(`/sesskey/${moodleData.moodleUserData.id}`)
                     console.log(res)
                     if (res.data.sesskey === "") {
                         throw "Contraseña incorrecta"
@@ -92,20 +92,12 @@ function LoginForm() {
                     }))
                 } catch (e) {
                     console.log(e)
-                    Swal.fire({
-                        icon: 'error',
-                        title: e,
-                        text: 'Intenta de nuevo'
-                    })
+                    Alert.error({ title: e, message: "Intenta de nuevo" })
                 }
                 navigate("/")
             } catch (e) {
                 console.log(e)
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Usuario incorrecto',
-                    text: 'Intenta de nuevo'
-                })
+                Alert.error({ title: "Usuario incorrecto", message: "Intenta de nuevo" })
             }
         }, 2000);
 

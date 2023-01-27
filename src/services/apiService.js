@@ -39,6 +39,16 @@ export async function postPublic(path, body) {
     return axios.post(path, body);
 }
 
+export async function putPublic(path, body) {
+    console.log(path)
+    return axios.put(path, body);
+}
+
+export async function deletePublic(path) {
+    console.log(path)
+    return axios.delete(path);
+}
+
 export async function deletePrivate(path) {
     const token = localStorage.getItem("token")
     return axios.delete(path, {

@@ -1,11 +1,9 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { selectUser } from '../../features/userSlice';
 import '../../styles/ProfesionalProfile.css'
 import { PrimaryButton } from '../../styles/styledComponents/Buttons';
-import ProgressBar from "@ramonak/react-progress-bar";
 import ProfProgressBar from '../profProgressBar';
 
 function ProfesionalProfile() {

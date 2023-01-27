@@ -1,10 +1,10 @@
 import { faCircleInfo, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from 'axios';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
-import Swal from 'sweetalert2';
+import Alert from '../../../services/alertService';
+import { deletePublic, postPublic } from '../../../services/apiService';
 import { PrimaryButton } from '../../../styles/styledComponents/Buttons';
 import DetailEventModal from './detailEventModal';
 import EditEventModal from './editEventModal';
@@ -28,7 +28,7 @@ export const EventsAdmin = () => {
     };
 
     const fetchData = async () => {
-        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/events/getAllEvents`, {page: pageNumber, size: itemsPerPage})
+        const res = await postPublic(`/events/getAllEvents`, {page: pageNumber, size: itemsPerPage})
         console.log(res)
         setEventList(res.data.rows)
         setElementCount(res.data.count)
@@ -46,25 +46,10 @@ export const EventsAdmin = () => {
     }
 
     const handleDelete = async (n) => {
-        Swal.fire({
-            title: 'Deseas eliminar este evento?',
-            text: "Esta acción es irreversible",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, eliminar!',
-            cancelButtonText: "Cancelar"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/events/delete/${n.id}`)
-                Swal.fire(
-                    'Eliminado!',
-                    'Novedad eliminada.',
-                    'success'
-                )
-                fetchData()
-            }
+        Alert.confirm({title: 'Deseas eliminar este evento?', message: "Esta acción es irreversible"}, async () => {
+            const res = await deletePublic(`/events/delete/${n.id}`)
+            Alert.success({title: "Eliminado!", message:"Evento eliminado"})
+            fetchData()
         })
     }
 

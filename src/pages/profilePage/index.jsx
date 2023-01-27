@@ -5,11 +5,9 @@ import { PrimaryButton } from '../../styles/styledComponents/Buttons';
 import { login, selectUser } from '../../features/userSlice';
 import '../../styles/ProfilePage.css'
 import { Countries } from '../../jsons/countries';
-import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import Swal from 'sweetalert2';
 import Cookies from 'universal-cookie';
+import { getPublic, postPublic, putPublic } from '../../services/apiService';
+import Alert from '../../services/alertService';
 
 
 
@@ -25,28 +23,15 @@ function ProfilePage() {
 
     const handleProfileChange = async () => {
         try {
-            const res = await axios.put(`https://api-perfil.uc.r.appspot.com/user/update`,
-                {
-                    userid: user.id,
-                    userGeneralData
-                }, {
-                headers: {
-                    authorization: sessionStorage.getItem("token")
-                }
+            const res = await putPublic(`/user/update`, {
+                userid: user.id,
+                userGeneralData
             })
-            Swal.fire(
-                'Actualizado!',
-                'Perfil actualizado.',
-                'success'
-            )
+            Alert.success({title: "Actualizado!", message: "Perfil actualizado"})
             await updateData()
         } catch (e) {
             console.log(e)
-            Swal.fire(
-                'Error!',
-                e.response.data.msg,
-                'error'
-            )
+            Alert.error({title: "Error!", message: e.response.data.msg})
         }
     }
 
@@ -66,36 +51,26 @@ function ProfilePage() {
         })
 
 
-    }, []);
+    }, [userGeneralData]);
 
     const handleProfileImg = async (file) => {
         try {
             const formData = new FormData();
             formData.append("file", file)
             formData.append("userid", user.id);
-            const res = await axios.post(`https://api-perfil.uc.r.appspot.com/userImg/upload`, formData)
+            const res = await postPublic(`/userImg/upload`, formData)
             console.log(res)
-
-            Swal.fire(
-                'Actualizado!',
-                'Imagen actualizada.',
-                'success'
-            )
+            Alert.success({title: 'Actualizado!', message: 'Imagen actualizada'})
             await updateData()
 
         } catch (e) {
             console.log(e)
-            Swal.fire(
-                'Error!',
-                e.response.data.msg,
-                'error'
-            )
-
+            Alert.error({title: 'Error!', message: e.response.data.msg})
         }
     }
 
     const updateData = async () => {
-        const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${user.id}`)
+        const profInfo = await getPublic(`/user/${user.id}`)
         dispatch(login({
             ...user,
             ...profInfo.data,

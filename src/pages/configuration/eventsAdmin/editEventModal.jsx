@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { PrimaryButton } from '../../../styles/styledComponents/Buttons';
 import '../../../styles/Modal.css'
-import Swal from 'sweetalert2';
-import axios from 'axios';
+import { getPublic, postPublic, putPublic } from '../../../services/apiService';
+import Alert from '../../../services/alertService';
 
 const EditEventModal = ({ open, onClose, fetch, update, setUpdate, current, setCurrent }) => {
 
@@ -11,7 +11,7 @@ const EditEventModal = ({ open, onClose, fetch, update, setUpdate, current, setC
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`https://api-perfil.uc.r.appspot.com/tags/`)
+      const res = await getPublic(`/tags`)
       setTagList(res.data)
     }
     fetchData()
@@ -25,20 +25,12 @@ const EditEventModal = ({ open, onClose, fetch, update, setUpdate, current, setC
     try {
       if (!update) {
         console.log({ event: actualEvent })
-        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/events/create`, { event: actualEvent })
-        Swal.fire(
-          'Añadido!',
-          'Evento añadido.',
-          'success'
-        )
+        const res = await postPublic(`/events/create`, { event: actualEvent })
+        Alert.success({ title: 'Añadido!', message: 'Evento añadido' })
       } else {
-        console.log( { eventid: current.id, event: actualEvent })
-        const res = await axios.put(`https://api-perfil.uc.r.appspot.com/events/update`, { eventid: current.id, event: actualEvent })
-        Swal.fire(
-          'Actualizado!',
-          'Evento actualizado.',
-          'success'
-        )
+        console.log({ eventid: current.id, event: actualEvent })
+        const res = await putPublic(`/events/update`, { eventid: current.id, event: actualEvent })
+        Alert.success({ title: 'Actualizado!', message: 'Evento actualizado' })
         setUpdate(false)
         setCurrent({})
       }
@@ -46,11 +38,7 @@ const EditEventModal = ({ open, onClose, fetch, update, setUpdate, current, setC
       fetch()
     } catch (e) {
       console.log(e)
-      Swal.fire(
-        'Error!',
-        e.response.data.msg,
-        'error'
-      )
+      Alert.error({ title: "Error!", message: e.response.data.msg })
     }
   }
 

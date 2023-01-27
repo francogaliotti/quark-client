@@ -8,6 +8,7 @@ import axios from 'axios';
 import ProfProgressBar from '../../components/profProgressBar';
 import Cookies from 'universal-cookie';
 import { useState } from 'react';
+import { getPublic, postPublic } from '../../services/apiService';
 
 function Home() {
     const user = useSelector(selectUser);
@@ -28,12 +29,12 @@ function Home() {
             navigate('/login')
         }
         const fetchNews = async () => {
-            const res = await axios.post(`https://api-perfil.uc.r.appspot.com/news/platformNews`,
-                { listaCurso })
+            const res = await postPublic(`/news/platformNews`,
+            { listaCurso })
             setNewsList(res.data)
         }
         const fetchEvent = async () => {
-            const res = await axios.get(`https://api-perfil.uc.r.appspot.com/events/closestEvent`)
+            const res = await getPublic(`/events/closestEvent`)
             setClosestEvent(res.data)
         }
         const listaCurso = user?.moodleUserData.listaCurso.map(c => {

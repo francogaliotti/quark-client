@@ -1,10 +1,10 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { selectUser } from '../../features/userSlice';
+import { postPublic } from '../../services/apiService';
 import '../../styles/Events.css'
 
 function Events() {
@@ -29,10 +29,10 @@ function Events() {
       navigate('/login')
     }
     const fetchEvents = async () => {
-      const resF = await axios.post(`https://api-perfil.uc.r.appspot.com/events/futureEvents`, { page: futurePage })
+      const resF = await postPublic(`/events/futureEvents`, { page: futurePage })
+      const resP = await postPublic(`/events/pastEvents`, { page: pastPage })
       setFutureEventsList(resF.data.rows)
       setElementCountFuture(resF.data.count)
-      const resP = await axios.post(`https://api-perfil.uc.r.appspot.com/events/pastEvents`, { page: pastPage })
       setPastEventsList(resP.data.rows)
       setElementCountPast(resP.data.count)
     }

@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { login, selectUser } from '../../../features/userSlice';
 import '../../../styles/ProfilePage.css'
-import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import Swal from 'sweetalert2';
+import Alert from '../../../services/alertService';
+import { deletePublic, getPublic, postPublic, putPublic } from '../../../services/apiService';
 
 function EditProfesionalProfile() {
 
@@ -35,83 +35,36 @@ function EditProfesionalProfile() {
                 }
             })
             if (!exist) {
-                Swal.fire({
-                    title: 'Añadir idioma?',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Añadir',
-                    cancelButtonText: "Cancelar"
-                }).then(async (result) => {
-                    if (result.isConfirmed) {
-                        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/languages/create`,
-                            {
-                                userid: user.id,
-                                languages: {
-                                    id: currentLanguage.languageId,
-                                    level: currentLanguage.level
-                                }
-                            }, {
-                            headers: {
-                                authorization: sessionStorage.getItem("token")
-                            }
-                        })
-                        console.log(res)
-
-                        Swal.fire(
-                            'Añadido!',
-                            'Idioma añadido.',
-                            'success'
-                        )
-                        await updateState('language')
-                        //setLanguages([...languages, { ...currentLanguage, id: res.data.id }])
-                    }
+                Alert.confirm({ title: "Añadir idioma?" }, async () => {
+                    const res = await postPublic(`/languages/create`, {
+                        userid: user.id,
+                        languages: {
+                            id: currentLanguage.languageId,
+                            level: currentLanguage.level
+                        }
+                    })
+                    console.log(res)
+                    Alert.success({ title: "Añadido!", message: "Idioma añadido" })
+                    await updateState('language')
+                    //setLanguages([...languages, { ...currentLanguage, id: res.data.id }])
                 })
-
-
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Idioma existente'
-                })
+                Alert.error({ title: "Idioma existente" })
             }
         } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Faltan datos por ingresar.'
-            })
+            Alert.error({ title: "Faltan datos por ingresar" })
         }
     }
 
     const deleteLanguage = async (lan) => {
         console.log(lan)
-        Swal.fire({
-            title: 'Deseas eliminar este idioma?',
-            text: "Esta acción es irreversible",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, eliminar!',
-            cancelButtonText: "Cancelar"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/languages/delete/${lan.id}`, {
-                    headers: {
-                        authorization: sessionStorage.getItem("token")
-                    }
-                })
-                console.log(res)
-                Swal.fire(
-                    'Eliminado!',
-                    'Idioma eliminado.',
-                    'success'
-                )
-                await updateState('language')
-                //setLanguages(languages.filter(l => l !== lan))
-            }
+        Alert.confirm({ title: "Deseas eliminar este idioma?", message: "Esta acción es irreversible" }, async () => {
+            const res = await deletePublic(`/languages/delete/${lan.id}`)
+            console.log(res)
+            Alert.success({ title: "Eliminado!", message: "Idioma eliminado" })
+            await updateState('language')
+            //setLanguages(languages.filter(l => l !== lan))
         })
-
     }
 
     const addSkill = async () => {
@@ -123,311 +76,168 @@ function EditProfesionalProfile() {
                 }
             })
             if (!exist) {
-
-                Swal.fire({
-                    title: 'Añadir habilidad?',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Añadir',
-                    cancelButtonText: "Cancelar"
-                }).then(async (result) => {
-                    if (result.isConfirmed) {
-                        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/skills/create`,
-                            {
-                                userid: user.id,
-                                skills: {
-                                    id: currentSkill.skillId,
-                                    score: currentSkill.score
-                                }
-                            }, {
-                            headers: {
-                                authorization: sessionStorage.getItem("token")
-                            }
-                        })
-                        Swal.fire(
-                            'Añadido!',
-                            'Habilidad añadida.',
-                            'success'
-                        )
-                        await updateState('skill')
-                        //setSkills([...skills, { ...currentSkill, id: res.data.id }])
-                    }
+                Alert.confirm({ title: "Añadir habilidad?" }, async () => {
+                    const res = await postPublic(`/skills/create`, {
+                        userid: user.id,
+                        skills: {
+                            id: currentSkill.skillId,
+                            score: currentSkill.score
+                        }
+                    })
+                    Alert.success({ title: "Añadido!", message: "Habilidad añadida" })
+                    await updateState('skill')
+                    //setSkills([...skills, { ...currentSkill, id: res.data.id }])
                 })
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Habilidad existente'
-                })
+                Alert.error({ title: "Halilidad existente" })
             }
         } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Faltan datos por ingresar.'
-            })
+            Alert.error({ title: "Faltan datos por ingresar" })
         }
     }
 
     const deleteSkill = async (sk) => {
         console.log(sk)
-        Swal.fire({
-            title: 'Deseas quitar esta habilidad?',
-            text: "Esta acción es irreversible",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, eliminar!',
-            cancelButtonText: "Cancelar"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/skills/delete/${sk.id}`, {
-                    headers: {
-                        authorization: sessionStorage.getItem("token")
-                    }
-                })
-                console.log(res)
-                Swal.fire(
-                    'Eliminado!',
-                    'Habilidad quitada.',
-                    'success'
-                )
-                await updateState('skill')
-                //setSkills(skills.filter(l => l !== sk))
-            }
+        Alert.confirm({ title: 'Deseas quitar esta habilidad?', message: "Esta acción es irreversible" }, async () => {
+            const res = await deletePublic(`skills/delete/${sk.id}`)
+            Alert.success({ title: "Eliminado!", message: "Habilidad eliminada" })
+            await updateState('skill')
+            //setSkills(skills.filter(l => l !== sk))
         })
-
     }
 
     const addActivity = async (type) => {
-        try{
-        switch (type) {
-            case "academic":
-                if (currentAcademic && currentAcademic.institution && currentAcademic.title && currentAcademic.state && currentAcademic.beginDate) {
-                    if (currentAcademic.state == "Finalizado") {
-                        if (!currentAcademic.endDate) {
-                            Swal.fire(
-                                'Error!',
-                                'Ingresar fecha de finalización.',
-                                'error'
-                            )
+        try {
+            switch (type) {
+                case "academic":
+                    if (currentAcademic && currentAcademic.institution && currentAcademic.title && currentAcademic.state && currentAcademic.beginDate) {
+                        if (currentAcademic.state == "Finalizado") {
+                            if (!currentAcademic.endDate) {
+                                Alert.error({ title: "Falta fecha de finalización." })
+                            } else {
+                                await addAcademic()
+                            }
                         } else {
                             await addAcademic()
                         }
                     } else {
-                        await addAcademic()
+                        Alert.error({ title: "Faltan datos por ingresar." })
                     }
-                } else {
-                    Swal.fire(
-                        'Error!',
-                        'Faltan datos por ingresar.',
-                        'error'
-                    )
-                }
-                break
-            case "labor":
-                if (currentLabor && currentLabor.company && currentLabor.title && currentLabor.state && currentLabor.beginDate) {
-                    if (currentLabor.state == "Finalizado") {
-                        if (!currentLabor.endDate) {
-                            Swal.fire(
-                                'Error!',
-                                'Ingresar fecha de finalización.',
-                                'error'
-                            )
+                    break
+                case "labor":
+                    if (currentLabor && currentLabor.company && currentLabor.title && currentLabor.state && currentLabor.beginDate) {
+                        if (currentLabor.state == "Finalizado") {
+                            if (!currentLabor.endDate) {
+                                Alert.error({ title: "Falta fecha de finalización." })
+                            } else {
+                                await addLabor()
+                            }
                         } else {
                             await addLabor()
                         }
                     } else {
-                        await addLabor()
+                        Alert.error({ title: "Faltan datos por ingresar." })
                     }
-                } else {
-                    Swal.fire(
-                        'Error!',
-                        'Faltan datos por ingresar.',
-                        'error'
-                    )
-                }
-                break
-            case "independent":
-                if (currentIndependent && currentIndependent.title && currentIndependent.state && currentIndependent.beginDate) {
-                    if (currentIndependent.state == "Finalizado") {
-                        if (!currentIndependent.endDate) {
-                            Swal.fire(
-                                'Error!',
-                                'Ingresar fecha de finalización.',
-                                'error'
-                            )
+                    break
+                case "independent":
+                    if (currentIndependent && currentIndependent.title && currentIndependent.state && currentIndependent.beginDate) {
+                        if (currentIndependent.state == "Finalizado") {
+                            if (!currentIndependent.endDate) {
+                                Alert.error({ title: "Falta fecha de finalización." })
+                            } else {
+                                await addIndependent()
+                            }
                         } else {
                             await addIndependent()
                         }
                     } else {
-                        await addIndependent()
+                        Alert.error({ title: "Faltan datos por ingresar." })
                     }
-                } else {
-                    Swal.fire(
-                        'Error!',
-                        'Faltan datos por ingresar.',
-                        'error'
-                    )
-                }
-                break
+                    break
+            }
+        } catch (e) {
+            console.log(e)
+            Alert.error({ title: "Error!", message: e.response.data.msg })
         }
-    } catch (e) {
-        console.log(e)
-        Swal.fire(
-            'Error!',
-            e.response.data.msg,
-            'error'
-        )
-    }
     }
 
     //Métodos de actividades académicas
     const addAcademic = async () => {
-            if (!currentAcademic.edited) {
-                Swal.fire({
-                    title: 'Añadir actividad académica?',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Añadir',
-                    cancelButtonText: "Cancelar"
-                }).then(async (result) => {
-                    if (result.isConfirmed) {
-                        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/academics/create`,
-                            {
-                                userid: user.id,
-                                academics: {
-                                    institution: currentAcademic.institution,
-                                    title: currentAcademic.title,
-                                    state: currentAcademic.state,
-                                    beginDate: currentAcademic.beginDate,
-                                    endDate: currentAcademic.endDate,
-                                    description: currentAcademic.description
-                                }
-                            }, {
-                            headers: {
-                                authorization: sessionStorage.getItem("token")
+        if (!currentAcademic.edited) {
+            Alert.confirm({ title: 'Añadir actividad académica?' }, async () => {
+                try {
+                    const res = await postPublic(`/academics/create`,
+                        {
+                            userid: user.id,
+                            academics: {
+                                institution: currentAcademic.institution,
+                                title: currentAcademic.title,
+                                state: currentAcademic.state,
+                                beginDate: currentAcademic.beginDate,
+                                endDate: currentAcademic.endDate,
+                                description: currentAcademic.description
                             }
-                        }
-                        )
-
-                        Swal.fire(
-                            'Añadido!',
-                            'Actividad académica añadida.',
-                            'success'
-                        )
-                        await updateState('academic')
-                        setAcademics([...academics, { ...currentAcademic, id: res.data.id }])
-                        console.log(res)
-                    }
-                }).catch(e => {
-                    Swal.fire(
-                        'Error!',
-                        e.response.data.msg,
-                        'error'
-                    )
-                })
-            } else {
-                const res = await axios.put(`https://api-perfil.uc.r.appspot.com/academics/update`,
-                    {
-                        id: currentAcademic.id,
-                        academics: {
-                            institution: currentAcademic.institution,
-                            title: currentAcademic.title,
-                            state: currentAcademic.state,
-                            beginDate: currentAcademic.beginDate,
-                            endDate: currentAcademic.endDate,
-                            description: currentAcademic.description
-                        }
-                    }, {
-                    headers: {
-                        authorization: sessionStorage.getItem("token")
-                    }
+                        })
+                    Alert.success({ title: 'Añadido!', message: "Actividad académica añadida" })
+                    await updateState('academic')
+                    setAcademics([...academics, { ...currentAcademic, id: res.data.id }])
+                    console.log(res)
+                } catch (e) {
+                    Alert.error({ message: e.response?.data.msg })
                 }
-                )
-                Swal.fire(
-                    'Actualizado!',
-                    'Actividad académica actualizada.',
-                    'success'
-                )
-                await updateState('academic')
-                setAcademics([...academics, currentAcademic])
-                console.log(res)
-            }
-            setCurrentAcademic({
-                ...currentAcademic,
-                institution: "",
-                title: "",
-                //state:"",
-                beginDate: "",
-                endDate: "",
-                description: "",
-                edited: false
             })
+        } else {
+            const res = await putPublic(`/academics/update`, {
+                id: currentAcademic.id,
+                academics: {
+                    institution: currentAcademic.institution,
+                    title: currentAcademic.title,
+                    state: currentAcademic.state,
+                    beginDate: currentAcademic.beginDate,
+                    endDate: currentAcademic.endDate,
+                    description: currentAcademic.description
+                }
+            })
+            Alert.success({ title: "Actualizado!", message: "Actividad académica actualizada" })
+            await updateState('academic')
+            setAcademics([...academics, currentAcademic])
+            console.log(res)
+        }
+        setCurrentAcademic({
+            ...currentAcademic,
+            institution: "",
+            title: "",
+            //state:"",
+            beginDate: "",
+            endDate: "",
+            description: "",
+            edited: false
+        })
     }
 
     const editAcademic = (ac) => {
-        Swal.fire({
-            title: 'Deseas actualizar esta actividad?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Actualizar',
-            cancelButtonText: "Cancelar"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                setCurrentAcademic({ ...ac, edited: true })
-                setAcademics(academics.filter(l => l !== ac))
-            }
+        Alert.confirm({ title: 'Deseas actualizar esta actividad?' }, () => {
+            setCurrentAcademic({ ...ac, edited: true })
+            setAcademics(academics.filter(l => l !== ac))
         })
-
     }
 
     const deleteAcademic = async (ac) => {
-        Swal.fire({
-            title: 'Deseas eliminar esta actividad?',
-            text: "Esta acción es irreversible",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, eliminar!',
-            cancelButtonText: "Cancelar"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/academics/delete/${ac.id}`/*, {
-                    headers: {
-                        authorization: sessionStorage.getItem("token")
-                    }
-                }*/)
-                Swal.fire(
-                    'Eliminado!',
-                    'Actividad eliminada.',
-                    'success'
-                )
-                await updateState('academic')
-                setAcademics(academics.filter(l => l !== ac))
-            }
+        Alert.confirm({ title: 'Deseas eliminar esta actividad?', message: 'Esta acción es ireeversible' }, async () => {
+            const res = await deletePublic(`/academics/delete/${ac.id}`)
+            Alert.success({ title: "Eliminada!", message: 'Actividad eliminada' })
+            await updateState('academic')
+            setAcademics(academics.filter(l => l !== ac))
         })
-
     }
 
     //Métodos de actividades laborales
     const addLabor = async () => {
         try {
             if (!currentLabor.edited) {
-                Swal.fire({
-                    title: 'Añadir actividad laboral?',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Añadir',
-                    cancelButtonText: "Cancelar"
-                }).then(async (result) => {
-                    const res = await axios.post(`https://api-perfil.uc.r.appspot.com/labors/create`,
-                        {
+                Alert.confirm({ title: 'Añadir actividad laboral?' }, async () => {
+                    try {
+                        const res = await postPublic(`/labors/create`, {
                             userid: user.id,
                             labors: {
                                 company: currentLabor.company,
@@ -437,55 +247,28 @@ function EditProfesionalProfile() {
                                 endDate: currentLabor.endDate,
                                 description: currentLabor.description
                             }
-                        }, {
-                        headers: {
-                            authorization: sessionStorage.getItem("token")
-                        }
+                        })
+                        Alert.success({ title: "Añadida!", message: "Actividad laboral añadida" })
+                        await updateState('labor')
+                        setLabors([...labors, { ...currentLabor, id: res.data.labors.id }])
+                    } catch (e) {
+                        Alert.error({ message: e.response?.data.msg })
                     }
-                    )
-
-
-                    Swal.fire(
-                        'Añadido!',
-                        'Actividad laboral añadida.',
-                        'success'
-                    )
-                    await updateState('labor')
-                    setLabors([...labors, { ...currentLabor, id: res.data.labors.id }])
-                }
-                ).catch(e => {
-                    Swal.fire(
-                        'Error!',
-                        e.response.data.msg,
-                        'error'
-                    )
                 })
-
-
             } else {
                 console.log(currentLabor)
-                const res = await axios.put(`https://api-perfil.uc.r.appspot.com/labors/update`,
-                    {
-                        id: currentLabor.id,
-                        labors: {
-                            company: currentLabor.company,
-                            title: currentLabor.title,
-                            state: currentLabor.state,
-                            beginDate: currentLabor.beginDate,
-                            endDate: currentLabor.endDate,
-                            description: currentLabor.description
-                        }
-                    }, {
-                    headers: {
-                        authorization: sessionStorage.getItem("token")
+                const res = await putPublic(`/labors/update`, {
+                    id: currentLabor.id,
+                    labors: {
+                        company: currentLabor.company,
+                        title: currentLabor.title,
+                        state: currentLabor.state,
+                        beginDate: currentLabor.beginDate,
+                        endDate: currentLabor.endDate,
+                        description: currentLabor.description
                     }
-                }
-                )
-                Swal.fire(
-                    'Actualizado!',
-                    'Actividad laboral actualizada.',
-                    'success'
-                )
+                })
+                Alert.success({ title: "Actualizada!", message: 'Actividad laboral actualizada' })
                 await updateState('labor')
                 setLabors([...labors, currentLabor])
             }
@@ -500,84 +283,31 @@ function EditProfesionalProfile() {
                 edited: false
             })
         } catch (e) {
-            console.log(e)
-            Swal.fire(
-                'Error!',
-                e.response.data.msg,
-                'error'
-            )
+            Alert.error({ title: "Error!", message: e.response.data.msg })
         }
     }
 
     const editLabor = (lab) => {
-        Swal.fire({
-            title: 'Deseas actualizar esta actividad?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Actualizar',
-            cancelButtonText: "Cancelar"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                setCurrentLabor({ ...lab, edited: true })
-                setLabors(labors.filter(l => l !== lab))
-            }
+        Alert.confirm({ title: "Deseas actualizar esta actividad?" }, () => {
+            setCurrentLabor({ ...lab, edited: true })
+            setLabors(labors.filter(l => l !== lab))
         })
-
     }
 
     const deleteLabor = async (lab) => {
-        Swal.fire({
-            title: 'Deseas eliminar esta actividad?',
-            text: "Esta acción es irreversible",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, eliminar!',
-            cancelButtonText: "Cancelar"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/labors/delete/${lab.id}`, {
-                    headers: {
-                        authorization: sessionStorage.getItem("token")
-                    }
-                })
-                Swal.fire(
-                    'Eliminado!',
-                    'Actividad eliminada.',
-                    'success'
-                )
-                await updateState('labor')
-                setLabors(labors.filter(l => l !== lab))
-            }
+        Alert.confirm({ title: 'Deseas eliminar esta actividad?', message: "Esta acción es irreversible" }, async () => {
+            const res = await deletePublic(`/labors/delete/${lab.id}`)
+            Alert.success({ title: "Eliminada!", message: "Actividad eliminada" })
+            await updateState('labor')
+            setLabors(labors.filter(l => l !== lab))
         })
-
     }
 
     const addIndependent = async () => {
         if (!currentIndependent.edited) {
-            console.log(JSON.stringify({
-                userid: user.id,
-                independents: {
-                    title: currentIndependent.title,
-                    state: currentIndependent.state,
-                    beginDate: currentIndependent.beginDate,
-                    endDate: currentIndependent.endDate,
-                    description: currentIndependent.description
-                }
-            }))
-            Swal.fire({
-                title: 'Añadir actividad independiente?',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Añadir',
-                cancelButtonText: "Cancelar"
-            }).then(async (result) => {
-                const res = await axios.post(`https://api-perfil.uc.r.appspot.com/independents/create`,
-                    {
+            Alert.confirm({ title: 'Añadir actividad independiente?' }, async () => {
+                try {
+                    const res = await postPublic(`/independents/create`, {
                         userid: user.id,
                         independents: {
                             title: currentIndependent.title,
@@ -586,50 +316,26 @@ function EditProfesionalProfile() {
                             endDate: currentIndependent.endDate,
                             description: currentIndependent.description
                         }
-                    }, {
-                    headers: {
-                        authorization: sessionStorage.getItem("token")
-                    }
+                    })
+                    Alert.success({ title: "Añadido!", message: "Actividad independiente añadida" })
+                    await updateState('independent')
+                    setIndependents([...independents, { ...currentIndependent, id: res.data.independent.id }])
+                } catch (e) {
+                    Alert.error({ title: "Error!", message: e.response.data.msg })
                 }
-                )
-
-                Swal.fire(
-                    'Añadido!',
-                    'Actividad independiente añadida.',
-                    'success'
-                )
-                await updateState('independent')
-                setIndependents([...independents, { ...currentIndependent, id: res.data.independent.id }])
-            }
-            ).catch(e => {
-                Swal.fire(
-                    'Error!',
-                    e.response.data.msg,
-                    'error'
-                )
             })
         } else {
-            const res = await axios.put(`https://api-perfil.uc.r.appspot.com/independents/update`,
-                {
-                    id: currentIndependent.id,
-                    independents: {
-                        title: currentIndependent.title,
-                        state: currentIndependent.state,
-                        beginDate: currentIndependent.beginDate,
-                        endDate: currentIndependent.endDate,
-                        description: currentIndependent.description
-                    }
-                }, {
-                headers: {
-                    authorization: sessionStorage.getItem("token")
+            const res = await putPublic(`/independents/update`, {
+                id: currentIndependent.id,
+                independents: {
+                    title: currentIndependent.title,
+                    state: currentIndependent.state,
+                    beginDate: currentIndependent.beginDate,
+                    endDate: currentIndependent.endDate,
+                    description: currentIndependent.description
                 }
-            }
-            )
-            Swal.fire(
-                'Actualizado!',
-                'Actividad independiente actualizada.',
-                'success'
-            )
+            })
+            Alert.success({ title: "Actualizado!", message: 'Actividad independiente actualizada' })
             await updateState('independent')
             setIndependents([...independents, currentIndependent])
         }
@@ -645,58 +351,27 @@ function EditProfesionalProfile() {
     }
 
     const editIndependent = (ind) => {
-        Swal.fire({
-            title: 'Deseas actualizar esta actividad?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Actualizar',
-            cancelButtonText: "Cancelar"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                setCurrentIndependent({ ...ind, edited: true })
-                setIndependents(independents.filter(l => l !== ind))
-            }
+        Alert.confirm({ title: 'Deseas actualizar esta actividad?' }, () => {
+            setCurrentIndependent({ ...ind, edited: true })
+            setIndependents(independents.filter(l => l !== ind))
         })
-
     }
 
     const deleteIndependent = async (ind) => {
-        Swal.fire({
-            title: 'Deseas eliminar esta actividad?',
-            text: "Esta acción es irreversible",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, eliminar!',
-            cancelButtonText: "Cancelar"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/independents/delete/${ind.id}`, {
-                    headers: {
-                        authorization: sessionStorage.getItem("token")
-                    }
-                })
-                Swal.fire(
-                    'Eliminado!',
-                    'Actividad eliminada.',
-                    'success'
-                )
-                await updateState('independent')
-                setIndependents(independents.filter(l => l !== ind))
-            }
+        Alert.confirm({ title: 'Deseas eliminar esta actividad?', message: "Esta acción es irreversible" }, async () => {
+            const res = await deletePublic(`/delete/${ind.id}`)
+            Alert.success({ title: "Eliminado", message: "Actividad eliminada" })
+            await updateState('independent')
+            setIndependents(independents.filter(l => l !== ind))
         })
-
     }
 
     const fetchData = async () => {
         //idiomas parametrizados
-        const languageList = await axios.get('https://api-perfil.uc.r.appspot.com/parameters/languages')
+        const languageList = await getPublic(`/parameters/languages`)
         setLanList(languageList.data)
         //habilidades parametrizadas
-        const skillsList = await axios.get(`https://api-perfil.uc.r.appspot.com/parameters/skills/${user.professionalprofile.career}`)
+        const skillsList = await getPublic(`/parameters/skills/${user.professionalprofile.career}`)
         setSkillList(skillsList.data)
     }
 
@@ -721,55 +396,35 @@ function EditProfesionalProfile() {
     const updateState = async (act) => {
         switch (act) {
             case 'independent':
-                const resInd = await axios.get(`https://api-perfil.uc.r.appspot.com/independents/${user.id}`, {
-                    headers: {
-                        authorization: sessionStorage.getItem("token")
-                    }
-                })
+                const resInd = await getPublic(`/independents/${user.id}`)
                 dispatch(login({
                     ...user,
                     independentActivities: resInd.data
                 }))
                 break
             case 'academic':
-                const resAc = await axios.get(`https://api-perfil.uc.r.appspot.com/academics/${user.id}`, {
-                    headers: {
-                        authorization: sessionStorage.getItem("token")
-                    }
-                })
+                const resAc = await getPublic(`/academics/${user.id}`)
                 dispatch(login({
                     ...user,
                     academicActivities: resAc.data
                 }))
                 break
             case 'labor':
-                const resLab = await axios.get(`https://api-perfil.uc.r.appspot.com/labors/${user.id}`, {
-                    headers: {
-                        authorization: sessionStorage.getItem("token")
-                    }
-                })
+                const resLab = await getPublic(`/labors/${user.id}`)
                 dispatch(login({
                     ...user,
                     laborActivities: resLab.data
                 }))
                 break
             case 'language':
-                const resLan = await axios.get(`https://api-perfil.uc.r.appspot.com/languages/${user.id}`, {
-                    headers: {
-                        authorization: sessionStorage.getItem("token")
-                    }
-                })
+                const resLan = await getPublic(`/languages/${user.id}`)
                 dispatch(login({
                     ...user,
                     languages: resLan.data.language
                 }))
                 break
             case 'skill':
-                const resSk = await axios.get(`https://api-perfil.uc.r.appspot.com/skills/${user.id}`, {
-                    headers: {
-                        authorization: sessionStorage.getItem("token")
-                    }
-                })
+                const resSk = await getPublic(`/skills/${user.id}`)
                 dispatch(login({
                     ...user,
                     skills: resSk.data

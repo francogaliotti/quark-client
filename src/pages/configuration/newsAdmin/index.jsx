@@ -1,12 +1,12 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import { PrimaryButton } from '../../../styles/styledComponents/Buttons';
 import { EditNewsModal } from './editNewsModal'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faCircleInfo, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import Swal from 'sweetalert2';
 import ReactPaginate from 'react-paginate'
 import '../../../styles/Configuration.css'
+import { deletePublic, postPublic } from '../../../services/apiService';
+import Alert from '../../../services/alertService';
 
 export const NewsAdmin = () => {
 
@@ -26,7 +26,7 @@ export const NewsAdmin = () => {
     };
 
     const fetchData = async () => {
-        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/news/getAllNews/`, {page: pageNumber, size: itemsPerPage})
+        const res = await postPublic(`/news/getAllNews/`, { page: pageNumber, size: itemsPerPage })
         setNewsList(res.data.data)
         setElementCount(res.data.amount)
     }
@@ -38,25 +38,10 @@ export const NewsAdmin = () => {
     }
 
     const handleDelete = async (n) => {
-        Swal.fire({
-            title: 'Deseas eliminar esta novedad?',
-            text: "Esta acción es irreversible",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, eliminar!',
-            cancelButtonText: "Cancelar"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const res = await axios.delete(`https://api-perfil.uc.r.appspot.com/news/delete/${n.id}`)
-                Swal.fire(
-                    'Eliminado!',
-                    'Novedad eliminada.',
-                    'success'
-                )
-                fetchData()
-            }
+        Alert.confirm({ title: 'Deseas eliminar esta novedad?', message: "Esta acción es irreversible" }, async () => {
+            const res = await deletePublic(`/news/delete/${n.id}`)
+            Alert.success({ title: "Eliminada!", message: "Novedad eliminada" })
+            fetchData()
         })
     }
 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { PrimaryButton } from '../../../styles/styledComponents/Buttons';
 import '../../../styles/Modal.css'
-import axios from 'axios';
-import Swal from 'sweetalert2';
+import { getPublic, postPublic, putPublic } from '../../../services/apiService';
+import Alert from '../../../services/alertService';
 
 
 export const EditNewsModal = ({ open, onClose, fetch, update, setUpdate, current, setCurrent }) => {
@@ -16,7 +16,7 @@ export const EditNewsModal = ({ open, onClose, fetch, update, setUpdate, current
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await axios.get(`https://api-perfil.uc.r.appspot.com/news/`)
+            const res = await getPublic(`/news`)
             setMoodleCourses(res.data)
         }
         fetchData()
@@ -25,19 +25,11 @@ export const EditNewsModal = ({ open, onClose, fetch, update, setUpdate, current
     const handleSubmit = async () => {
         try {
             if (!update) {
-                const res = await axios.post(`https://api-perfil.uc.r.appspot.com/news/create`, { news: currentNews })
-                Swal.fire(
-                    'Añadido!',
-                    'Novedad añadida.',
-                    'success'
-                )
+                const res = await postPublic(`/news/create`, { news: currentNews })
+                Alert.success({ title: 'Añadida!', message: 'Novedad añadida' })
             } else {
-                const res = await axios.put(`https://api-perfil.uc.r.appspot.com/news/update`, { newsId: current.id, news: currentNews })
-                Swal.fire(
-                    'Actualizado!',
-                    'Novedad actualizada.',
-                    'success'
-                )
+                const res = await putPublic(`/news/update`, { newsId: current.id, news: currentNews })
+                Alert.success({ title: 'Actualizada!', message: 'Novedad actualizada' })
                 setUpdate(false)
                 setCurrent({})
             }
@@ -45,11 +37,7 @@ export const EditNewsModal = ({ open, onClose, fetch, update, setUpdate, current
             fetch()
         } catch (e) {
             console.log(e)
-            Swal.fire(
-                'Error!',
-                e.response.data.msg,
-                'error'
-            )
+            Alert.error({ title: 'Error!', message: e.response.data.msg })
         }
     }
 

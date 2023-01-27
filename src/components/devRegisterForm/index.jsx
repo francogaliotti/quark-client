@@ -3,10 +3,10 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import '../../styles/DevRegisterForm.css'
 import { PrimaryButton } from '../../styles/styledComponents/Buttons'
-import { login } from '../../features/userSlice'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { postPublic } from '../../services/apiService'
 
 function DevRegisterForm() {
 
@@ -61,7 +61,7 @@ function DevRegisterForm() {
             password: data.password,
             email: data.email
         }
-        const res = await axios.post(`https://api-perfil.uc.r.appspot.com/register`, { user })
+        const res = await postPublic(`/register`, { user })
         console.log(res)
     }
 
