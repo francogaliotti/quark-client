@@ -13,6 +13,8 @@ function ProfesionalProfile() {
 
     useEffect(() => {
         if (!user) navigate('/login')
+
+        
     }, []);
 
     return (
@@ -22,9 +24,13 @@ function ProfesionalProfile() {
                 <h2 className="name">{user?.userBasicDatum.nickname}</h2>
 
                 <div className="profesionalDescriptionContainer">
-                    <ProfProgressBar type='profesional'/>
-                    <h3>Biografía:</h3>
-                    <p>{user?.userBasicDatum.biography}</p>
+                    <ProfProgressBar type='profesional' />
+                    {user?.userBasicDatum.biography.length !== 0 &&
+                        <>
+                            <h3>Biografía:</h3>
+                            <p>{user?.userBasicDatum.biography}</p>
+                        </>
+                    }
                 </div>
                 <div className="badgeContainer">
                     <h3>Insignias:</h3>
@@ -38,7 +44,7 @@ function ProfesionalProfile() {
                         }
                     </div>
                 </div>
-                <div className="aboutContainer" id='ppAbout'>
+                {user.academicActivities?.length !== 0 && <div className="aboutContainer" id='ppAbout'>
                     <h3>Actividades Académicas:</h3>
                     {user.academicActivities?.map(lan => {
                         return (
@@ -73,8 +79,8 @@ function ProfesionalProfile() {
 
                         )
                     })}
-                </div>
-                <div className="aboutContainer" id='ppAbout'>
+                </div>}
+                {user.laborActivities?.length !== 0 && <div className="aboutContainer" id='ppAbout'>
                     <h3>Actividades Laborales:</h3>
                     {user.laborActivities?.map(lan => {
                         return (
@@ -109,8 +115,8 @@ function ProfesionalProfile() {
 
                         )
                     })}
-                </div>
-                <div className="aboutContainer" id='ppAbout'>
+                </div>}
+                {user.independentActivities?.length !== 0 && <div className="aboutContainer" id='ppAbout'>
                     <h3>Actividades Independientes:</h3>
                     {user.independentActivities?.map(lan => {
                         return (
@@ -142,8 +148,8 @@ function ProfesionalProfile() {
 
                         )
                     })}
-                </div>
-                <div className="aboutContainer" id='ppAbout'>
+                </div>}
+                {user.languages?.length !== 0 && <div className="aboutContainer" id='ppAbout'>
                     <h3>Idiomas:</h3>
                     {user.languages?.map(lan => {
                         return (
@@ -156,12 +162,12 @@ function ProfesionalProfile() {
                                     <label>Nivel</label>
                                     <label>{lan?.level}</label>
                                 </div>
-                                
+
                             </div>
                         )
                     })}
-                </div>
-                <div className="aboutContainer" id='ppAbout'>
+                </div>}
+                {user.skills?.length !== 0 && <div className="aboutContainer" id='ppAbout'>
                     <h3>Habilidades:</h3>
                     {user.skills?.map(sk => {
                         return (
@@ -177,8 +183,8 @@ function ProfesionalProfile() {
                             </div>
                         )
                     })}
-                </div>
-                <PrimaryButton onClick={() => navigate('/profesionalProfile/edit')}>Editar</PrimaryButton>
+                </div>}
+                <PrimaryButton onClick={() => navigate('/editProfile')}>Editar</PrimaryButton>
             </div>
         </div>
     )

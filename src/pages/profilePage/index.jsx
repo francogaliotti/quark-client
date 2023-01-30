@@ -51,7 +51,7 @@ function ProfilePage() {
         })
 
 
-    }, [userGeneralData]);
+    }, [user]);
 
     const handleProfileImg = async (file) => {
         try {

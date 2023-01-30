@@ -359,7 +359,7 @@ function EditProfesionalProfile() {
 
     const deleteIndependent = async (ind) => {
         Alert.confirm({ title: 'Deseas eliminar esta actividad?', message: "Esta acción es irreversible" }, async () => {
-            const res = await deletePublic(`/delete/${ind.id}`)
+            const res = await deletePublic(`/independents/delete/${ind.id}`)
             Alert.success({ title: "Eliminado", message: "Actividad eliminada" })
             await updateState('independent')
             setIndependents(independents.filter(l => l !== ind))
@@ -435,7 +435,7 @@ function EditProfesionalProfile() {
     }
 
     useEffect(() => {
-        if (!sessionStorage.getItem("sesskey")) navigate('/login')
+       // if (!sessionStorage.getItem("sesskey")) navigate('/login')
         fetchData()
         setActivities()
     }, []);

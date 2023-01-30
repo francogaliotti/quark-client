@@ -30,7 +30,7 @@ function Home() {
         }
         const fetchNews = async () => {
             const res = await postPublic(`/news/platformNews`,
-            { listaCurso })
+                { listaCurso })
             setNewsList(res.data)
         }
         const fetchEvent = async () => {
@@ -84,34 +84,25 @@ function Home() {
                     })}
                 </div>
             </div>
-            <div className="homeEvent">
-                <h2>Siguiente evento</h2>
-                <div className="liveEventsList" id='homeEvents'>
-                    {/*<div className="singleEvent">
-                        <div className="seLeftContainer">
-                            <img id='eventImg' src="https://img.freepik.com/free-vector/joystick-game-sport-technology_138676-2045.jpg?w=2000" alt="" />
+            {closestEvent &&
+                <div className="homeEvent">
+                    <h2>Siguiente evento</h2>
+                    <div className="liveEventsList" id='homeEvents'>
+
+                        <div className="singleEvent" onClick={() => window.open("http://" + closestEvent?.link, "_blank", "noopener noreferrer")}>
+                            <div className="seLeftContainer">
+                                <img id='eventImg' src="https://img.freepik.com/free-vector/joystick-game-sport-technology_138676-2045.jpg?w=2000" alt="" />
+                            </div>
+                            <div className="seRightContainer">
+                                <h3>{closestEvent?.title}</h3>
+                                <p id='eventDescription'>{closestEvent?.description}</p>
+                                <p>{new Date(closestEvent?.eventDate).toLocaleDateString("en-AU")}</p>
+                            </div>
                         </div>
-                        <div className="seRightContainer">
-                            <h3>Título Evento 1</h3>
-                            <p>descripción</p>
-                            <p>fecha</p>
-                            <a href="#">Link</a>
-                        </div>
-                    </div>*/}
-                    <div className="singleEvent" onClick={() => window.open("http://" + closestEvent?.link, "_blank", "noopener noreferrer")}>
-                        <div className="seLeftContainer">
-                            <img id='eventImg' src="https://img.freepik.com/free-vector/joystick-game-sport-technology_138676-2045.jpg?w=2000" alt="" />
-                        </div>
-                        <div className="seRightContainer">
-                            <h3>{closestEvent?.title}</h3>
-                            <p id='eventDescription'>{closestEvent?.description}</p>
-                            <p>{new Date(closestEvent?.eventDate).toLocaleDateString("en-AU")}</p>
-                        </div>
+
                     </div>
                 </div>
-
-
-            </div>
+            }
         </div>
     )
 }

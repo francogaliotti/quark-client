@@ -208,8 +208,4 @@ h3 {
         flex-direction: column;
     }
 
-    .basicInfo img {
-        height: 40%;
-        width: 40%;
-    }
 }

@@ -10,6 +10,8 @@ import VerticalNavbar from './components/verticalNavbar';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import env from "react-dotenv";
+import { getPublic } from './services/apiService';
+import { LoadingModal } from './components/loadingModal';
 
 
 
@@ -19,14 +21,16 @@ function App() {
   const dispatch = useDispatch();
   const cookies = new Cookies()
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
       if (cookies.get("myCookieName")) {
         console.log("asd")
         const username = cookies.get("username")
-        const res = await axios.get(`https://api-perfil.uc.r.appspot.com/user/getMoodleData/${username}`)
+        const res = await getPublic(`/user/getMoodleData/${username}`)
         const user = res.data
-        const profInfo = await axios.get(`https://api-perfil.uc.r.appspot.com/user/${user.moodleUserData.id}`)
+        const profInfo = await getPublic(`/user/${user.moodleUserData.id}`)
         dispatch(login({
           ...user,
           ...profInfo.data,
@@ -34,11 +38,22 @@ function App() {
           sesskey: sessionStorage.getItem("sesskey"),
           LoggedIn: true
         }))
+        setLoading(false)
       }
     }
     fetchData()
     console.log(env?.SERVER_URL)
   }, []);
+
+  if (loading) {
+    return (<div className="app-container">
+    <Navbar />
+    <div className="content-container">
+      <LoadingModal />
+      
+    </div>
+  </div>)
+  }
 
   return (
     <div className="app-container">

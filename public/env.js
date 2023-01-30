@@ -1,7 +1,7 @@
 window.env = {
   "ALLUSERSPROFILE": "C:\\ProgramData",
   "APPDATA": "C:\\Users\\Franco\\AppData\\Roaming",
-  "CHROME_CRASHPAD_PIPE_NAME": "\\\\.\\pipe\\LOCAL\\crashpad_9412_RWINAIJTHLTOSTZQ",
+  "CHROME_CRASHPAD_PIPE_NAME": "\\\\.\\pipe\\LOCAL\\crashpad_10952_EAIJRCZSOHVJHUUP",
   "COLORTERM": "truecolor",
   "CommonProgramFiles": "C:\\Program Files\\Common Files",
   "CommonProgramFiles(x86)": "C:\\Program Files (x86)\\Common Files",
@@ -192,7 +192,7 @@ window.env = {
   "npm_package_description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "npm_package_eslintConfig_extends_0": "react-app",
   "npm_package_eslintConfig_extends_1": "react-app/jest",
-  "npm_package_gitHead": "8dc36f9946586e7fb1c0d02c7013a185c26c6ff7",
+  "npm_package_gitHead": "f4e231516927bac1cf5d9211e37e11baffbc2472",
   "npm_package_name": "quark-client",
   "npm_package_private": "true",
   "npm_package_proxy": "https://api-perfil.uc.r.appspot.com/",

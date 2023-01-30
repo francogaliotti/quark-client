@@ -75,6 +75,10 @@
     margin-top: 3px;
 }
 
+.wrapper {
+    width: 90%;
+}
+
 @media (max-width: 900px) {
     #courseImg {
         width: 80px;

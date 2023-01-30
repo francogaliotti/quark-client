@@ -28,7 +28,7 @@ function PublicRoutes() {
         {/*User routes */}
         <Route path='/profile' element={<ProfilePage/>}/>
         <Route path='/profesionalProfile' element={<ProfesionalProfile/>}/>
-        <Route path='/profesionalProfile/edit' element={<EditProfesionalProfile/>}/>
+        <Route path='/editProfile' element={<EditProfesionalProfile/>}/>
         <Route path='/myCourses' element={<MyCourses/>}/>
         <Route path='/events' element={<Events/>}/>
         <Route path='/' element={<Home/>}/>
