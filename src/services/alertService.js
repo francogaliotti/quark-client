@@ -14,8 +14,8 @@ export default class Alert {
 
   //Button colors follow UI guidelines, icons colors are defaulted from the sweetAlert2 package
 
-  static buttonConfirmColor = '#2378d3'
-  static buttonCancelColor = '#DB5752'
+  static buttonConfirmColor = '#FE720F'
+  static buttonCancelColor = '#181B20'
 
 
   static success({ title, message }) {

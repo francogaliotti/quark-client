@@ -5,14 +5,16 @@ import { selectUser } from '../../features/userSlice';
 import '../../styles/ProfesionalProfile.css'
 import { PrimaryButton } from '../../styles/styledComponents/Buttons';
 import ProfProgressBar from '../profProgressBar';
+import Cookies from 'universal-cookie';
 
 function ProfesionalProfile() {
 
     const user = useSelector(selectUser);
     const navigate = useNavigate();
+    const cookies = new Cookies()
 
     useEffect(() => {
-        if (!user) navigate('/login')
+        if (!cookies.get("myCookieName")) navigate('/login')
 
         
     }, []);

@@ -7,12 +7,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import Alert from '../../../services/alertService';
 import { deletePublic, getPublic, postPublic, putPublic } from '../../../services/apiService';
+import Cookies from 'universal-cookie';
 
 function EditProfesionalProfile() {
 
     const user = useSelector(selectUser);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const cookies = new Cookies()
 
     const [currentLanguage, setCurrentLanguage] = useState()
     const [currentSkill, setCurrentSkill] = useState()
@@ -435,7 +437,9 @@ function EditProfesionalProfile() {
     }
 
     useEffect(() => {
-       // if (!sessionStorage.getItem("sesskey")) navigate('/login')
+        if (!cookies.get("myCookieName")) {
+            navigate('/login')
+        }
         fetchData()
         setActivities()
     }, []);

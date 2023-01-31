@@ -19,6 +19,7 @@
 }
 
 .wrapContainer {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     max-width: 90%;
@@ -48,7 +49,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 80%;
+    font-size: 75%;
 }
 
 #courseImg {
@@ -93,10 +94,6 @@
         height: 67px;
     }
 
-    #courseDate {
-        display: none;
-    }
-
     .bar {
         margin-top: 20px;
     }
@@ -107,6 +104,10 @@
 
     }
 
+    #courseContainer h3 {
+        font-size: 85%;
+    }
+
     .wrapContainer {
         width: 100%;
         gap: 10px;
@@ -114,4 +115,5 @@
         padding-bottom: 15px;
 
     }
+    
 }

@@ -8,6 +8,7 @@ import { useMediaQuery } from 'react-responsive';
 import menuStyle from './menuStyle'
 import quarkLogo from '../../images/quark-logo.png'
 import { useState } from 'react';
+import Cookies from 'universal-cookie';
 
 function Navbar() {
   const user = useSelector(selectUser);
@@ -15,6 +16,7 @@ function Navbar() {
   const navigate = useNavigate();
   const isMovile = useMediaQuery({ maxWidth: "860px" })
   const [isMenuOpen, setMenuOpen] = useState(false)
+  const cookies = new Cookies()
 
   const handleLogout = () => {
 
@@ -25,7 +27,7 @@ function Navbar() {
   if (isMovile) return (
     <Menu right styles={menuStyle} isOpen={isMenuOpen} onOpen={() => setMenuOpen(true)} onClose={() => setMenuOpen(false)} >
       <div>
-        {user ? <ul className='verticalList' id='verticalResponsive'>
+        {cookies.get("myCookieName") ? <ul className='verticalList' id='verticalResponsive'>
           <li><a onClick={() => {
             navigate('/')
             setMenuOpen(!isMenuOpen)
@@ -73,7 +75,7 @@ function Navbar() {
       <div className="logoContainer" onClick={() => navigate('/')}>
         <img src={quarkLogo} alt="" />
       </div>
-      {user ? <ul>
+      {cookies.get("myCookieName") ? <ul>
         <li><a onClick={() => {
           handleLogout()
           setMenuOpen(!isMenuOpen)

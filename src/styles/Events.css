@@ -72,6 +72,7 @@
 }
 
 .pastEventsList {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -109,18 +110,23 @@
 }
 
 .eventPaginationBttns {
-    transform: translate(0%, -800%);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     list-style: none;
-    width: 110%;
+    width: 95%;
     display: flex;
     justify-content: space-between;
     margin: 0;
 }
 
 .pastEventPaginationBttns {
-    transform: translate(0%, -1150%);
+    position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
     list-style: none;
-    width: 110%;
+    width: 95%;
     display: flex;
     justify-content: space-between;
     margin: 0;
@@ -161,10 +167,6 @@
 
     .pastEventsList {
         width: 140%;
-    }
-
-    .eventPaginationBttns {
-        transform: translate(0%, -1100%);
     }
     
     #pastSingleEvent {

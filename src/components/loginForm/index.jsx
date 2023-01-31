@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import Cookies from 'universal-cookie'
 import { getPublic, postPublic } from '../../services/apiService';
 import Alert from '../../services/alertService';
+import env from "react-dotenv";
 
 
 function LoginForm() {
@@ -75,6 +76,7 @@ function LoginForm() {
                 /*const loginResponse = await axios.get(`http://localhost:3030/login`,
                     //{ withCredentials: "include" }
                     )*/
+                    console.log(`${ env.SERVER_URL}login`)
                 cookieRef.current.src = `http://localhost:8080/login`
                 const profInfo = await getPublic(`/user/${moodleData.moodleUserData.id}`)
                 try {

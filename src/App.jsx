@@ -39,6 +39,9 @@ function App() {
           LoggedIn: true
         }))
         setLoading(false)
+      } else {
+        navigate('/login')
+        setLoading(false)
       }
     }
     fetchData()

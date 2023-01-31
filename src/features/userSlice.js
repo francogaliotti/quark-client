@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import Cookies from 'universal-cookie'
+import { postPublic } from '../services/apiService'
 
 const moodleLogout = async (key) => {
     window.location.href = `http://localhost/moodle/login/logout.php?sesskey=${key}`
@@ -26,8 +27,8 @@ export const userSlice = createSlice({
             const cookies = new Cookies()
             cookies.remove('myCookieName')
             cookies.remove('username')
-            const res = await axios.post(`https://api-perfil.uc.r.appspot.com/sesskey/`, {
-                'id': state.user.id, //aca tiene que ir state.user.id
+            const res = await postPublic(`/sesskey/`, {
+                'id': state.user.id,
                 'sesskey': null
             })
             await moodleLogout(state.user.sesskey)

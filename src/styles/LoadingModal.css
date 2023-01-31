@@ -4,15 +4,15 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
   }
   
   .loading-spinner {
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid #3498db;
+    border: 5px solid #181B20;
+    border-top: 5px solid #FE720F;
     border-radius: 50%;
     width: 50px;
     height: 50px;
