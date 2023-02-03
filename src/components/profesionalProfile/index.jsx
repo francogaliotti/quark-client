@@ -13,12 +13,6 @@ function ProfesionalProfile() {
     const navigate = useNavigate();
     const cookies = new Cookies()
 
-    useEffect(() => {
-        if (!cookies.get("myCookieName")) navigate('/login')
-
-        
-    }, []);
-
     return (
         <div className="profesionalProfileContainer">
             <div className="basicInfo" id='profesionalInfo'>
@@ -27,7 +21,7 @@ function ProfesionalProfile() {
 
                 <div className="profesionalDescriptionContainer">
                     <ProfProgressBar type='profesional' />
-                    {user?.userBasicDatum.biography.length !== 0 &&
+                    {user?.userBasicDatum.biography?.length !== 0 &&
                         <>
                             <h3>Biografía:</h3>
                             <p>{user?.userBasicDatum.biography}</p>

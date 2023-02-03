@@ -27,7 +27,7 @@ function Navbar() {
   if (isMovile) return (
     <Menu right styles={menuStyle} isOpen={isMenuOpen} onOpen={() => setMenuOpen(true)} onClose={() => setMenuOpen(false)} >
       <div>
-        {cookies.get("myCookieName") ? <ul className='verticalList' id='verticalResponsive'>
+        {cookies.get("QuarkSession") ? <ul className='verticalList' id='verticalResponsive'>
           <li><a onClick={() => {
             navigate('/')
             setMenuOpen(!isMenuOpen)
@@ -48,6 +48,10 @@ function Navbar() {
             navigate('/events')
             setMenuOpen(!isMenuOpen)
           }}>Eventos</a></li>
+          <li><a onClick={() => {
+            navigate('/offer')
+            setMenuOpen(!isMenuOpen)
+          }}>Oferta</a></li>
           {user?.professionalprofile.role == 1 &&
             <li><a onClick={() => {
               navigate('/config')
@@ -75,7 +79,7 @@ function Navbar() {
       <div className="logoContainer" onClick={() => navigate('/')}>
         <img src={quarkLogo} alt="" />
       </div>
-      {cookies.get("myCookieName") ? <ul>
+      {cookies.get("QuarkSession") ? <ul>
         <li><a onClick={() => {
           handleLogout()
           setMenuOpen(!isMenuOpen)

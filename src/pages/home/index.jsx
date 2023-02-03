@@ -9,6 +9,7 @@ import ProfProgressBar from '../../components/profProgressBar';
 import Cookies from 'universal-cookie';
 import { useState } from 'react';
 import { getPublic, postPublic } from '../../services/apiService';
+import { SingleCourse } from '../../components/singleCourse';
 
 function Home() {
     const user = useSelector(selectUser);
@@ -25,9 +26,7 @@ function Home() {
     const [closestEvent, setClosestEvent] = useState()
 
     useEffect(() => {
-        if (!user) {
-            navigate('/login')
-        }
+
         const fetchNews = async () => {
             const res = await postPublic(`/news/platformNews`,
                 { listaCurso })
@@ -43,10 +42,6 @@ function Home() {
         fetchNews()
         fetchEvent()
     }, []);
-
-    useEffect(() => {
-        if (!user) navigate('/login')
-    }, [user]);
 
     return (
         <div className='homePageContainer'>
@@ -66,24 +61,14 @@ function Home() {
                     })}
                 </div>
             </div>}
-            <div className="homeEvent">
+            {cursosOrdenados.length !== 0 && <div className="homeCourses">
                 <h2>Tus últimos cursos</h2>
-                <div className="wrapContainer" id='homeEvents'>
-                    {cursosOrdenados && cursosOrdenados?.map((c) => {
-
-                        return (<div className="basicInfo" id='courseContainer'>
-                            <h3 id='courseTitle'>{c.fullName}</h3>
-                            <img src={c.url} id='courseImg' />
-                            <h4 id='courseDate'>Fecha de inicio: <p>{new Date(c.timestarted).toLocaleDateString("en-AU")}</p></h4>
-                            <ProgressBar completed={Math.round(c.progress)} className="wrapper"
-                                barContainerClassName="container"
-                                bgColor='rgb(24, 27, 32)'
-                                labelClassName="label"
-                                labelAlignment='center' />
-                        </div>)
+                <div className="wrapContainer">
+                    {cursosOrdenados?.map((c) => {
+                        return (<SingleCourse course={c}/>)
                     })}
                 </div>
-            </div>
+            </div>}
             {closestEvent &&
                 <div className="homeEvent">
                     <h2>Siguiente evento</h2>

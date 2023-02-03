@@ -3,30 +3,25 @@ import env from "react-dotenv";
 import Cookies from 'universal-cookie';
 
 //TODO here we should put the base url from the server side
-axios.defaults.baseURL = env.SERVER_URL
+axios.defaults.baseURL = env?.SERVER_URL || "http://34.71.113.200:3030/"
 const cookies = new Cookies()
+const token = cookies.get("QuarkSession")
 
 export async function getPrivate(path) {
-    const token = localStorage.getItem("token")
-    console.log(token)
     return axios.get(path, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { QuarkSession: token },
     });
 }
 
 export async function postPrivate(path, body) {
-    const token = localStorage.getItem("token")
     return axios.post(path, body, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { QuarkSession: token },
     });
 }
 
-export async function putPrivate(path, id, data) {
-    const token = localStorage.getItem("token")
-    return axios.put(path + id, data, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
+export async function putPrivate(path, data) {
+    return axios.put(path, data, {
+        headers: { QuarkSession: token },
     });
 }
 
@@ -52,8 +47,6 @@ export async function deletePublic(path) {
 export async function deletePrivate(path) {
     const token = localStorage.getItem("token")
     return axios.delete(path, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
+        headers: { QuarkSession: token },
     })
 }

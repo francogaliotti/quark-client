@@ -6,7 +6,7 @@ import { login, selectUser } from '../../features/userSlice';
 import '../../styles/ProfilePage.css'
 import { Countries } from '../../jsons/countries';
 import Cookies from 'universal-cookie';
-import { getPublic, postPublic, putPublic } from '../../services/apiService';
+import { getPublic, postPublic, putPrivate, putPublic } from '../../services/apiService';
 import Alert from '../../services/alertService';
 
 
@@ -23,7 +23,7 @@ function ProfilePage() {
 
     const handleProfileChange = async () => {
         try {
-            const res = await putPublic(`/user/update`, {
+            const res = await putPrivate(`/user/update`, {
                 userid: user.id,
                 userGeneralData
             })
@@ -36,15 +36,13 @@ function ProfilePage() {
     }
 
     useEffect(() => {
-        if (!cookies.get('myCookieName')) navigate('/login')
-
         setUserGeneralData({
             biography: user?.userBasicDatum.biography,
             nickname: user?.userBasicDatum.nickname,
             birthdate: user?.userBasicDatum.birthdate,
             firstname: user?.moodleUserData.firstname,
             lastname: user?.moodleUserData.lastname,
-            email: user?.moodleUserData.email,
+            //email: user?.moodleUserData.email,
             city: user?.moodleUserData.city,
             phone: user?.moodleUserData.phone,
             country: user?.moodleUserData.country
@@ -106,10 +104,10 @@ function ProfilePage() {
                             <label>Apellido</label>
                             <input type="text" value={userGeneralData?.lastname} onChange={(event) => setUserGeneralData({ ...userGeneralData, lastname: event.target.value })} />
                         </div>
-                        <div className="fillForm">
+                        {/*<div className="fillForm">
                             <label>Email</label>
                             <input type="text" value={userGeneralData?.email} onChange={(event) => setUserGeneralData({ ...userGeneralData, email: event.target.value })} />
-                        </div>
+</div>*/}
                         <div className="fillForm">
                             <label>Fecha de Nacimiento</label>
                             <input type="date" value={userGeneralData?.birthdate} onChange={(e) => setUserGeneralData({ ...userGeneralData, birthdate: e.target.value })} />

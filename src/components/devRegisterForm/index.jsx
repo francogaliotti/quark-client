@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { postPublic } from '../../services/apiService'
+import Alert from '../../services/alertService'
 
 function DevRegisterForm() {
 
@@ -26,7 +27,7 @@ function DevRegisterForm() {
         username: Yup.string()
             .min(3, "El minimo de caracteres es 3")
             .max(20, "El máximo de caracteres es 20")
-            .lowercase("Solo puede llevar minúsculas")
+            .lowercase("Solo puede llevar minúsculas").strict()
             .required("Campo requerido"),
         firstName: Yup.string()
             .min(3, "El minimo de caracteres es 3")
@@ -61,8 +62,14 @@ function DevRegisterForm() {
             password: data.password,
             email: data.email
         }
-        const res = await postPublic(`/register`, { user })
-        console.log(res)
+        try {
+            const res = await postPublic(`/register`, { user })
+            console.log(res)
+            Alert.success({title:"Email enviado", message: res.data.message})
+        } catch (e) {
+            Alert.error({title:"Error!", message: e.response.data.message})
+            console.log(e)
+        }
     }
 
     return (

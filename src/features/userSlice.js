@@ -4,7 +4,7 @@ import Cookies from 'universal-cookie'
 import { postPublic } from '../services/apiService'
 
 const moodleLogout = async (key) => {
-    window.location.href = `http://localhost/moodle/login/logout.php?sesskey=${key}`
+    window.location.href = `http://34.71.113.200/moodle/login/logout.php?sesskey=${key}`
 }
 
 export const userSlice = createSlice({
@@ -25,7 +25,7 @@ export const userSlice = createSlice({
             sessionStorage.removeItem("sesskey")
             sessionStorage.removeItem("token")
             const cookies = new Cookies()
-            cookies.remove('myCookieName')
+            cookies.remove('QuarkSession')
             cookies.remove('username')
             const res = await postPublic(`/sesskey/`, {
                 'id': state.user.id,

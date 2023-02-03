@@ -25,9 +25,7 @@ function Events() {
   const pageCountPast = Math.ceil(elementCountPast / 4)
 
   useEffect(() => {
-    if (!user) {
-      navigate('/login')
-    }
+
     const fetchEvents = async () => {
       const resF = await postPublic(`/events/futureEvents`, { page: futurePage })
       const resP = await postPublic(`/events/pastEvents`, { page: pastPage })

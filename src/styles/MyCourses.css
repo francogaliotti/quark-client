@@ -22,7 +22,7 @@
     position: relative;
     display: flex;
     flex-wrap: wrap;
-    max-width: 90%;
+    width: 100%;
     gap: 25px;
     justify-content: center;
     background-color: #666;
@@ -38,11 +38,11 @@
 }
 
 #courseContainer {
-    width: 25%;
+    width: 23%;
     padding-bottom: 20px;
     cursor: pointer;
     font-size: 100%;
-    min-width: 200px;
+    min-width: 180px;
 }
 
 #courseContainer h3 {
@@ -106,14 +106,6 @@
 
     #courseContainer h3 {
         font-size: 85%;
-    }
-
-    .wrapContainer {
-        width: 100%;
-        gap: 10px;
-        padding-top: 15px;
-        padding-bottom: 15px;
-
     }
     
 }

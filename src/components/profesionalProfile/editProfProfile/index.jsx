@@ -437,9 +437,6 @@ function EditProfesionalProfile() {
     }
 
     useEffect(() => {
-        if (!cookies.get("myCookieName")) {
-            navigate('/login')
-        }
         fetchData()
         setActivities()
     }, []);

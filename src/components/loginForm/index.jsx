@@ -57,16 +57,14 @@ function LoginForm() {
 
     const getMoodleData = async () => {
         try {
+            console.log(env.SERVER_URL)
             const res = await getPublic(`user/getMoodleData/${email}`)
             moodleData = res.data
         }
         catch (e) {
             console.log(e)
-            Swal.fire({
-                icon: 'error',
-                title: "Usuario no encontrado",
-                text: 'Intenta de nuevo'
-            })
+            Alert.error({ title: "Usuario no encontrado", message: "Intenta de nuevo" })
+
         }
     }
 
@@ -76,15 +74,18 @@ function LoginForm() {
                 /*const loginResponse = await axios.get(`http://localhost:3030/login`,
                     //{ withCredentials: "include" }
                     )*/
-                    console.log(`${ env.SERVER_URL}login`)
-                cookieRef.current.src = `http://localhost:8080/login`
+                console.log(`${env.SERVER_URL}login`)
+                cookieRef.current.src = `http://34.71.113.200:3030/login/`
                 const profInfo = await getPublic(`/user/${moodleData.moodleUserData.id}`)
+
                 try {
                     const res = await getPublic(`/sesskey/${moodleData.moodleUserData.id}`)
                     console.log(res)
-                    if (res.data.sesskey === "") {
+                    if (res.data.sesskey === null) {
+                        cookies.remove('QuarkSession')
                         throw "Contraseña incorrecta"
                     }
+                    //cookieRef.current.src = `http://34.71.113.200:3030/login`
                     dispatch(login({
                         ...moodleData,
                         ...profInfo.data,
@@ -92,11 +93,12 @@ function LoginForm() {
                         //token: loginResponse.data.token,
                         LoggedIn: true
                     }))
+                    navigate("/")
                 } catch (e) {
                     console.log(e)
                     Alert.error({ title: e, message: "Intenta de nuevo" })
                 }
-                navigate("/")
+                
             } catch (e) {
                 console.log(e)
                 Alert.error({ title: "Usuario incorrecto", message: "Intenta de nuevo" })
@@ -107,8 +109,8 @@ function LoginForm() {
 
     return (
 
-        <form className="login-form" ref={ref} action="http://localhost/moodle/login/index.php" onSubmit={(e) => handleSubmit(e)} method="post" id="login">
-            <input type="hidden" name="logintoken" value="aHuEaKUub63tg4ONOX8E8wYnHupAyBKI" />
+        <form className="login-form" ref={ref} action="http://34.71.113.200/moodle/login/index.php" onSubmit={(e) => handleSubmit(e)} method="post" id="login">
+            <input type="hidden" name="logintoken" value="UfICO3IsgLmxSY7yVaN1lo4pa8O3irlV" />
             <div className="login-form-username form-group singleField" id="yui_3_17_2_1_1669123034452_20">
                 <label for="username" class="sr-only">
                     Nombre de usuario
@@ -121,15 +123,15 @@ function LoginForm() {
             </div>
             <PrimaryButton type="submit" id="loginbtn" onClick="this.form.target='moodleframe'">Acceder</PrimaryButton>
             <div className="login-form-forgotpassword form-group">
-                <a href="http://localhost/moodle/login/forgot_password.php">¿Ha extraviado la contraseña?</a>
+                <a href="http://34.71.113.200/moodle/login/forgot_password.php">¿Ha extraviado la contraseña?</a>
             </div>
 
             <iframe id="inlineFrameExample"
                 style={{ display: "none" }}
                 title="Inline Frame Example"
-                width="1"
-                height="1"
-                src="http://localhost/moodle/my/"
+                width="600"
+                height="400"
+                src="http://34.71.113.200/moodle/my/"
                 name='moodleframe'>
             </iframe>
             <iframe id="inlineFrameExample"

@@ -1,0 +1,55 @@
+.offerPageContainer {
+    position: relative;
+    padding: 8px;
+}
+
+.offersContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 12px;
+}
+
+.singleOffer {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    gap: 15px;
+    background-color: #181B20;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.singleOffer .front {
+    padding: 8px;
+    cursor: pointer;
+    width: 300px;
+}
+
+.singleOffer .front .offerImg {
+    width: 100%;
+    max-height: 170px;
+    border-radius: 10px;
+    
+}
+
+.singleOffer .dropdown{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.singleOffer .dropdown .level {
+    padding: 5px;
+    background-color: #FE720F;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 500ms ease-in-out;
+}
+
+.singleOffer .dropdown .level:hover {
+    background-color: #FF8C00;
+}

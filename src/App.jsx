@@ -25,7 +25,7 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (cookies.get("myCookieName")) {
+      if (cookies.get("QuarkSession")) {
         console.log("asd")
         const username = cookies.get("username")
         const res = await getPublic(`/user/getMoodleData/${username}`)
@@ -45,7 +45,7 @@ function App() {
       }
     }
     fetchData()
-    console.log(env?.SERVER_URL)
+    console.log(cookies.get("QuarkSession"))
   }, []);
 
   if (loading) {
@@ -60,7 +60,7 @@ function App() {
 
   return (
     <div className="app-container">
-      {cookies.get("myCookieName") && <>
+      {cookies.get("QuarkSession") && <>
         <VerticalNavbar />
       </>}
       <Navbar />

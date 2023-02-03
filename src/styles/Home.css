@@ -38,6 +38,10 @@
     align-items: center;
 }
 
+.homeCourses {
+    width: 85%;
+}
+
 #homeEvents{
     width: 120%;
 }
