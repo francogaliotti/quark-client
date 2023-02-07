@@ -5,7 +5,7 @@
     bottom: 0;
     height: 100%;
     background-color: #282c34;
-    width: 190px;
+    width: 12%;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
     z-index: 9;
 }
@@ -18,7 +18,7 @@
     padding: 0;
     margin-top: 120px;
     text-align: start;
-    font-size: 80%;
+    font-size: 70%;
 }
 
 .verticalList a {

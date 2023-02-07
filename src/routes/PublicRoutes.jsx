@@ -10,12 +10,14 @@ import { ConfirmRegisterDev } from '../pages/auth/confirmRegisterDev';
 import Configuration from '../pages/configuration';
 import { EventsAdmin } from '../pages/configuration/eventsAdmin';
 import { NewsAdmin } from '../pages/configuration/newsAdmin';
+import { ScholarshipsAdmin } from '../pages/configuration/scholarshipsAdmin';
 import { Course } from '../pages/course';
 import Events from '../pages/events';
 import Home from '../pages/home';
 import MyCourses from '../pages/myCourses';
 import { Offer } from '../pages/offer';
 import ProfilePage from '../pages/profilePage';
+import { Scholarships } from '../pages/scholarships';
 
 function PublicRoutes() {
   return (
@@ -36,12 +38,14 @@ function PublicRoutes() {
         <Route exact path='/course/:id' element={<Course/>}/>
         <Route path='/events' element={<Events/>}/>
         <Route path='/offer' element={<Offer/>}/>
+        <Route path='/scholarships' element={<Scholarships/>}/>
         <Route path='/' element={<Home/>}/>
 
         {/*Admin routes*/}
         <Route path='/config' element={<Configuration/>}/>
         <Route path='/config/events' element={<EventsAdmin/>}/>
         <Route path='/config/news' element={<NewsAdmin/>}/>
+        <Route path='/config/scholarships' element={<ScholarshipsAdmin/>}/>
         <Route path='/config/adminMoodle' element={<IFrameComponent url='/admin/search.php'/>}/>
     </Routes>
     </>

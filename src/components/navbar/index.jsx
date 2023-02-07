@@ -52,6 +52,10 @@ function Navbar() {
             navigate('/offer')
             setMenuOpen(!isMenuOpen)
           }}>Oferta</a></li>
+          <li><a onClick={() => {
+            navigate('/scholarships')
+            setMenuOpen(!isMenuOpen)
+          }}>Becas</a></li>
           {user?.professionalprofile.role == 1 &&
             <li><a onClick={() => {
               navigate('/config')

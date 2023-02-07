@@ -219,7 +219,12 @@ function EditProfesionalProfile() {
 
     const editAcademic = (ac) => {
         Alert.confirm({ title: 'Deseas actualizar esta actividad?' }, () => {
-            setCurrentAcademic({ ...ac, edited: true })
+            setCurrentAcademic({
+                ...ac,
+                beginDate: new Date(ac.beginDate).toISOString().substring(0, 10),
+                endDate: new Date(ac.endDate).toISOString().substring(0, 10),
+                edited: true
+            })
             setAcademics(academics.filter(l => l !== ac))
         })
     }
@@ -291,7 +296,12 @@ function EditProfesionalProfile() {
 
     const editLabor = (lab) => {
         Alert.confirm({ title: "Deseas actualizar esta actividad?" }, () => {
-            setCurrentLabor({ ...lab, edited: true })
+            setCurrentLabor({
+                ...lab,
+                beginDate: new Date(lab.beginDate).toISOString().substring(0, 10),
+                endDate: new Date(lab.endDate).toISOString().substring(0, 10),
+                edited: true
+            })
             setLabors(labors.filter(l => l !== lab))
         })
     }
@@ -354,7 +364,12 @@ function EditProfesionalProfile() {
 
     const editIndependent = (ind) => {
         Alert.confirm({ title: 'Deseas actualizar esta actividad?' }, () => {
-            setCurrentIndependent({ ...ind, edited: true })
+            setCurrentIndependent({
+                ...ind,
+                beginDate: new Date(ind.beginDate).toISOString().substring(0, 10),
+                endDate: new Date(ind.endDate).toISOString().substring(0, 10),
+                edited: true
+            })
             setIndependents(independents.filter(l => l !== ind))
         })
     }
@@ -739,7 +754,7 @@ function EditProfesionalProfile() {
                                 })}
                             </select>
                         </div>
-                        <div className="fillForm">
+                        <div className="fillForm" id='radiosForm'>
                             <label>Puntaje</label>
                             <div className='inputRadios'>
                                 <input type="radio" value="1" id='1' name='score' onChange={(e) => setCurrentSkill({ ...currentSkill, score: e.target.value })} />

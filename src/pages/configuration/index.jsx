@@ -17,8 +17,8 @@ function Configuration() {
             <PrimaryButton onClick={()=>navigate('/config/events')}>Administrar eventos</PrimaryButton>
             <PrimaryButton onClick={()=>navigate('/config/news')}>Administrar novedades</PrimaryButton>
             <PrimaryButton onClick={()=>navigate('/config/adminMoodle')}>Administrar moodle</PrimaryButton>
-            <PrimaryButton>Opcion 4</PrimaryButton>
-            <PrimaryButton>Opcion 5</PrimaryButton>
+            <PrimaryButton onClick={()=>navigate('/config/scholarships')}>Administrar becas</PrimaryButton>
+            <PrimaryButton>Administrar formularios</PrimaryButton>
         </div>
     </div>
   )

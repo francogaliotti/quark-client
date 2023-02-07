@@ -49,6 +49,17 @@
     border-radius: 50%;
 }
 
+.basicInfo .names {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.basicInfo .names h2 {
+    font-size: 80%;
+    margin: 0;
+}
+
 
 
 .descriptionContainer {
@@ -133,7 +144,7 @@ h3 {
 }
 
 .aboutContainer .fillForms .fillForm label {
-    font-size: 60%;
+    font-size: 55%;
 }
 
 .aboutContainer .fillForms .fillForm input {
@@ -163,8 +174,13 @@ h3 {
     border-radius: 5px;
 }
 
+ #radiosForm{
+    width: 30%;
+}
+
 .aboutContainer .fillForms .fillForm .inputRadios input {
     width: 10%;
+    cursor: pointer;
 }
 
 .aboutContainer .fillForms .fillForm .inputRadios label {

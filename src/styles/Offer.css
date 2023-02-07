@@ -20,19 +20,20 @@
     background-color: #181B20;
     border-radius: 5px;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    width: 30%;
 }
 
 .singleOffer .front {
     padding: 8px;
     cursor: pointer;
-    width: 300px;
+    height: fit-content;
 }
 
 .singleOffer .front .offerImg {
     width: 100%;
-    max-height: 170px;
+    height: 100%;
+    max-height: 250px;
     border-radius: 10px;
-    
 }
 
 .singleOffer .dropdown{
