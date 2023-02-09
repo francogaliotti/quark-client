@@ -4,32 +4,23 @@ import { getPublic, postPublic } from "../../services/apiService";
 import { login, selectUser } from "../../features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Alert from "../../services/alertService";
+import { Scholarship } from "./scholarship";
 
 export const Scholarships = () => {
-  const [scholarshipDropdown, setScholarshipDropDown] = useState(false);
   const [containsScholarship, setContainsScholarship] = useState(false);
+  const [scholarships, setScholarships] = useState([])
 
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    user.moodleUserData.listaCurso.map((c) => {
-      if (c.idCurso == 7 || 3) setContainsScholarship(true);
-    });
+    getScholarships()
   }, [user]);
 
-  const applyForScholarship = async () => {
-    const res = await postPublic(`/scholarship`, {
-      userid: user.id,
-      courseid: 7,
-    });
-    console.log(res);
-    Alert.success({
-      title: "Se te dio de alta el desafio!",
-      message: 'Ve a la sección "Mi aprendizaje"',
-    });
-    await fetchData();
-  };
+  const getScholarships = async () => {
+    const res = await postPublic(`/scholarship/getUserScholarships`, {courseList: user.moodleUserData.listaCurso})
+    setScholarships(res.data)
+  }
 
   const fetchData = async () => {
     const moodleData = await getPublic(
@@ -47,25 +38,10 @@ export const Scholarships = () => {
   return (
     <div className="offerPageContainer">
       <div className="offersContainer">
-        <div className="singleOffer">
-          <div
-            className="front"
-            onClick={() => setScholarshipDropDown(!scholarshipDropdown)}
-          >
-            <img
-              className="offerImg"
-              src="https://quarkacademy.com.ar/wp-content/uploads/2023/01/Vector-9.png"
-              alt=""
-            />
-          </div>
-          {scholarshipDropdown && (
-            <div className="dropdown">
-              <div className="level" onClick={applyForScholarship}>
-                Aplicar a la beca
-              </div>
-            </div>
-          )}
-        </div>
+        {scholarships.map(s=> {
+          console.log(s.id)
+          return(<Scholarship item={s} fetch={fetchData}/>)
+        })}
       </div>
     </div>
   );

@@ -1,18 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { PrimaryButton } from "../../styles/styledComponents/Buttons";
-import { login, selectUser } from "../../features/userSlice";
-import "../../styles/ProfilePage.css";
-import { Countries } from "../../jsons/countries";
+import { PrimaryButton } from "../../../styles/styledComponents/Buttons";
+import { login, selectUser } from "../../../features/userSlice";
+import "../../../styles/ProfilePage.css";
+import { Countries } from "../../../jsons/countries";
 import Cookies from "universal-cookie";
 import {
   getPublic,
   postPublic,
   putPrivate,
   putPublic,
-} from "../../services/apiService";
-import Alert from "../../services/alertService";
+} from "../../../services/apiService";
+import Alert from "../../../services/alertService";
 
 function ProfilePage() {
   const user = useSelector(selectUser);

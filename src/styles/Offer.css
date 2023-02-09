@@ -36,6 +36,15 @@
     border-radius: 10px;
 }
 
+.singleOffer .front .offerTitle {
+    color: #FE720F;
+}
+
+.singleOffer .front .scholarshipDuration {
+    color: #ddd;
+    font-size: 80%;
+}
+
 .singleOffer .dropdown{
     display: flex;
     flex-direction: column;

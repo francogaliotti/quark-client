@@ -6,6 +6,11 @@
     height: fit-content;
     margin-left: 5%;
     gap: 10px;
+
+    background-color: #bbb;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    padding: 10px;
 }
 
 .leftContainer {
@@ -108,6 +113,13 @@ h3 {
     margin-left: 15%;
 }
 
+#profesionalInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #bbb;
+}
+
 .aboutContainer {
     text-align: start;
     background-color: #eee;
@@ -194,6 +206,33 @@ h3 {
     float: right;
 }
 
+.aboutContainer .moreInfoContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.aboutContainer .moreInfoContainer .infoQuestion{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px;
+}
+
+.aboutContainer .moreInfoContainer .infoQuestion label {
+    font-size: 70%;
+    width: 85%;
+}
+
+.aboutContainer .moreInfoContainer .infoQuestion select {
+    width: 10%;
+    height: 22px;
+    position: relative;
+    bottom: 0;
+    border: 1px solid #777;
+    border-radius: 5px;
+}
+
 #ppAbout {
     text-align: start;
     box-shadow: none;
@@ -210,6 +249,31 @@ h3 {
 
 .plus:hover {
     color: #666;
+}
+
+.myProfileContainer {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.myProfileButtons{
+    position: absolute;
+    top: 0;
+    left: 5%;
+    z-index: 10;
+}
+
+.profileButton{
+    font-size: 70%;
+    border: none;
+    cursor: pointer;
+    background-color: #aaa;
+}
+
+#presed {
+    background-color: #bbb;
+    cursor: default;
 }
 
 

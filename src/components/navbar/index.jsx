@@ -37,10 +37,6 @@ function Navbar() {
             setMenuOpen(!isMenuOpen)
           }}>Mi Perfil</a></li>
           <li><a onClick={() => {
-            navigate('/profesionalProfile')
-            setMenuOpen(!isMenuOpen)
-          }}>Perfil Profesional</a></li>
-          <li><a onClick={() => {
             navigate('/myCourses')
             setMenuOpen(!isMenuOpen)
           }}>Mi Aprendizaje</a></li>

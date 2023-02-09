@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login, selectUser } from '../../../features/userSlice';
-import '../../../styles/ProfilePage.css'
+import { login, selectUser } from '../../../../features/userSlice';
+import '../../../../styles/ProfilePage.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import Alert from '../../../services/alertService';
-import { deletePublic, getPublic, postPublic, putPublic } from '../../../services/apiService';
+import Alert from '../../../../services/alertService';
+import { deletePublic, getPublic, postPublic, putPublic } from '../../../../services/apiService';
 import Cookies from 'universal-cookie';
 
-function EditProfesionalProfile() {
+export function EditProfesionalProfile() {
 
     const user = useSelector(selectUser);
     const dispatch = useDispatch();
@@ -778,4 +778,3 @@ function EditProfesionalProfile() {
         </div >
     )
 }
-export default EditProfesionalProfile
