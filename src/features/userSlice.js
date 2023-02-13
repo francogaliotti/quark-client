@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
 import Cookies from 'universal-cookie'
 import { postPublic } from '../services/apiService'
 

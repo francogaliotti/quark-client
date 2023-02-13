@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faCircleInfo, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import ReactPaginate from 'react-paginate'
 import '../../../styles/Configuration.css'
-import { deletePublic, postPublic } from '../../../services/apiService';
+import { deletePublic, postPublic, putPublic } from '../../../services/apiService';
 import Alert from '../../../services/alertService';
 
 export const ScholarshipsAdmin = () => {
@@ -39,7 +39,7 @@ export const ScholarshipsAdmin = () => {
 
     const handleDelete = async (n) => {
         Alert.confirm({ title: 'Deseas eliminar esta beca?', message: "Esta acción es irreversible" }, async () => {
-            const res = await deletePublic(`/news/delete/${n.id}`)
+            const res = await deletePublic(`/scholarship/delete/${n.id}`)
             Alert.success({ title: "Eliminada!", message: "Beca eliminada" })
             fetchData()
         })
@@ -77,6 +77,7 @@ export const ScholarshipsAdmin = () => {
                             <th>Nombre</th>
                             <th>Duración</th>
                             <th>Cantidad</th>
+                            <th>Imagen</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -86,6 +87,7 @@ export const ScholarshipsAdmin = () => {
                                 <td>{n.name}</td>
                                 <td>{n.duration} meses</td>
                                 <td>{n.amount} becas</td>
+                                <td><button onClick={()=>putPublic(`scholarship/updateImg`)}>agregar</button></td>
                                 <td id='crudButtons'>
                                     <button className='plus' onClick={() => openForUpdate(n)}><FontAwesomeIcon icon={faPenToSquare} /></button>
                                     <button className='plus' onClick={() => handleDelete(n)}><FontAwesomeIcon icon={faTrashCan} /></button>

@@ -63,6 +63,23 @@ export default class Alert {
     })
   }
 
+  static confirmWithCancel({ title, message }, onConfirm, onCancel) {
+
+    Swal.fire({
+      title,
+      text: message,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: this.buttonConfirmColor,
+      confirmButtonText: 'Aceptar',
+      cancelButtonColor: this.buttonCancelColor,
+      cancelButtonText: 'Cancelar',
+    }).then(result => {
+      if (result.isConfirmed) { return onConfirm() }
+      else if(result.dismiss) { return onCancel() }
+    })
+  }
+
 
   static confirmRequest({ title, message }, request, onSuccess) {
     Swal.fire({

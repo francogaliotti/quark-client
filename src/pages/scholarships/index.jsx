@@ -5,6 +5,7 @@ import { login, selectUser } from "../../features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Alert from "../../services/alertService";
 import { Scholarship } from "./scholarship";
+import { ChallengeModal } from "../../components/challengeModal";
 
 export const Scholarships = () => {
   const [containsScholarship, setContainsScholarship] = useState(false);
@@ -37,9 +38,9 @@ export const Scholarships = () => {
 
   return (
     <div className="offerPageContainer">
+      <ChallengeModal/>
       <div className="offersContainer">
         {scholarships.map(s=> {
-          console.log(s.id)
           return(<Scholarship item={s} fetch={fetchData}/>)
         })}
       </div>

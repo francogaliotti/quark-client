@@ -2,15 +2,15 @@
     position: inherit;
     display: flex;
     width: 85%;
-    margin-top: 20px;
+    margin-top: 30px;
     height: fit-content;
     margin-left: 5%;
     gap: 10px;
-
     background-color: #bbb;
     border-radius: 10px;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
     padding: 10px;
+    z-index: 10;
 }
 
 .leftContainer {
@@ -118,6 +118,8 @@ h3 {
     flex-direction: column;
     align-items: center;
     background-color: #bbb;
+    margin-top: 15px;
+    z-index: 10;
 }
 
 .aboutContainer {
@@ -269,6 +271,10 @@ h3 {
     border: none;
     cursor: pointer;
     background-color: #aaa;
+    padding: 8px;
+    position: relative;
+    top: 0;
+    
 }
 
 #presed {

@@ -35,16 +35,11 @@ function PublicRoutes() {
           path="/confirmRegisterDev/:id"
           element={<ConfirmRegisterDev />}
         />
-        
+
         {user && (
           <>
-           {/* <Route path="/profile" element={<ProfilePage />} />
-            <Route
-              path="/profesionalProfile"
-              element={<ProfesionalProfile />}
-            />*/}
-        <Route path="/editProfile" element={<EditProfesionalProfile />} />
-        <Route path="/profile" element={<MyProfile />} />
+            <Route path="/editProfile" element={<EditProfesionalProfile />} />
+            <Route path="/profile" element={<MyProfile />} />
             <Route path="/myCourses" element={<MyCourses />} />
             <Route exact path="/course/:id" element={<Course />} />
             <Route path="/events" element={<Events />} />
@@ -53,13 +48,13 @@ function PublicRoutes() {
             <Route path="/" element={<Home />} />
           </>
         )}
-        {/*User routes */}
+
         {user?.professionalprofile.role === 1 && (
           <>
-            {/*Admin routes*/}
             <Route path="/config" element={<Configuration />} />
             <Route path="/config/events" element={<EventsAdmin />} />
             <Route path="/config/news" element={<NewsAdmin />} />
+            <Route path="/config/forms" element={<FormAdmin />} />
             <Route
               path="/config/scholarships"
               element={<ScholarshipsAdmin />}

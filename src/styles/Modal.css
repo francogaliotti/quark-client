@@ -83,6 +83,34 @@
     resize: none;
   }
 
+  #formModal {
+    height: 75%;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .modalCamp .questionContainer {
+    background-color: #ddd;
+    border-radius: 10px;
+    padding: 5px;
+    width: 150%;
+  }
+
+  .modalCamp .questionContainer h4 {
+    font-size: 70%;
+  }
+
+  .modalCamp .questionContainer .answersList {
+    background-color: #fff;
+    border-radius: 10px;
+  }
+
+  .modalCamp .questionContainer .answersList .singleAnswer {
+    font-size: 60%;
+  }
+
   @media (max-width: 540px) {
 
     .modalContainer {
