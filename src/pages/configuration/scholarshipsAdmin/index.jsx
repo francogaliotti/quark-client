@@ -77,7 +77,6 @@ export const ScholarshipsAdmin = () => {
                             <th>Nombre</th>
                             <th>Duración</th>
                             <th>Cantidad</th>
-                            <th>Imagen</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -87,7 +86,6 @@ export const ScholarshipsAdmin = () => {
                                 <td>{n.name}</td>
                                 <td>{n.duration} meses</td>
                                 <td>{n.amount} becas</td>
-                                <td><button onClick={()=>putPublic(`scholarship/updateImg`)}>agregar</button></td>
                                 <td id='crudButtons'>
                                     <button className='plus' onClick={() => openForUpdate(n)}><FontAwesomeIcon icon={faPenToSquare} /></button>
                                     <button className='plus' onClick={() => handleDelete(n)}><FontAwesomeIcon icon={faTrashCan} /></button>

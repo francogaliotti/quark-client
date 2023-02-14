@@ -14,28 +14,22 @@ const DetailEventModal = ({ open, onClose, current, setCurrent }) => {
       <div className="modalContainer" onClick={(e) => e.stopPropagation()}>
         <p className="closeBtn" onClick={closeModal}>X</p>
         <div className="modalCamp">
-          <label for="title">Titulo</label>
-          <p>{current?.title}</p>
+          <label for="title">Titulo: {current?.title}</label>
         </div>
         <div className="modalCamp">
-          <label for="eventDate" >Fecha</label>
-          <p>{new Date(current?.eventDate).toLocaleDateString("en-AU")}</p>
+          <label for="eventDate" >Fecha: {new Date(current?.eventDate).toLocaleDateString("en-AU")}</label>
         </div>
         <div className="modalCamp">
-          <label for="link">Link</label>
-          <p>{current?.link}</p>
+          <label for="link">Link: {current?.link}</label>
         </div>
         <div className="modalCamp">
-          <label for="visibility">Visibilidad</label>
-          <p>{current?.visibility == 0 ? <>Visible</> : <>Oculto</>}</p>
+          <label for="visibility">Visibilidad: {current?.visibility == 0 ? <>Visible</> : <>Oculto</>}</label>
         </div>
         <div className="modalCamp">
-          <label for="isSaved">Guardado</label>
-          <p>{current?.isSaved == 0 ? <>No</> : <>Si</>}</p>
+          <label for="isSaved">Guardado: {current?.isSaved == 0 ? <>No</> : <>Si</>}</label>
         </div>
         <div className="modalCamp">
-          <label for="descripcion">Descripción</label>
-          <p>{current?.description}</p>
+          <label for="descripcion">Descripción: {current?.description}</label>
         </div>
         {/*<div className="modalCamp">
           <label for="tagList">Etiquetas</label>

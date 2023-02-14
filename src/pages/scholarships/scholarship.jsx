@@ -14,8 +14,15 @@ export const Scholarship = ({ item, fetch }) => {
   const dispatch = useDispatch();
 
   const applyForScholarship = async () => {
-    setOpenModal(true);
-    await fetch();
+    Alert.confirm(
+      {
+        title: "Aplicar a la beca?",
+        message: "Rendirás un formulario de 10 preguntas sobre programación",
+      },
+      () => {
+        setOpenModal(true);
+      }
+    );
   };
 
   return (
@@ -43,6 +50,7 @@ export const Scholarship = ({ item, fetch }) => {
             dispatch(backToZero());
             setOpenModal(false);
           }}
+          fetch={fetch}
         />
       )}
     </div>

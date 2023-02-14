@@ -33,6 +33,7 @@ export const SingleQuestion = ({ question, id, isSended }) => {
       <h4>
         Pregunta {id + 1}: {question.name}
       </h4>
+      {question.img !== null && <img className="questionImg" src={question.img} alt="" />}
       {question.answers?.map((a, id) => {
         return (
           <div className="answersList">

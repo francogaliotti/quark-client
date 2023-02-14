@@ -8,7 +8,7 @@ import { backToZero, sendForm } from "../../features/formSlice";
 import { getPublic } from "../../services/apiService";
 import { selectUser } from "../../features/userSlice";
 
-export const ChallengeModal = ({ onClose, idScholarship }) => {
+export const ChallengeModal = ({ onClose, idScholarship, fetch }) => {
 
   const [isSended, setSended] = useState(false);
   const [questionnary, setQuestionnary] = useState({})
@@ -23,6 +23,7 @@ export const ChallengeModal = ({ onClose, idScholarship }) => {
       () => {
         dispatch(sendForm({userid: user.id, scholarshipid: idScholarship}));
         onClose()
+        fetch()
       }, 
       ()=> {
         dispatch(backToZero())
@@ -42,7 +43,7 @@ export const ChallengeModal = ({ onClose, idScholarship }) => {
 
 
   return (
-    <div className="overlay" onClick={onClose}>
+    <div className="overlay" id="challengeOverlayId" onClick={onClose}>
       <div
         className="modalContainer"
         onClick={(e) => e.stopPropagation()}
