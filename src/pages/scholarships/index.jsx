@@ -8,7 +8,7 @@ import { Scholarship } from "./scholarship";
 import { ChallengeModal } from "../../components/challengeModal";
 
 export const Scholarships = () => {
-  const [containsScholarship, setContainsScholarship] = useState(false);
+  
   const [scholarships, setScholarships] = useState([])
 
   const user = useSelector(selectUser);
@@ -38,7 +38,6 @@ export const Scholarships = () => {
 
   return (
     <div className="offerPageContainer">
-      <ChallengeModal/>
       <div className="offersContainer">
         {scholarships.map(s=> {
           return(<Scholarship item={s} fetch={fetchData}/>)

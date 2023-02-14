@@ -1,24 +1,20 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { ChallengeModal } from "../../components/challengeModal";
+import { backToZero } from "../../features/formSlice";
 import { selectUser } from "../../features/userSlice";
 import Alert from "../../services/alertService";
 import { postPublic } from "../../services/apiService";
 
 export const Scholarship = ({ item, fetch }) => {
   const [scholarshipDropdown, setScholarshipDropDown] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const user = useSelector(selectUser);
+  const dispatch = useDispatch();
 
   const applyForScholarship = async () => {
-    const res = await postPublic(`/scholarship`, {
-      userid: user.id,
-      courseid: item.id,
-    });
-    console.log(res);
-    Alert.success({
-      title: "Se te dio de alta el desafio!",
-      message: 'Ve a la sección "Mi aprendizaje"',
-    });
+    setOpenModal(true);
     await fetch();
   };
 
@@ -39,6 +35,15 @@ export const Scholarship = ({ item, fetch }) => {
             Aplicar a la beca
           </div>
         </div>
+      )}
+      {openModal && (
+        <ChallengeModal
+          idScholarship={item.id}
+          onClose={() => {
+            dispatch(backToZero());
+            setOpenModal(false);
+          }}
+        />
       )}
     </div>
   );

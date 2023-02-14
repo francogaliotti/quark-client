@@ -3,171 +3,26 @@ import { PrimaryButton } from "../../styles/styledComponents/Buttons";
 import "../../styles/Modal.css";
 import { SingleQuestion } from "./singleQuestion";
 import Alert from "../../services/alertService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { backToZero, sendForm } from "../../features/formSlice";
 import { getPublic } from "../../services/apiService";
+import { selectUser } from "../../features/userSlice";
 
-export const ChallengeModal = ({ onClose }) => {
-  const hardcodedQuestionary = {
-    name: "nombreform",
-    questionList: [
-      {
-        name: "¿kdhkjashdkjashdasdad aslkdj ?",
-        answerList: [
-          {
-            name: "asd asd asd asd asd sadas ",
-            correct: 0,
-          },
-          {
-            name: "a dsadsq wqweqweqw ",
-            correct: 0,
-          },
-          {
-            name: "asdqwqweadsdsa",
-            correct: 1,
-          },
-          {
-            name: "asdqwweasdasdasdasasdas das dasd ",
-            correct: 0,
-          },
-        ],
-      },
-      {
-        name: "¿kdhkjashdkjashdasdaj asldk ?",
-        answerList: [
-          {
-            name: "asd asd asd asd asd sadas ",
-            correct: 0,
-          },
-          {
-            name: "a dsadsq wqweqweqw ",
-            correct: 0,
-          },
-          {
-            name: "asdqwqweadsdsa",
-            correct: 1,
-          },
-          {
-            name: "asdqwweasdasdasdasasdas das dasd ",
-            correct: 0,
-          },
-        ],
-      },
-      {
-        name: "¿kdkjashdasdad aslkdj asldk ?",
-        answerList: [
-          {
-            name: "asd asd asd asd asd sadas ",
-            correct: 0,
-          },
-          {
-            name: "a dsadsq wqweqweqw ",
-            correct: 0,
-          },
-          {
-            name: "asdqwqweadsdsa",
-            correct: 1,
-          },
-          {
-            name: "asdqwweasdasdasdasasdas das dasd ",
-            correct: 0,
-          },
-        ],
-      },
-      {
-        name: "¿kdhkjashshdasdad aslkdj asldk ?",
-        answerList: [
-          {
-            name: "asd asd asd asd asd sadas ",
-            correct: 0,
-          },
-          {
-            name: "a dsadsq wqweqweqw ",
-            correct: 0,
-          },
-          {
-            name: "asdqwqweadsdsa",
-            correct: 1,
-          },
-          {
-            name: "asdqwweasdasdasdasasdas das dasd ",
-            correct: 0,
-          },
-        ],
-      },
-      {
-        name: "¿kdhkjashdkjashdasdj asldk ?",
-        answerList: [
-          {
-            name: "asd asd asd asd asd sadas ",
-            correct: 0,
-          },
-          {
-            name: "a dsadsq wqweqweqw ",
-            correct: 0,
-          },
-          {
-            name: "asdqwqweadsdsa",
-            correct: 1,
-          },
-          {
-            name: "asdqwweasdasdasdasasdas das dasd ",
-            correct: 0,
-          },
-        ],
-      },
-      {
-        name: "¿kdhkjashdkjashdasdsldk ?",
-        answerList: [
-          {
-            name: "asd asd asd asd asd sadas ",
-            correct: 0,
-          },
-          {
-            name: "a dsadsq wqweqweqw ",
-            correct: 0,
-          },
-          {
-            name: "asdqwqweadsdsa",
-            correct: 1,
-          },
-          {
-            name: "asdqwweasdasdasdasasdas das dasd ",
-            correct: 0,
-          },
-        ],
-      },
-      {
-        name: "¿asdasdasdatyud asd? ",
-        answerList: [
-          {
-            name: "asd asd asd asd asdas ",
-            correct: 0,
-          },
-          {
-            name: "as dasd asd asd asd asd ",
-            correct: 0,
-          },
-          {
-            name: "aaaa",
-            correct: 1,
-          },
-        ],
-      },
-    ],
-  };
+export const ChallengeModal = ({ onClose, idScholarship }) => {
 
   const [isSended, setSended] = useState(false);
   const [questionnary, setQuestionnary] = useState({})
 
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
 
   const handleResult = () => {
     setSended(true);
     Alert.confirmWithCancel(
       { title: "Enviar formulario?", message: "Esta accion es irreversible" },
       () => {
-        dispatch(sendForm());
+        dispatch(sendForm({userid: user.id, scholarshipid: idScholarship}));
+        onClose()
       }, 
       ()=> {
         dispatch(backToZero())
