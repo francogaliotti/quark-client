@@ -8,20 +8,26 @@ const cookies = new Cookies()
 const token = cookies.get("QuarkSession")
 
 export async function getPrivate(path) {
+    const cookies = new Cookies()
+const token = cookies.get("QuarkSession")
     return axios.get(path, {
-        headers: { QuarkSession: token },
+        headers: { quarksession: token },
     });
 }
 
 export async function postPrivate(path, body) {
+    const cookies = new Cookies()
+    const token = cookies.get("QuarkSession")
     return axios.post(path, body, {
-        headers: { QuarkSession: token },
+        headers: { quarksession: token },
     });
 }
 
 export async function putPrivate(path, data) {
+    const cookies = new Cookies()
+    const token = cookies.get("QuarkSession")
     return axios.put(path, data, {
-        headers: { QuarkSession: token },
+        headers: { quarksession: token },
     });
 }
 
@@ -39,14 +45,10 @@ export async function putPublic(path, body) {
     return axios.put(path, body);
 }
 
-export async function deletePublic(path) {
-    console.log(path)
-    return axios.delete(path);
-}
-
 export async function deletePrivate(path) {
-    const token = localStorage.getItem("token")
+    const cookies = new Cookies()
+    const token = cookies.get("QuarkSession")
     return axios.delete(path, {
-        headers: { QuarkSession: token },
+        headers: { quarksession: token },
     })
 }

@@ -55,7 +55,7 @@ function Events() {
           {futureEventsList.map(e => {
             return <div className="singleEvent" onClick={() => window.open("http://" + e.link, "_blank", "noopener noreferrer")}>
               <div className="seLeftContainer">
-                <img id='eventImg' src="https://img.freepik.com/free-vector/joystick-game-sport-technology_138676-2045.jpg?w=2000" alt="" />
+                <img id='eventImg' src={e.img} alt="" />
               </div>
               <div className="seRightContainer">
                 <h3>{e.title}</h3>
@@ -109,7 +109,7 @@ function Events() {
           {pastEventsList.map(e => {
             return <div className="singleEvent" id='pastSingleEvent' onClick={() => window.open("http://" + e.link, "_blank", "noopener noreferrer")}>
               <div className="pastEvContainer">
-                <img id='eventImg' src="https://img.freepik.com/free-vector/joystick-game-sport-technology_138676-2045.jpg?w=2000" alt="" />
+                <img id='eventImg' src={e.img} alt="" />
                 <h3>{e.title}</h3>
                 <p id='eventDescription'>{e.description}</p>
               </div>

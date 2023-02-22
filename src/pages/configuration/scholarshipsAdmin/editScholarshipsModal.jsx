@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { PrimaryButton } from "../../../styles/styledComponents/Buttons";
 import "../../../styles/Modal.css";
-import { getPublic, postPublic, putPublic } from "../../../services/apiService";
+import { getPublic, postPrivate,  putPrivate } from "../../../services/apiService";
 import Alert from "../../../services/alertService";
 
 export const EditScholarshipsModal = ({
@@ -39,13 +39,11 @@ export const EditScholarshipsModal = ({
       formData.append("courseList", currentScholarship.courseList);
       formData.append("file", file, file.name);
       if (!update) {
-        const res = await postPublic(`/scholarship/create`, formData);
+        const res = await postPrivate(`/scholarship/create`, formData);
         Alert.success({ title: "Añadida!", message: "Beca añadida" });
       } else {
-        const res = await putPublic(`/scholarship/update`, {
-          scholarshipId: current.id,
-          scholarship: currentScholarship,
-        });
+        formData.append("scholarshipId", current.id)
+        const res = await putPrivate(`/scholarship/update`, formData);
         Alert.success({ title: "Actualizada!", message: "Beca actualizada" });
         setUpdate(false);
         setCurrent({});

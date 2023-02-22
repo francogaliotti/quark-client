@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 import Alert from '../../../services/alertService';
-import { deletePublic, postPublic } from '../../../services/apiService';
+import { deletePrivate, postPublic } from '../../../services/apiService';
 import { PrimaryButton } from '../../../styles/styledComponents/Buttons';
 import DetailEventModal from './detailEventModal';
 import EditEventModal from './editEventModal';
@@ -47,7 +47,7 @@ export const EventsAdmin = () => {
 
     const handleDelete = async (n) => {
         Alert.confirm({title: 'Deseas eliminar este evento?', message: "Esta acción es irreversible"}, async () => {
-            const res = await deletePublic(`/events/delete/${n.id}`)
+            const res = await deletePrivate(`/events/delete/${n.id}`)
             Alert.success({title: "Eliminado!", message:"Evento eliminado"})
             fetchData()
         })

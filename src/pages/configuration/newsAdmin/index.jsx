@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ReactPaginate from "react-paginate";
 import "../../../styles/Configuration.css";
-import { deletePublic, postPublic } from "../../../services/apiService";
+import { deletePrivate, postPublic } from "../../../services/apiService";
 import Alert from "../../../services/alertService";
 import DetailNewsModal from "./detailNewsModal";
 
@@ -57,7 +57,7 @@ export const NewsAdmin = () => {
         message: "Esta acción es irreversible",
       },
       async () => {
-        const res = await deletePublic(`/news/delete/${n.id}`);
+        const res = await deletePrivate(`/news/delete/${n.id}`);
         Alert.success({ title: "Eliminada!", message: "Novedad eliminada" });
         fetchData();
       }

@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Alert from "../services/alertService";
-import { postPublic } from "../services/apiService";
+import { postPrivate } from "../services/apiService";
 
 const sendToCorrect = async (userid, scholarshipid, grade) => {
-  const res = await postPublic(`challenge/correctExam`, {
+  const res = await postPrivate(`challenge/correctExam`, {
     userid,
     grade,
     scholarshipid,

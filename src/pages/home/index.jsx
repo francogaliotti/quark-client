@@ -76,7 +76,7 @@ function Home() {
 
                         <div className="singleEvent" onClick={() => window.open("http://" + closestEvent?.link, "_blank", "noopener noreferrer")}>
                             <div className="seLeftContainer">
-                                <img id='eventImg' src="https://img.freepik.com/free-vector/joystick-game-sport-technology_138676-2045.jpg?w=2000" alt="" />
+                                <img id='eventImg' src={closestEvent?.img} alt="" />
                             </div>
                             <div className="seRightContainer">
                                 <h3>{closestEvent?.title}</h3>

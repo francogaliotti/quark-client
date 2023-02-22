@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { login, selectUser } from '../../../../features/userSlice';
 import '../../../../styles/ProfilePage.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import Alert from '../../../../services/alertService';
-import { deletePublic, getPublic, postPublic, putPublic } from '../../../../services/apiService';
-import Cookies from 'universal-cookie';
+import { deletePrivate, getPrivate, getPublic, postPrivate, putPrivate } from '../../../../services/apiService';
 
 export function EditProfesionalProfile() {
 
     const user = useSelector(selectUser);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const cookies = new Cookies()
 
     const [currentLanguage, setCurrentLanguage] = useState()
     const [currentSkill, setCurrentSkill] = useState()
@@ -38,7 +34,7 @@ export function EditProfesionalProfile() {
             })
             if (!exist) {
                 Alert.confirm({ title: "Añadir idioma?" }, async () => {
-                    const res = await postPublic(`/languages/create`, {
+                    const res = await postPrivate(`/languages/create`, {
                         userid: user.id,
                         languages: {
                             id: currentLanguage.languageId,
@@ -61,7 +57,7 @@ export function EditProfesionalProfile() {
     const deleteLanguage = async (lan) => {
         console.log(lan)
         Alert.confirm({ title: "Deseas eliminar este idioma?", message: "Esta acción es irreversible" }, async () => {
-            const res = await deletePublic(`/languages/delete/${lan.id}`)
+            const res = await deletePrivate(`/languages/delete/${lan.id}`)
             console.log(res)
             Alert.success({ title: "Eliminado!", message: "Idioma eliminado" })
             await updateState('language')
@@ -79,13 +75,14 @@ export function EditProfesionalProfile() {
             })
             if (!exist) {
                 Alert.confirm({ title: "Añadir habilidad?" }, async () => {
-                    const res = await postPublic(`/skills/create`, {
+                    const res = await postPrivate(`/skills/create`, {
                         userid: user.id,
                         skills: {
                             id: currentSkill.skillId,
                             score: currentSkill.score
                         }
                     })
+                    console.log(res)
                     Alert.success({ title: "Añadido!", message: "Habilidad añadida" })
                     await updateState('skill')
                     //setSkills([...skills, { ...currentSkill, id: res.data.id }])
@@ -101,7 +98,7 @@ export function EditProfesionalProfile() {
     const deleteSkill = async (sk) => {
         console.log(sk)
         Alert.confirm({ title: 'Deseas quitar esta habilidad?', message: "Esta acción es irreversible" }, async () => {
-            const res = await deletePublic(`skills/delete/${sk.id}`)
+            const res = await deletePrivate(`/skills/delete/${sk.id}`)
             Alert.success({ title: "Eliminado!", message: "Habilidad eliminada" })
             await updateState('skill')
             //setSkills(skills.filter(l => l !== sk))
@@ -168,7 +165,7 @@ export function EditProfesionalProfile() {
         if (!currentAcademic.edited) {
             Alert.confirm({ title: 'Añadir actividad académica?' }, async () => {
                 try {
-                    const res = await postPublic(`/academics/create`,
+                    const res = await postPrivate(`/academics/create`,
                         {
                             userid: user.id,
                             academics: {
@@ -189,7 +186,7 @@ export function EditProfesionalProfile() {
                 }
             })
         } else {
-            const res = await putPublic(`/academics/update`, {
+            const res = await putPrivate(`/academics/update`, {
                 id: currentAcademic.id,
                 academics: {
                     institution: currentAcademic.institution,
@@ -219,19 +216,24 @@ export function EditProfesionalProfile() {
 
     const editAcademic = (ac) => {
         Alert.confirm({ title: 'Deseas actualizar esta actividad?' }, () => {
-            setCurrentAcademic({
+            let newCurrent = {
                 ...ac,
                 beginDate: new Date(ac.beginDate).toISOString().substring(0, 10),
-                endDate: new Date(ac.endDate).toISOString().substring(0, 10),
                 edited: true
-            })
+            }
+            if (ac.endDate) {
+                newCurrent = {
+                    ...newCurrent,
+                    endDate: new Date(ac.endDate).toISOString().substring(0, 10),
+                }
+            }
+            setCurrentAcademic(newCurrent)
             setAcademics(academics.filter(l => l !== ac))
         })
     }
 
     const deleteAcademic = async (ac) => {
         Alert.confirm({ title: 'Deseas eliminar esta actividad?', message: 'Esta acción es ireeversible' }, async () => {
-            const res = await deletePublic(`/academics/delete/${ac.id}`)
             Alert.success({ title: "Eliminada!", message: 'Actividad eliminada' })
             await updateState('academic')
             setAcademics(academics.filter(l => l !== ac))
@@ -244,7 +246,7 @@ export function EditProfesionalProfile() {
             if (!currentLabor.edited) {
                 Alert.confirm({ title: 'Añadir actividad laboral?' }, async () => {
                     try {
-                        const res = await postPublic(`/labors/create`, {
+                        const res = await postPrivate(`/labors/create`, {
                             userid: user.id,
                             labors: {
                                 company: currentLabor.company,
@@ -264,17 +266,6 @@ export function EditProfesionalProfile() {
                 })
             } else {
                 console.log(currentLabor)
-                const res = await putPublic(`/labors/update`, {
-                    id: currentLabor.id,
-                    labors: {
-                        company: currentLabor.company,
-                        title: currentLabor.title,
-                        state: currentLabor.state,
-                        beginDate: currentLabor.beginDate,
-                        endDate: currentLabor.endDate,
-                        description: currentLabor.description
-                    }
-                })
                 Alert.success({ title: "Actualizada!", message: 'Actividad laboral actualizada' })
                 await updateState('labor')
                 setLabors([...labors, currentLabor])
@@ -296,19 +287,24 @@ export function EditProfesionalProfile() {
 
     const editLabor = (lab) => {
         Alert.confirm({ title: "Deseas actualizar esta actividad?" }, () => {
-            setCurrentLabor({
+            let newCurrent = {
                 ...lab,
                 beginDate: new Date(lab.beginDate).toISOString().substring(0, 10),
-                endDate: new Date(lab.endDate).toISOString().substring(0, 10),
                 edited: true
-            })
+            }
+            if (lab.endDate) {
+                newCurrent = {
+                    ...newCurrent,
+                    endDate: new Date(lab.endDate).toISOString().substring(0, 10),
+                }
+            }
+            setCurrentLabor(newCurrent)
             setLabors(labors.filter(l => l !== lab))
         })
     }
 
     const deleteLabor = async (lab) => {
         Alert.confirm({ title: 'Deseas eliminar esta actividad?', message: "Esta acción es irreversible" }, async () => {
-            const res = await deletePublic(`/labors/delete/${lab.id}`)
             Alert.success({ title: "Eliminada!", message: "Actividad eliminada" })
             await updateState('labor')
             setLabors(labors.filter(l => l !== lab))
@@ -319,7 +315,7 @@ export function EditProfesionalProfile() {
         if (!currentIndependent.edited) {
             Alert.confirm({ title: 'Añadir actividad independiente?' }, async () => {
                 try {
-                    const res = await postPublic(`/independents/create`, {
+                    const res = await postPrivate(`/independents/create`, {
                         userid: user.id,
                         independents: {
                             title: currentIndependent.title,
@@ -337,16 +333,6 @@ export function EditProfesionalProfile() {
                 }
             })
         } else {
-            const res = await putPublic(`/independents/update`, {
-                id: currentIndependent.id,
-                independents: {
-                    title: currentIndependent.title,
-                    state: currentIndependent.state,
-                    beginDate: currentIndependent.beginDate,
-                    endDate: currentIndependent.endDate,
-                    description: currentIndependent.description
-                }
-            })
             Alert.success({ title: "Actualizado!", message: 'Actividad independiente actualizada' })
             await updateState('independent')
             setIndependents([...independents, currentIndependent])
@@ -364,19 +350,24 @@ export function EditProfesionalProfile() {
 
     const editIndependent = (ind) => {
         Alert.confirm({ title: 'Deseas actualizar esta actividad?' }, () => {
-            setCurrentIndependent({
+            let newCurrent = {
                 ...ind,
                 beginDate: new Date(ind.beginDate).toISOString().substring(0, 10),
-                endDate: new Date(ind.endDate).toISOString().substring(0, 10),
                 edited: true
-            })
+            }
+            if (ind.endDate) {
+                newCurrent = {
+                    ...newCurrent,
+                    endDate: new Date(ind.endDate).toISOString().substring(0, 10),
+                }
+            }
+            setCurrentIndependent(newCurrent)
             setIndependents(independents.filter(l => l !== ind))
         })
     }
 
     const deleteIndependent = async (ind) => {
         Alert.confirm({ title: 'Deseas eliminar esta actividad?', message: "Esta acción es irreversible" }, async () => {
-            const res = await deletePublic(`/independents/delete/${ind.id}`)
             Alert.success({ title: "Eliminado", message: "Actividad eliminada" })
             await updateState('independent')
             setIndependents(independents.filter(l => l !== ind))
@@ -413,35 +404,35 @@ export function EditProfesionalProfile() {
     const updateState = async (act) => {
         switch (act) {
             case 'independent':
-                const resInd = await getPublic(`/independents/${user.id}`)
+                const resInd = await getPrivate(`/independents/${user.id}`)
                 dispatch(login({
                     ...user,
                     independentActivities: resInd.data
                 }))
                 break
             case 'academic':
-                const resAc = await getPublic(`/academics/${user.id}`)
+                const resAc = await getPrivate(`/academics/${user.id}`)
                 dispatch(login({
                     ...user,
                     academicActivities: resAc.data
                 }))
                 break
             case 'labor':
-                const resLab = await getPublic(`/labors/${user.id}`)
+                const resLab = await getPrivate(`/labors/${user.id}`)
                 dispatch(login({
                     ...user,
                     laborActivities: resLab.data
                 }))
                 break
             case 'language':
-                const resLan = await getPublic(`/languages/${user.id}`)
+                const resLan = await getPrivate(`/languages/${user.id}`)
                 dispatch(login({
                     ...user,
                     languages: resLan.data.language
                 }))
                 break
             case 'skill':
-                const resSk = await getPublic(`/skills/${user.id}`)
+                const resSk = await getPrivate(`/skills/${user.id}`)
                 dispatch(login({
                     ...user,
                     skills: resSk.data
@@ -730,7 +721,7 @@ export function EditProfesionalProfile() {
                             <div className="fillForms">
                                 <div className="fillForm">
                                     <label>Habilidad</label>
-                                    <label>{sk?.skill.name}</label>
+                                    <label>{sk?.skill?.name}</label>
                                 </div>
                                 <div className="fillForm">
                                     <label>Puntaje</label>

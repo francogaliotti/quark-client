@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { PrimaryButton } from '../../../styles/styledComponents/Buttons';
 import '../../../styles/Modal.css'
-import { getPublic, postPublic, putPublic } from '../../../services/apiService';
+import { getPublic, postPrivate,  putPrivate } from '../../../services/apiService';
 import Alert from '../../../services/alertService';
 
 
@@ -25,10 +25,10 @@ export const EditNewsModal = ({ open, onClose, fetch, update, setUpdate, current
     const handleSubmit = async () => {
         try {
             if (!update) {
-                const res = await postPublic(`/news/create`, { news: currentNews })
+                const res = await postPrivate(`/news/create`, { news: currentNews })
                 Alert.success({ title: 'Añadida!', message: 'Novedad añadida' })
             } else {
-                const res = await putPublic(`/news/update`, { newsId: current.id, news: currentNews })
+                const res = await putPrivate(`/news/update`, { newsId: current.id, news: currentNews })
                 Alert.success({ title: 'Actualizada!', message: 'Novedad actualizada' })
                 setUpdate(false)
                 setCurrent({})

@@ -51,6 +51,9 @@ function ProfilePage() {
       city: user?.moodleUserData.city,
       phone: user?.moodleUserData.phone,
       country: user?.moodleUserData.country,
+      discord: user?.userBasicDatum.discord,
+      linkedIn: user?.userBasicDatum.linkedIn,
+      idnumber: user?.moodleUserData.idnumber,
     });
   }, [user]);
 
@@ -70,10 +73,13 @@ function ProfilePage() {
   };
 
   const updateData = async () => {
-    const profInfo = await getPublic(`/user/${user.id}`);
+    const moodleData = await getPublic(
+      `/user/getMoodleData/${user.moodleUserData.username}`
+    );
+    const profInfo = await getPublic(`/user/${user.moodleUserData.id}`);
     dispatch(
       login({
-        ...user,
+        ...moodleData.data,
         ...profInfo.data,
       })
     );
@@ -169,7 +175,14 @@ function ProfilePage() {
             <div className="fillForm">
               <label>DNI/Pasaporte</label>
               <input
-                type="text" /*value={userGeneralData?.phone} onChange={(event) => setUserGeneralData({ ...userGeneralData, phone: event.target.value })}*/
+                type="text"
+                value={userGeneralData?.idnumber}
+                onChange={(event) =>
+                  setUserGeneralData({
+                    ...userGeneralData,
+                    idnumber: event.target.value,
+                  })
+                }
               />
             </div>
             <div className="fillForm">
@@ -221,31 +234,31 @@ function ProfilePage() {
               <label>Perfil de LinkedIn</label>
               <input
                 type="text"
-                // value={userGeneralData?.nickname}
-                // onChange={(e) =>
-                //   setUserGeneralData({
-                //     ...userGeneralData,
-                //     nickname: e.target.value,
-                //   })
-                // }
+                value={userGeneralData?.linkedIn}
+                onChange={(e) =>
+                  setUserGeneralData({
+                    ...userGeneralData,
+                    linkedIn: e.target.value,
+                  })
+                }
               />
             </div>
             <div className="fillForm">
               <label>Usuario de Discord</label>
               <input
                 type="text"
-                // value={userGeneralData?.nickname}
-                // onChange={(e) =>
-                //   setUserGeneralData({
-                //     ...userGeneralData,
-                //     nickname: e.target.value,
-                //   })
-                // }
+                value={userGeneralData?.discord}
+                onChange={(e) =>
+                  setUserGeneralData({
+                    ...userGeneralData,
+                    discord: e.target.value,
+                  })
+                }
               />
             </div>
           </div>
         </div>
-        <div className="aboutContainer">
+{       /* <div className="aboutContainer">
           <h3>Informacion adicional</h3>
           <div className="moreInfoContainer">
             <div className="infoQuestion">
@@ -256,14 +269,19 @@ function ProfilePage() {
               </select>
             </div>
             <div className="infoQuestion">
-              <label>¿Estás de acuerdo con compartir tu información para que te contactemos con ofertas de inglés para programadores?</label>
+              <label>
+                ¿Estás de acuerdo con compartir tu información para que te
+                contactemos con ofertas de inglés para programadores?
+              </label>
               <select name="" id="">
                 <option value="0">No</option>
                 <option value="1">Si</option>
               </select>
             </div>
             <div className="infoQuestion">
-              <label>¿Cuántas horas semanales podrías dedicarle al cursado?</label>
+              <label>
+                ¿Cuántas horas semanales podrías dedicarle al cursado?
+              </label>
               <select name="" id="">
                 <option value="5">5 hs</option>
                 <option value="10">10 hs</option>
@@ -287,7 +305,7 @@ function ProfilePage() {
               </select>
             </div>
           </div>
-        </div>
+        </div>*/}
         <div className="descriptionContainer">
           <h3>Mi Biografía</h3>
           <textarea

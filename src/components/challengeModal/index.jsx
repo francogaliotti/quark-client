@@ -5,7 +5,7 @@ import { SingleQuestion } from "./singleQuestion";
 import Alert from "../../services/alertService";
 import { useDispatch, useSelector } from "react-redux";
 import { backToZero, sendForm } from "../../features/formSlice";
-import { getPublic } from "../../services/apiService";
+import { getPrivate } from "../../services/apiService";
 import { selectUser } from "../../features/userSlice";
 
 export const ChallengeModal = ({ onClose, idScholarship, fetch }) => {
@@ -33,7 +33,7 @@ export const ChallengeModal = ({ onClose, idScholarship, fetch }) => {
   };
 
   const fetchQuestions = async () => {
-    const res = await getPublic(`/challenge/getQuestionnaire/13`)
+    const res = await getPrivate(`/challenge/getQuestionnaire/13`)
     setQuestionnary(res.data)
   }
 

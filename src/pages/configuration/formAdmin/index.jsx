@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faCircleInfo, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import ReactPaginate from 'react-paginate'
 import '../../../styles/Configuration.css'
-import { deletePublic, postPublic } from '../../../services/apiService';
+import { deletePrivate, postPublic } from '../../../services/apiService';
 import Alert from '../../../services/alertService';
 import { EditFormModal } from './editFormModal';
 
@@ -38,7 +38,7 @@ export const FormAdmin = () => {
 
     const handleDelete = async (n) => {
         Alert.confirm({ title: 'Deseas eliminar esta novedad?', message: "Esta acción es irreversible" }, async () => {
-            const res = await deletePublic(`/news/delete/${n.id}`)
+            const res = await deletePrivate(`/news/delete/${n.id}`)
             Alert.success({ title: "Eliminada!", message: "Novedad eliminada" })
             fetchData()
         })
