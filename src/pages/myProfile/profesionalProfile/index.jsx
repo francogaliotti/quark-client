@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { selectUser } from "../../../features/userSlice";
-import "../../../styles/ProfesionalProfile.css";
+//import "../../../styles/ProfesionalProfile.css";
 import { PrimaryButton } from "../../../styles/styledComponents/Buttons";
 import ProfProgressBar from "../../../components/profProgressBar";
 import Cookies from "universal-cookie";

@@ -75,7 +75,7 @@ function LoginForm() {
                     //{ withCredentials: "include" }
                     )*/
                 console.log(`${env.SERVER_URL}login`)
-                cookieRef.current.src = `http://34.71.113.200:3030/login/`
+                cookieRef.current.src = `http://34.66.2.129:3030/login/`
                 const profInfo = await getPublic(`/user/${moodleData.moodleUserData.id}`)
 
                 try {
@@ -109,7 +109,7 @@ function LoginForm() {
 
     return (
 
-        <form className="login-form" ref={ref} action="http://34.71.113.200/moodle/login/index.php" onSubmit={(e) => handleSubmit(e)} method="post" id="login">
+        <form className="login-form" ref={ref} action="http://34.66.2.129/moodle/login/index.php" onSubmit={(e) => handleSubmit(e)} method="post" id="login">
             <input type="hidden" name="logintoken" value="UfICO3IsgLmxSY7yVaN1lo4pa8O3irlV" />
             <div className="login-form-username form-group singleField" id="yui_3_17_2_1_1669123034452_20">
                 <label for="username" class="sr-only">
@@ -123,7 +123,7 @@ function LoginForm() {
             </div>
             <PrimaryButton type="submit" id="loginbtn" onClick="this.form.target='moodleframe'">Acceder</PrimaryButton>
             <div className="login-form-forgotpassword form-group">
-                <a href="http://34.71.113.200/moodle/login/forgot_password.php">¿Ha extraviado la contraseña?</a>
+                <a href="http://34.66.2.129/moodle/login/forgot_password.php">¿Ha extraviado la contraseña?</a>
             </div>
 
             <iframe id="inlineFrameExample"
@@ -131,7 +131,7 @@ function LoginForm() {
                 title="Inline Frame Example"
                 width="600"
                 height="400"
-                src="http://34.71.113.200/moodle/my/"
+                src="http://34.66.2.129/moodle/my/"
                 name='moodleframe'>
             </iframe>
             <iframe id="inlineFrameExample"

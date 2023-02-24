@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../styles/Offer.css";
+//import "../../styles/Offer.css";
 
 export const Offer = () => {
   const [unrealDropdown, setUnrealDropDown] = useState(false);

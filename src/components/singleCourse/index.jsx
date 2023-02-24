@@ -1,7 +1,7 @@
 import ProgressBar from '@ramonak/react-progress-bar'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import '../../styles/MyCourses.css'
+//import '../../styles/MyCourses.css'
 
 export const SingleCourse = ({ course }) => {
 

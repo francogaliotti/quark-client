@@ -2,7 +2,7 @@ import ProgressBar from '@ramonak/react-progress-bar';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
-import '../../styles/ProgressBar.css'
+//import '../../styles/ProgressBar.css'
 
 function ProfProgressBar(props) {
 

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { PrimaryButton } from "../../../styles/styledComponents/Buttons";
 import { login, selectUser } from "../../../features/userSlice";
-import "../../../styles/ProfilePage.css";
+//import "../../../styles/ProfilePage.css";
 import { Countries } from "../../../jsons/countries";
 import Cookies from "universal-cookie";
 import {

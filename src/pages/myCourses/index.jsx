@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { PrimaryButton, SecondaryButton } from '../../styles/styledComponents/Buttons';
 import { selectUser } from '../../features/userSlice';
-import '../../styles/MyCourses.css'
+//import '../../styles/MyCourses.css'
 import ProgressBar from "@ramonak/react-progress-bar";
 import axios from 'axios';
 import { SingleCourse } from '../../components/singleCourse';

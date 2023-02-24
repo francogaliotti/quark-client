@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { selectUser } from '../../features/userSlice';
 import { postPublic } from '../../services/apiService';
-import '../../styles/Events.css'
+//import '../../styles/Events.css'
 
 function Events() {
 

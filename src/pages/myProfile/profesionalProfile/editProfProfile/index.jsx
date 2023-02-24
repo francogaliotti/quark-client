@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { login, selectUser } from '../../../../features/userSlice';
-import '../../../../styles/ProfilePage.css'
+//import '../../../../styles/ProfilePage.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import Alert from '../../../../services/alertService';

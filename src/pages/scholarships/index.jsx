@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../../styles/Offer.css";
+//import "../../styles/Offer.css";
 import { getPublic, postPublic } from "../../services/apiService";
 import { login, selectUser } from "../../features/userSlice";
 import { useDispatch, useSelector } from "react-redux";

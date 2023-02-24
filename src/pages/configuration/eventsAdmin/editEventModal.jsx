@@ -47,11 +47,8 @@ const EditEventModal = ({
         const res = await postPrivate(`/events/create`, formData);
         Alert.success({ title: "Añadido!", message: "Evento añadido" });
       } else {
-        console.log({ eventid: current.id, event: actualEvent });
-        const res = await putPrivate(`/events/update`, {
-          eventid: current.id,
-          event: actualEvent,
-        });
+        formData.append("eventid", current.id)
+        const res = await putPrivate(`/events/update`, formData);
         Alert.success({ title: "Actualizado!", message: "Evento actualizado" });
         setUpdate(false);
         setCurrent({});
@@ -60,7 +57,7 @@ const EditEventModal = ({
       fetch();
     } catch (e) {
       console.log(e);
-      Alert.error({ title: "Error!", message: e.response.data.msg });
+      Alert.error({ title: "Error!", message: e.response?.data.msg });
     }
   };
 

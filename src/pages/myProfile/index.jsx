@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import ProfesionalProfile from "./profesionalProfile";
 import ProfilePage from "./profilePage";
-import "../../styles/ProfilePage.css";
+//import "../../styles/ProfilePage.css";
 
 export const MyProfile = () => {
   const [profileOpen, isProfileOpen] = useState(true);
