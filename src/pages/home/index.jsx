@@ -10,6 +10,10 @@ import Cookies from "universal-cookie";
 import { useState } from "react";
 import { getPublic, postPublic } from "../../services/apiService";
 import { SingleCourse } from "../../components/singleCourse";
+import { Container, Row, Col, Card, Modal, Button } from "react-bootstrap";
+import { ProfileCard } from "../../components/profileCard";
+import { PersonalInfoModal } from "../../components/onBoardingModals/personalInfoModal";
+import { ExperienceModal } from "../../components/onBoardingModals/experienceModal";
 
 function Home() {
   const user = useSelector(selectUser);
@@ -27,6 +31,8 @@ function Home() {
 
   const [newsList, setNewsList] = useState([]);
   const [closestEvent, setClosestEvent] = useState();
+  const [showPersonalInfoModal, setShowPersonalInfoModal] = useState(false);
+  const [showExperienceModal, setShowExperienceModal] = useState(false);
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -46,7 +52,52 @@ function Home() {
 
   return (
     <div className="homePageContainer">
-      <h1>Bienvenido/a {user?.moodleUserData.firstname}!</h1>
+      <Container fluid>
+        <Row>
+          <Col md={8}>
+            <div className="welcomeMsgContainer">
+              <h1>Bienvenido(a/e) {user?.moodleUserData.firstname}</h1>
+              <p>
+                Estos son los cursos en los que estas inscripto(a/e), continua
+                tu entrenamiento!
+              </p>
+            </div>
+            {cursosOrdenados.length !== 0 && (
+              <div className="homeCourses">
+                {cursosOrdenados?.map((c) => {
+                  return <SingleCourse course={c} />;
+                })}
+              </div>
+            )}
+          </Col>
+          <Col md={4}>
+            <ProfileCard />
+            <Button
+              variant="primary"
+              onClick={() => setShowPersonalInfoModal(true)}
+            >
+              PersonalInFoModal
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => setShowExperienceModal(true)}
+            >
+              ExperienceModal
+            </Button>
+          </Col>
+        </Row>
+      </Container>
+
+      <PersonalInfoModal
+        show={showPersonalInfoModal}
+        setShow={setShowPersonalInfoModal}
+      />
+      <ExperienceModal
+        show={showExperienceModal}
+        setShow={setShowExperienceModal}
+      />
+
+      {/*<h1>Bienvenido/a {user?.moodleUserData.firstname}!</h1>
       <div className="homeProgBars">
         <ProfProgressBar type="normal" />
         <ProfProgressBar type="profesional" />
@@ -105,7 +156,7 @@ function Home() {
             </div>
           </div>
         </div>
-      )}
+                  )}*/}
     </div>
   );
 }

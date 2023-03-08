@@ -50,7 +50,6 @@ function App() {
 
   if (loading) {
     return (<div className="app-container">
-    <Navbar />
     <div className="content-container">
       <LoadingModal />
       
@@ -63,7 +62,6 @@ function App() {
       {cookies.get("QuarkSession") && <>
         <VerticalNavbar />
       </>}
-      <Navbar />
       <div className="content-container">
         <PublicRoutes />
         

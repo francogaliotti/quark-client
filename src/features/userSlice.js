@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie'
 import { postPublic } from '../services/apiService'
 
 const moodleLogout = async (key) => {
-    window.location.href = `http://34.71.113.200/moodle/login/logout.php?sesskey=${key}`
+    window.location.href = `http://34.66.2.129/moodle/login/logout.php?sesskey=${key}`
 }
 
 export const userSlice = createSlice({

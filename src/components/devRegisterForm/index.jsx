@@ -1,160 +1,226 @@
-import React from 'react'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
-import * as Yup from 'yup'
-import '../../styles/DevRegisterForm.css'
-import { PrimaryButton } from '../../styles/styledComponents/Buttons'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import { postPublic } from '../../services/apiService'
-import Alert from '../../services/alertService'
+import React from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+//import "../../styles/DevRegisterForm.css";
+import { PrimaryButton } from "../../styles/styledComponents/Buttons";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { postPublic } from "../../services/apiService";
+import Alert from "../../services/alertService";
+import { Button, Col, Container, Row } from "react-bootstrap";
 
 function DevRegisterForm() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const initialValues = {
+    username: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    password2: "",
+    email: "",
+    idnumber: "",
+    idnumber2: "",
+  };
 
-    const initialValues = {
-        username: "",
-        firstName: "",
-        lastName: "",
-        password: "",
-        password2: "",
-        email: ""
+  const validationSchema = Yup.object().shape({
+    username: Yup.string()
+      .min(3, "El minimo de caracteres es 3")
+      .max(20, "El máximo de caracteres es 20")
+      .lowercase("Solo puede llevar minúsculas")
+      .strict()
+      .required("Campo requerido"),
+    firstName: Yup.string()
+      .min(3, "El minimo de caracteres es 3")
+      .max(20, "El máximo de caracteres es 20")
+      .required("Campo requerido"),
+    lastName: Yup.string()
+      .min(3, "El minimo de caracteres es 3")
+      .max(20, "El máximo de caracteres es 20")
+      .required("Campo requerido"),
+    password: Yup.string()
+      .min(8, "El minimo de caracteres es 8")
+      .max(20, "El máximo de caracteres es 20")
+      .matches(/[A-Z]/, "Debe tener al menos una letra en mayúscula")
+      .matches(/\d/, "Debe tener al menos un número")
+      .matches(/[a-z]/, "Debe tener al menos una letra en minúscula")
+      .matches(/\W/, "Debe tener al menos un caracter alfanumérico")
+      .required("Campo requerido"),
+    password2: Yup.string()
+      .required("Debes confirmar la contraseña")
+      .oneOf([Yup.ref("password"), null], "Las contraseñas no coinciden"),
+    idnumber: Yup.string()
+      .min(6, "El minimo de caracteres es 6")
+      .max(20, "El máximo de caracteres es 20")
+      .required("Campo requerido"),
+    idnumber2: Yup.string()
+      .required("Debes confirmar el numero de identificacion personal")
+      .oneOf([Yup.ref("idnumber"), null], "Los numeros no coinciden"),
+    email: Yup.string().email("Email invalido").required("Campo requerido"),
+    confirmAge: Yup.boolean().test(
+      "confirm-age",
+      "Debes tener al menos 18 años para continuar",
+      (value) => value === true
+    ),
+  });
+
+  const onSubmit = async (data) => {
+    const user = {
+      username: data.username,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      password: data.password,
+      email: data.email,
+      idnumber: data.idnumber,
+    };
+    try {
+      const res = await postPublic(`/register`, { user });
+      console.log(res);
+      Alert.success({ title: "Email enviado", message: res.data.message });
+    } catch (e) {
+      Alert.error({ title: "Error!", message: e.response.data.message });
+      console.log(e);
     }
+  };
 
-    const validationSchema = Yup.object().shape({
-        username: Yup.string()
-            .min(3, "El minimo de caracteres es 3")
-            .max(20, "El máximo de caracteres es 20")
-            .lowercase("Solo puede llevar minúsculas").strict()
-            .required("Campo requerido"),
-        firstName: Yup.string()
-            .min(3, "El minimo de caracteres es 3")
-            .max(20, "El máximo de caracteres es 20")
-            .required("Campo requerido"),
-        lastName: Yup.string()
-            .min(3, "El minimo de caracteres es 3")
-            .max(20, "El máximo de caracteres es 20")
-            .required("Campo requerido"),
-        password: Yup.string()
-            .min(8, "El minimo de caracteres es 8")
-            .max(20, "El máximo de caracteres es 20")
-            .matches(/[A-Z]/, 'Debe tener al menos una letra en mayúscula')
-            .matches(/\d/, 'Debe tener al menos un número')
-            .matches(/[a-z]/, 'Debe tener al menos una letra en minúscula')
-            .matches(/\W/, 'Debe tener al menos un caracter alfanumérico')
-            .required("Campo requerido"),
-        password2: Yup.string()
-            .required('Debes confirmar la contraseña')
-            .oneOf([Yup.ref('password'), null], "Las contraseñas no coinciden"),
-        email: Yup.string()
-            .email("Email invalido")
-            .required("Campo requerido")
-    })
-
-
-    const onSubmit = async (data) => {
-        const user = {
-            username: data.username,
-            firstName: data.firstName,
-            lastName: data.lastName,
-            password: data.password,
-            email: data.email
-        }
-        try {
-            const res = await postPublic(`/register`, { user })
-            console.log(res)
-            Alert.success({title:"Email enviado", message: res.data.message})
-        } catch (e) {
-            Alert.error({title:"Error!", message: e.response.data.message})
-            console.log(e)
-        }
-    }
-
-    return (
-        <div className="devRegisterForm">
-            <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-                <Form className="formContainer" id='devFormId'>
+  return (
+    <div className="devRegisterForm">
+      <Container fluid>
+        <Row className="justify-content-center">
+          <Col md={4}>
+            <Formik
+              initialValues={initialValues}
+              onSubmit={onSubmit}
+              validationSchema={validationSchema}
+            >
+              <Form className="formContainer" id="devFormId">
+                <div className="singleField">
+                  <div className="inputContainer">
+                    <Field
+                      autoComplete="off"
+                      name="username"
+                      placeholder="Nombre de Usuario"
+                      className="form-control"
+                    />
+                    <ErrorMessage name="username" component="span" />
+                  </div>
+                </div>
+                <Row>
+                  <Col md={6}>
                     <div className="singleField">
-                        <label>Nombre de Usuario: </label>
-                        <div className="inputContainer">
-
-                            <Field
-                                autoComplete="off"
-                                id="fieldAddRecord"
-                                name="username"
-                                placeholder="Your username" />
-                            <ErrorMessage name='username' component='span' />
-                        </div>
+                      <div className="inputContainer">
+                        <Field
+                          autoComplete="off"
+                          name="firstName"
+                          placeholder="Nombre/s"
+                          className="form-control"
+                        />
+                        <ErrorMessage name="firstName" component="span" />
+                      </div>
                     </div>
+                  </Col>
+                  <Col md={6}>
                     <div className="singleField">
-                        <label>Nombre: </label>
-                        <div className="inputContainer">
-
-                            <Field
-                                autoComplete="off"
-                                id="fieldAddRecord"
-                                name="firstName"
-                                placeholder="Tu nombre" />
-                            <ErrorMessage name='firstName' component='span' />
-                        </div>
+                      <div className="inputContainer">
+                        <Field
+                          autoComplete="off"
+                          name="lastName"
+                          placeholder="Apellido/s"
+                          className="form-control"
+                        />
+                        <ErrorMessage name="lastName" component="span" />
+                      </div>
                     </div>
-                    <div className="singleField">
-                        <label>Apellido: </label>
-                        <div className="inputContainer">
-
-                            <Field
-                                autoComplete="off"
-                                id="fieldAddRecord"
-                                name="lastName"
-                                placeholder="Tu Apellido" />
-                            <ErrorMessage name='lastName' component='span' />
-                        </div>
-                    </div>
-                    <div className="singleField">
-                        <label>Email: </label>
-                        <div className="inputContainer">
-
-                            <Field
-                                autoComplete="off"
-                                id="fieldAddRecord"
-                                name="email"
-                                placeholder="Tu Email" />
-                            <ErrorMessage name='email' component='span' />
-                        </div>
-                    </div>
-                    <div className="singleField">
-                        <label>Contraseña: </label>
-                        <div className="inputContainer">
-
-                            <Field
-                                autoComplete="off"
-                                id="fieldAddRecord"
-                                name="password"
-                                placeholder="Ingresar contraseña"
-                                type='password' />
-                            <ErrorMessage name='password' component='span' />
-                        </div>
-                    </div>
-                    <div className="singleField">
-                        <label>Confirmar contraseña: </label>
-                        <div className="inputContainer">
-
-                            <Field
-                                autoComplete="off"
-                                id="fieldAddRecord"
-                                name="password2"
-                                placeholder="Confirmar contraseña"
-                                type='password' />
-                            <ErrorMessage name='password2' component='span' />
-                        </div>
-                    </div>
-                    <PrimaryButton type='submit'>Registrate</PrimaryButton>
-                </Form>
+                  </Col>
+                </Row>
+                <div className="singleField">
+                  <div className="inputContainer">
+                    <Field
+                      autoComplete="off"
+                      name="email"
+                      placeholder="Email"
+                      className="form-control"
+                    />
+                    <ErrorMessage name="email" component="span" />
+                  </div>
+                </div>
+                <div className="singleField">
+                  <div className="inputContainer">
+                    <Field
+                      autoComplete="off"
+                      name="password"
+                      placeholder="Contraseña"
+                      className="form-control"
+                      type="password"
+                    />
+                    <ErrorMessage name="password" component="span" />
+                  </div>
+                </div>
+                <div className="singleField">
+                  <div className="inputContainer">
+                    <Field
+                      autoComplete="off"
+                      name="password2"
+                      placeholder="Confirmar contraseña"
+                      className="form-control"
+                      type="password"
+                    />
+                    <ErrorMessage name="password2" component="span" />
+                  </div>
+                </div>
+                <div className="singleField">
+                  <div className="inputContainer">
+                    <Field
+                      autoComplete="off"
+                      name="idnumber"
+                      placeholder="Numero de identificación personal"
+                      className="form-control"
+                      type="number"
+                    />
+                    <ErrorMessage name="idnumber" component="span" />
+                  </div>
+                </div>
+                <div className="singleField">
+                  <div className="inputContainer">
+                    <Field
+                      autoComplete="off"
+                      name="idnumber2"
+                      placeholder="Confirmar numero de identificación personal"
+                      className="form-control"
+                      type="number"
+                    />
+                    <ErrorMessage name="idnumber2" component="span" />
+                  </div>
+                </div>
+                <div className="singleField">
+                  <div className="inputContainer">
+                    <Row>
+                      <Col sm={2}>
+                        <Field
+                          type="checkbox"
+                          id="confirmAge"
+                          name="confirmAge"
+                        />
+                      </Col>
+                      <Col sm={10}>
+                        <label className="h6" htmlFor="confirmAge">
+                          Soy mayor de 18 años
+                        </label>
+                      </Col>
+                    </Row>
+                  </div>
+                </div>
+                <Button variant="primary" type="submit">
+                  Registrarme
+                </Button>
+              </Form>
             </Formik>
-        </div>
-    )
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  );
 }
 
-export default DevRegisterForm
+export default DevRegisterForm;

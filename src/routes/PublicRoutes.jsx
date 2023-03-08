@@ -45,7 +45,7 @@ function PublicRoutes() {
             <Route path="/events" element={<Events />} />
             <Route path="/offer" element={<Offer />} />
             <Route path="/scholarships" element={<Scholarships />} />
-            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
           </>
         )}
 

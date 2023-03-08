@@ -1,4 +1,4 @@
-.verticalNavbarContainer {
+/*.verticalNavbarContainer {
     position: fixed;
     left: 0;
     top: 0;
@@ -28,4 +28,37 @@
 
 .verticalList a:hover {
     color: #fff;
+}*/
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 50px; /* ancho del sidebar */
+  padding-top: 1rem; /* espacio entre el navbar y el primer ítem */
+  background-color: #f8f9fa; /* color de fondo del sidebar */
+}
+
+.sidebar .nav-link {
+  display: flex;
+  align-items: flex-end;
+  padding: 0.5rem;
+  color: #6c757d; /* color del texto de los ítems */
+}
+
+.sidebar .nav-link:hover {
+  color: #212529; /* color del texto de los ítems al hacer hover */
+  background-color: #e9ecef; /* color de fondo de los ítems al hacer hover */
+}
+
+.sidebar .nav-link .icon {
+  margin-right: 0.5rem; /* espacio entre el icono y el texto */
+}
+
+.sidebar .nav-link .text {
+  display: none; /* esconde el texto por defecto */
+}
+
+.sidebar.expanded .nav-link .text {
+  display: block; /* muestra el texto al estar expandido */
 }
