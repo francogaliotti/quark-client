@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { postPublic } from "../../services/apiService";
 import Alert from "../../services/alertService";
 import { Button, Col, Container, Row } from "react-bootstrap";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 
 function DevRegisterForm() {
   const dispatch = useDispatch();
@@ -174,22 +176,27 @@ function DevRegisterForm() {
                     <Field
                       autoComplete="off"
                       name="idnumber"
-                      placeholder="Numero de identificación personal"
+                      placeholder="Número de identificación personal"
                       className="form-control"
                       type="number"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="right"
+                      data-bs-title="Tooltip on rkii"
                     />
                     <ErrorMessage name="idnumber" component="span" />
                   </div>
                 </div>
                 <div className="singleField">
                   <div className="inputContainer">
-                    <Field
+                      <Field
                       autoComplete="off"
                       name="idnumber2"
                       placeholder="Confirmar numero de identificación personal"
                       className="form-control"
                       type="number"
                     />
+
+                    
                     <ErrorMessage name="idnumber2" component="span" />
                   </div>
                 </div>

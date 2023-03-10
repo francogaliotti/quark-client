@@ -37,6 +37,7 @@ const EditEventModal = ({
     try {
       const formData = new FormData();
       formData.append("title", actualEvent.title);
+      formData.append("speaker", actualEvent.speaker);
       formData.append("eventDate", actualEvent.eventDate);
       formData.append("link", actualEvent.link);
       formData.append("visibility", actualEvent.visibility);
@@ -76,6 +77,17 @@ const EditEventModal = ({
             value={actualEvent?.title}
             onChange={(e) =>
               setActualEvent({ ...actualEvent, title: e.target.value })
+            }
+          />
+        </div>
+        <div className="modalCamp">
+          <label for="speaker">Orador</label>
+          <input
+            id="speaker"
+            className="modalInput"
+            value={actualEvent?.speaker}
+            onChange={(e) =>
+              setActualEvent({ ...actualEvent, speaker: e.target.value })
             }
           />
         </div>

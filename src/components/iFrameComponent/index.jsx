@@ -3,7 +3,7 @@ import env from 'react-dotenv'
 
 export const IFrameComponent = ({ url }) => {
     
-    const src = (env?.MOODLE_URL || 'http://34.71.113.200/moodle/') + url
+    const src = (env?.MOODLE_URL || 'http://34.66.2.129/moodle/') + url
 
     return (
         <div className='iFrameContainer' style={{position: 'relative', height: '100%'}}>

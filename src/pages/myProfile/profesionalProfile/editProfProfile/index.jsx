@@ -165,6 +165,7 @@ export function EditProfesionalProfile() {
         if (!currentAcademic.edited) {
             Alert.confirm({ title: 'Añadir actividad académica?' }, async () => {
                 try {
+                    
                     const res = await postPrivate(`/academics/create`,
                         {
                             userid: user.id,
@@ -233,9 +234,14 @@ export function EditProfesionalProfile() {
     }
 
     const deleteAcademic = async (ac) => {
+        
         Alert.confirm({ title: 'Deseas eliminar esta actividad?', message: 'Esta acción es ireeversible' }, async () => {
+            console.log(ac)
+            const res = await deletePrivate(`/academics/delete/${ac.id}`)
+            
             Alert.success({ title: "Eliminada!", message: 'Actividad eliminada' })
             await updateState('academic')
+            
             setAcademics(academics.filter(l => l !== ac))
         })
     }
@@ -305,6 +311,7 @@ export function EditProfesionalProfile() {
 
     const deleteLabor = async (lab) => {
         Alert.confirm({ title: 'Deseas eliminar esta actividad?', message: "Esta acción es irreversible" }, async () => {
+            const res = await deletePrivate(`/labors/delete/${lab.id}`)
             Alert.success({ title: "Eliminada!", message: "Actividad eliminada" })
             await updateState('labor')
             setLabors(labors.filter(l => l !== lab))
@@ -368,6 +375,7 @@ export function EditProfesionalProfile() {
 
     const deleteIndependent = async (ind) => {
         Alert.confirm({ title: 'Deseas eliminar esta actividad?', message: "Esta acción es irreversible" }, async () => {
+            const res = await deletePrivate(`/independents/delete/${ind.id}`)
             Alert.success({ title: "Eliminado", message: "Actividad eliminada" })
             await updateState('independent')
             setIndependents(independents.filter(l => l !== ind))

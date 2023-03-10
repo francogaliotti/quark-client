@@ -72,7 +72,8 @@ function Home() {
           </Col>
           <Col md={4}>
             <ProfileCard />
-            <Button
+            {/*Estos botones no van*/}
+           {/* <Button
               variant="primary"
               onClick={() => setShowPersonalInfoModal(true)}
             >
@@ -83,7 +84,7 @@ function Home() {
               onClick={() => setShowExperienceModal(true)}
             >
               ExperienceModal
-            </Button>
+              </Button>*/}
           </Col>
         </Row>
       </Container>

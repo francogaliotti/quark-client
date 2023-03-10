@@ -25,6 +25,13 @@ export const EditNewsModal = ({ open, onClose, fetch, update, setUpdate, current
     const handleSubmit = async () => {
         try {
             if (!update) {
+                if(currentNews?.courseList){
+                    
+                    
+                }else{
+                    currentNews.courseList = []
+                    console.log(currentNews)
+                }
                 const res = await postPrivate(`/news/create`, { news: currentNews })
                 Alert.success({ title: 'Añadida!', message: 'Novedad añadida' })
             } else {

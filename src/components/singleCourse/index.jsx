@@ -27,22 +27,19 @@ export const SingleCourse = ({ course }) => {
         {!stats ? (
           <>
             <Card.Title>{course.fullName}</Card.Title>
-
             <Card.Body>
-              <Card.Footer>
-                <label>@Ultima Unidad Cursada</label>
-                <ButtonGroup>
-                  <Button
-                    variant="primary"
-                    onClick={() => handleMoodleCourse(course.idCurso)}
-                  >
-                    Continuar cursado
-                  </Button>
-                  <Button variant="success" onClick={() => showStats(!stats)}>
-                    stats
-                  </Button>
-                </ButtonGroup>
-              </Card.Footer>
+              <label>@Ultima Unidad Cursada</label>
+              <ButtonGroup>
+                <Button
+                  variant="primary"
+                  onClick={() => handleMoodleCourse(course.idCurso)}
+                >
+                  Continuar cursado
+                </Button>
+                <Button variant="success" onClick={() => showStats(!stats)}>
+                  stats
+                </Button>
+              </ButtonGroup>
             </Card.Body>
           </>
         ) : (
@@ -62,7 +59,10 @@ export const SingleCourse = ({ course }) => {
                 >
                   Continuar cursado
                 </Button>
-                <Button variant="outline-success" onClick={() => showStats(!stats)}>
+                <Button
+                  variant="outline-success"
+                  onClick={() => showStats(!stats)}
+                >
                   stats
                 </Button>
               </ButtonGroup>

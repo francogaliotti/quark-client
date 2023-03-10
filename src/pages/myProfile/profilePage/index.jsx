@@ -13,12 +13,12 @@ import {
   putPublic,
 } from "../../../services/apiService";
 import Alert from "../../../services/alertService";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 
-function ProfilePage() {
+function ProfilePage({ updateData }) {
   const user = useSelector(selectUser);
   const navigate = useNavigate();
-  const refCV = useRef(null);
-  const refImg = useRef(null);
   const dispatch = useDispatch();
   const cookies = new Cookies();
 
@@ -57,69 +57,34 @@ function ProfilePage() {
     });
   }, [user]);
 
-  const handleProfileImg = async (file) => {
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("userid", user.id);
-      const res = await postPublic(`/userImg/upload`, formData);
-      console.log(res);
-      Alert.success({ title: "Actualizado!", message: "Imagen actualizada" });
-      await updateData();
-    } catch (e) {
-      console.log(e);
-      Alert.error({ title: "Error!", message: e.response.data.msg });
-    }
-  };
-
-  const updateData = async () => {
-    const moodleData = await getPublic(
-      `/user/getMoodleData/${user.moodleUserData.username}`
-    );
-    const profInfo = await getPublic(`/user/${user.moodleUserData.id}`);
-    dispatch(
-      login({
-        ...moodleData.data,
-        ...profInfo.data,
-      })
-    );
-  };
-
   return (
     <div className="profilePageContainer">
-      <div className="leftContainer">
-        <div className="basicInfo">
-          <img src={user?.userBasicDatum.imgUrl} />
-          <div className="names">
-            <h2>{user?.moodleUserData.username}</h2>
-            <h2>{user?.moodleUserData.email}</h2>
-          </div>
-          <PrimaryButton onClick={() => refImg.current.click()}>
-            Cambiar Imagen
-          </PrimaryButton>
-          <h2 className="name">{user?.username}</h2>
-          <input
-            ref={refImg}
-            type="file"
-            id="getFile"
-            accept="image/png, image/jpeg, image/jpg"
-            onChange={(e) => handleProfileImg(e.target.files[0])}
-          />
+      <div className="personalProfileContainer">
+        <div className="pHeader">
+          <h5>Sobre mí</h5>
+          <p
+            clasName="saveBtn"
+            onClick={() => handleProfileChange()}
+            style={{ cursor: "pointer" }}
+          >
+            <FontAwesomeIcon icon={faFloppyDisk} className="d-inline" /> Guardar
+            Cambios
+          </p>
         </div>
-        {/*<div className="descriptionContainer">
-                    <h3>Añade tu CV</h3>
-                    <PrimaryButton onClick={() => refCV.current.click()}>Añadir CV</PrimaryButton>
-                    <input ref={refCV} type='file' accept='.pdf' id="getFile" />
-    </div>*/}
-      </div>
-      <div className="rightContainer">
-        <div className="aboutContainer">
-          <h3>Sobre mí</h3>
+        <div className="userAndMail">
+          <span>Nombre de Usuario: {user?.moodleUserData.username}</span>
+          <span>Email: {user?.moodleUserData.email}</span>
+        </div>
+        <div className="generalData">
+          <h3>Datos generales</h3>
           <div className="fillForms">
-            <div className="fillForm">
-              <label>Nick Name</label>
+            <div className="input-group">
+              <span className="input-group-text" id="basic-addon3">
+                Nickname
+              </span>
               <input
                 type="text"
+                className="form-control"
                 value={userGeneralData?.nickname}
                 onChange={(e) =>
                   setUserGeneralData({
@@ -129,11 +94,14 @@ function ProfilePage() {
                 }
               />
             </div>
-            <div className="fillForm">
-              <label>Nombre</label>
+            <div className="input-group">
+              <span className="input-group-text" id="basic-addon3">
+                Nombre
+              </span>
               <input
                 type="text"
                 value={userGeneralData?.firstname}
+                className="form-control"
                 onChange={(event) =>
                   setUserGeneralData({
                     ...userGeneralData,
@@ -142,11 +110,14 @@ function ProfilePage() {
                 }
               />
             </div>
-            <div className="fillForm">
-              <label>Apellido</label>
+            <div className="input-group">
+              <span className="input-group-text" id="basic-addon3">
+                Apellido
+              </span>
               <input
                 type="text"
                 value={userGeneralData?.lastname}
+                className="form-control"
                 onChange={(event) =>
                   setUserGeneralData({
                     ...userGeneralData,
@@ -155,28 +126,14 @@ function ProfilePage() {
                 }
               />
             </div>
-            {/*<div className="fillForm">
-                            <label>Email</label>
-                            <input type="text" value={userGeneralData?.email} onChange={(event) => setUserGeneralData({ ...userGeneralData, email: event.target.value })} />
-</div>*/}
-            <div className="fillForm">
-              <label>Fecha de Nacimiento</label>
-              <input
-                type="date"
-                value={userGeneralData?.birthdate}
-                onChange={(e) =>
-                  setUserGeneralData({
-                    ...userGeneralData,
-                    birthdate: e.target.value,
-                  })
-                }
-              />
-            </div>
-            <div className="fillForm">
-              <label>DNI/Pasaporte</label>
+            <div className="input-group">
+              <span className="input-group-text" id="basic-addon3">
+                Número de identificación personal
+              </span>
               <input
                 type="text"
                 value={userGeneralData?.idnumber}
+                className="form-control"
                 onChange={(event) =>
                   setUserGeneralData({
                     ...userGeneralData,
@@ -185,25 +142,37 @@ function ProfilePage() {
                 }
               />
             </div>
-            <div className="fillForm">
-              <label>Telefono</label>
+            <div className="input-group">
+              <span className="input-group-text" id="basic-addon3">
+                Fecha de Nacimiento
+              </span>
               <input
-                type="text"
-                value={userGeneralData?.phone}
-                onChange={(event) =>
+                type="date"
+                value={userGeneralData?.birthdate}
+                className="form-control"
+                onChange={(e) =>
                   setUserGeneralData({
                     ...userGeneralData,
-                    phone: event.target.value,
+                    birthdate: e.target.value,
                   })
                 }
               />
             </div>
-            <div className="fillForm">
-              <label>Pais</label>
+          </div>
+        </div>
+
+        <div className="contact">
+          <h3>Contacto y ubicación</h3>
+          <div className="fillForms">
+            <div className="input-group">
+              <span className="input-group-text" id="basic-addon3">
+                Pais
+              </span>
               <select
                 name=""
                 id=""
                 value={userGeneralData?.country}
+                className="form-control"
                 onChange={(event) =>
                   setUserGeneralData({
                     ...userGeneralData,
@@ -217,11 +186,15 @@ function ProfilePage() {
                 })}
               </select>
             </div>
-            <div className="fillForm">
-              <label>Ciudad</label>
+
+            <div className="input-group">
+              <span className="input-group-text" id="basic-addon3">
+                Ciudad
+              </span>
               <input
                 type="text"
                 value={userGeneralData?.city}
+                className="form-control"
                 onChange={(event) =>
                   setUserGeneralData({
                     ...userGeneralData,
@@ -230,24 +203,31 @@ function ProfilePage() {
                 }
               />
             </div>
-            <div className="fillForm">
-              <label>Perfil de LinkedIn</label>
+            <div className="input-group">
+              <span className="input-group-text" id="basic-addon3">
+                Teléfono
+              </span>
               <input
                 type="text"
-                value={userGeneralData?.linkedIn}
-                onChange={(e) =>
+                value={userGeneralData?.phone}
+                className="form-control"
+                onChange={(event) =>
                   setUserGeneralData({
                     ...userGeneralData,
-                    linkedIn: e.target.value,
+                    phone: event.target.value,
                   })
                 }
               />
             </div>
-            <div className="fillForm">
-              <label>Usuario de Discord</label>
+
+            <div className="input-group">
+              <span className="input-group-text" id="basic-addon3">
+                Discord
+              </span>
               <input
                 type="text"
                 value={userGeneralData?.discord}
+                className="form-control"
                 onChange={(e) =>
                   setUserGeneralData({
                     ...userGeneralData,
@@ -256,72 +236,43 @@ function ProfilePage() {
                 }
               />
             </div>
-          </div>
-        </div>
-{       /* <div className="aboutContainer">
-          <h3>Informacion adicional</h3>
-          <div className="moreInfoContainer">
-            <div className="infoQuestion">
-              <label>¿Sabes programar?</label>
-              <select name="" id="">
-                <option value="0">No</option>
-                <option value="1">Si</option>
-              </select>
-            </div>
-            <div className="infoQuestion">
-              <label>
-                ¿Estás de acuerdo con compartir tu información para que te
-                contactemos con ofertas de inglés para programadores?
-              </label>
-              <select name="" id="">
-                <option value="0">No</option>
-                <option value="1">Si</option>
-              </select>
-            </div>
-            <div className="infoQuestion">
-              <label>
-                ¿Cuántas horas semanales podrías dedicarle al cursado?
-              </label>
-              <select name="" id="">
-                <option value="5">5 hs</option>
-                <option value="10">10 hs</option>
-                <option value="15">15 hs</option>
-                <option value="20">20 hs</option>
-                <option value="25">25 hs</option>
-              </select>
-            </div>
-            <div className="infoQuestion">
-              <label>¿Tienes interés en recibir ofertas laborales?</label>
-              <select name="" id="">
-                <option value="0">No</option>
-                <option value="1">Si</option>
-              </select>
-            </div>
-            <div className="infoQuestion">
-              <label>¿Tienes interés en recibir ofertas laborales?</label>
-              <select name="" id="">
-                <option value="0">No</option>
-                <option value="1">Si</option>
-              </select>
+            <div className="input-group">
+              <span className="input-group-text" id="basic-addon3">
+                LinkedIn
+              </span>
+              <input
+                type="text"
+                value={userGeneralData?.linkedIn}
+                className="form-control"
+                onChange={(e) =>
+                  setUserGeneralData({
+                    ...userGeneralData,
+                    linkedIn: e.target.value,
+                  })
+                }
+              />
             </div>
           </div>
-        </div>*/}
-        <div className="descriptionContainer">
-          <h3>Mi Biografía</h3>
-          <textarea
-            value={userGeneralData?.biography}
-            onChange={(e) =>
-              setUserGeneralData({
-                ...userGeneralData,
-                biography: e.target.value,
-              })
-            }
-          ></textarea>
         </div>
-
-        <PrimaryButton onClick={() => handleProfileChange()}>
-          Guardar
-        </PrimaryButton>
+        <div className="biography">
+          <div className="fillForms">
+            <div className="input-group">
+              <span className="input-group-text" id="basic-addon3">
+                Mi Biografía
+              </span>
+              <textarea
+                value={userGeneralData?.biography}
+                className="form-control"
+                onChange={(e) =>
+                  setUserGeneralData({
+                    ...userGeneralData,
+                    biography: e.target.value,
+                  })
+                }
+              ></textarea>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
