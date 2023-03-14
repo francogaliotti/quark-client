@@ -13,7 +13,7 @@ import { FormAdmin } from "../pages/configuration/formAdmin";
 import { NewsAdmin } from "../pages/configuration/newsAdmin";
 import { ScholarshipsAdmin } from "../pages/configuration/scholarshipsAdmin";
 import { Course } from "../pages/course";
-import Events from "../pages/events";
+import Events from "../pages/events/newEvent/Events";
 import Home from "../pages/home";
 import MyCourses from "../pages/myCourses";
 import { MyProfile } from "../pages/myProfile";
