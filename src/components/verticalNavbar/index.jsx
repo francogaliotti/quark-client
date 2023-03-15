@@ -13,6 +13,7 @@ import {
   faCalendar,
   faTag,
   faGraduationCap,
+  faVirus
 } from "@fortawesome/free-solid-svg-icons";
 import SideNav, {
   Toggle,
@@ -70,6 +71,12 @@ function VerticalNavbar() {
             <FontAwesomeIcon icon={faCalendar} className="d-inline" />
           </NavIcon>
           <NavText>Eventos</NavText>
+        </NavItem>
+        <NavItem eventKey="gameJam">
+          <NavIcon>
+            <FontAwesomeIcon icon={faVirus} className="d-inline" />
+          </NavIcon>
+          <NavText>Game Jams</NavText>
         </NavItem>
         <NavItem eventKey="offer">
           <NavIcon>

@@ -14,6 +14,7 @@ import { NewsAdmin } from "../pages/configuration/newsAdmin";
 import { ScholarshipsAdmin } from "../pages/configuration/scholarshipsAdmin";
 import { Course } from "../pages/course";
 import Events from "../pages/events/newEvent/Events";
+import GameJam from "../pages/gameJam/GameJam";
 import Home from "../pages/home";
 import MyCourses from "../pages/myCourses";
 import { MyProfile } from "../pages/myProfile";
@@ -46,6 +47,7 @@ function PublicRoutes() {
             <Route path="/offer" element={<Offer />} />
             <Route path="/scholarships" element={<Scholarships />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/gameJam" element={<GameJam/>} />
           </>
         )}
 
