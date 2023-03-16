@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Container from "react-bootstrap/Container";
+import GameJamCard from "./GameJamCard";
+import { selectUser } from "../../features/userSlice";
+import { useSelector } from "react-redux";
 
 const GameJam = () => {
+  const user = useSelector(selectUser);
   const [gameJam, setGameJam] = useState(null);
 
   async function fetchData(state) {
-    var gameJamList = await axios.get("http://localhost:3030/getGameJams");
-    console.log(gameJamList);
-    state(gameJamList.data);
+    setGameJam(user.moodleUserData.listaGameJams)
   }
 
   useEffect(() => {
@@ -22,9 +24,9 @@ const GameJam = () => {
         <h5 className="subtitle">Subtitulo</h5>
         <hr className="line" />
 
-        {/* {gameJam != null
+        {gameJam != null
           ? gameJam.map((gameJams) => <GameJamCard gameJam={gameJams} />)
-          : "No hay Nada"} */}
+          : "No hay Nada"}
 
         <div
           className="buscador"

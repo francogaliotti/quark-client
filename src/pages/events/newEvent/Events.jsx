@@ -22,7 +22,7 @@ const Events = () => {
   const [events, setEvents] = useState(null);
   const [recorded, setRecorded] = useState(null);
   const [next, setNext] = useState(0);
-  const [userBool, setUserBool] = useState(true)
+  const [userBool, setUserBool] = useState(true);
 
   const [userEvents, setUserEvents] = useState(null);
 
@@ -48,7 +48,7 @@ const Events = () => {
   async function fetchUserEvents() {
     var userDb = await getPrivate(`/studentEvents/${user.id}`);
     setUserEvents(userDb.data);
-    setNext(0)
+    setNext(0);
     // setUserBool(true)
     // setRecorded(null);
     // setEvents(null);
@@ -58,7 +58,7 @@ const Events = () => {
     const resP = await postPublic(`/events/pastEvents`, { page: pastPage });
     status(resP.data.rows);
     next(2);
-   
+
     // setUserBool(false)
   }
 
@@ -125,23 +125,24 @@ const Events = () => {
         <Row>
           {userEvents != null && next == 0
             ? userEvents.map((news) => {
-              if(userEvents.length != 0){
-                return <UserEventCard event={news} />
-              }else{
-                console.log("No hay")
-              }
-              
-            })
-            : ""}
-        </Row>
-        <Row>
-          {events != null && next == 1
-            ? events.map((news) => {
-                console.log(userEvents)
-                return <EventCard news={news} enrollUser={enrollUser} />
+                if (userEvents.length != 0) {
+                  return <UserEventCard event={news} />;
+                } else {
+                  console.log(userEvents);
+                }
               })
             : ""}
         </Row>
+
+        <Row>
+          {events != null && next == 1
+            ? events.map((news) => {
+                console.log(userEvents);
+                return <EventCard news={news} enrollUser={enrollUser} />;
+              })
+            : "No hay"}
+        </Row>
+
         <Row>
           {recorded != null && next == 2
             ? recorded.map((news) => <UserEventCard event={news} />)
