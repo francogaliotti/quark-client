@@ -361,9 +361,9 @@ function ProfesionalProfile() {
             })}
           </div>
           )*/}
-        <PrimaryButton onClick={() => navigate("/editProfile")}>
+        {/*<PrimaryButton onClick={() => navigate("/editProfile")}>
           Editar
-        </PrimaryButton>
+        </PrimaryButton>*/}
       </div>
     </div>
   );

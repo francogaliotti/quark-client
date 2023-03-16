@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { selectUser } from "../../../features/userSlice";
 import Cookies from "universal-cookie";
 import Alert from "../../../services/alertService";
+import UserEventCard from "./UserEventCard";
 
 const Events = () => {
   const user = useSelector(selectUser);
@@ -20,7 +21,8 @@ const Events = () => {
 
   const [events, setEvents] = useState(null);
   const [recorded, setRecorded] = useState(null);
-  const [next, setNext] = useState(true);
+  const [next, setNext] = useState(0);
+  const [userBool, setUserBool] = useState(true)
 
   const [userEvents, setUserEvents] = useState(null);
 
@@ -33,30 +35,31 @@ const Events = () => {
   const pageCountPast = Math.ceil(elementCountPast / 4);
 
   async function fetchFutureEvents(status, next) {
-    const resF = await postPublic(`/events/futureEvents`, { page: futurePage, userId: user.id });
+    const resF = await postPublic(`/events/futureEvents`, {
+      page: futurePage,
+      userId: user.id,
+    });
     status(resF.data.row);
-    next(true);
-
-    setUserEvents(null)
-
-   
+    next(1);
+    // setUserBool(false)
+    // setUserEvents(null);
   }
 
-  async function fetchUserEvents(){
-    var userDb = await getPrivate(`/studentEvents/${user.id}`)
-    setUserEvents(userDb.data)
-
-    setRecorded(null)
-    setEvents(null)
+  async function fetchUserEvents() {
+    var userDb = await getPrivate(`/studentEvents/${user.id}`);
+    setUserEvents(userDb.data);
+    setNext(0)
+    // setUserBool(true)
+    // setRecorded(null);
+    // setEvents(null);
   }
-    
 
-  
   async function fetchPastEvents(status, next) {
     const resP = await postPublic(`/events/pastEvents`, { page: pastPage });
     status(resP.data.rows);
-    next(false);
-    setUserEvents(null)
+    next(2);
+   
+    // setUserBool(false)
   }
 
   async function enrollUser(eventId) {
@@ -65,24 +68,20 @@ const Events = () => {
         userId: user.id,
         eventId,
       });
-      
-      setEvents(events.filter(e => e.id !== eventId))
+
+      setEvents(events.filter((e) => e.id !== eventId));
       Alert.success({ title: "Exito", message: "Se te inscribio al evento" });
     } catch (err) {
       Alert.error({ title: "Error", message: err.message });
     }
   }
   useEffect(() => {
-    
     fetchUserEvents();
-    
   }, []);
 
   useEffect(() => {
     setEvents(null);
   }, [recorded]);
-
- 
 
   return (
     <Container fluid>
@@ -124,24 +123,28 @@ const Events = () => {
 
       <div className="cardContainer">
         <Row>
-        {userEvents != null 
-            ? userEvents.map((news) => (
-                <EventCard news={news} enrollUser={enrollUser} />
-              ))
+          {userEvents != null && next == 0
+            ? userEvents.map((news) => {
+              if(userEvents.length != 0){
+                return <UserEventCard event={news} />
+              }else{
+                console.log("No hay")
+              }
+              
+            })
             : ""}
         </Row>
         <Row>
-          {events != null && next == true
-            ? events.map((news) => (
-                <EventCard news={news} enrollUser={enrollUser} />
-              ))
+          {events != null && next == 1
+            ? events.map((news) => {
+                console.log(userEvents)
+                return <EventCard news={news} enrollUser={enrollUser} />
+              })
             : ""}
         </Row>
         <Row>
-          {recorded != null && next == false
-            ? recorded.map((news) => (
-                <EventCard news={news} enrollUser={enrollUser} />
-              ))
+          {recorded != null && next == 2
+            ? recorded.map((news) => <UserEventCard event={news} />)
             : ""}
         </Row>
       </div>

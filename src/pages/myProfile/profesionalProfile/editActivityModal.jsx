@@ -25,12 +25,39 @@ export const EditActivityModal = ({
   const fetchLanguages = async () => {
     //idiomas parametrizados
     const languageList = await getPublic(`/parameters/languages`);
-    setLanList(languageList.data);
+    //setLanList(languageList.data);
+    let allLang = languageList.data;
+    let userLang = [];
+    user.languages.map((l) => {
+      userLang.push(l.language);
+    });
+    const array3 = allLang.filter(element => !userLang.some(item => item.id === element.id));
+    
+    if (!isNew) {
+      setLanList(...array3, current)
+    } else {
+      setLanList(array3);
+    }
   };
 
   useEffect(() => {
     if (show) {
       setCurrentActivity(current);
+      if (current.beginDate) {
+        setCurrentActivity({
+          ...current,
+          beginDate: new Date(current.beginDate).toISOString().substring(0, 10),
+        });
+        if (current.endDate) {
+          setCurrentActivity({
+            ...current,
+            beginDate: new Date(current.beginDate)
+              .toISOString()
+              .substring(0, 10),
+            endDate: new Date(current.endDate).toISOString().substring(0, 10),
+          });
+        }
+      }
       if (type == 3) {
         fetchLanguages();
       }
@@ -226,7 +253,10 @@ export const EditActivityModal = ({
                 },
               });
               console.log(res);
-              Alert.success({ title: "Actualizado!", message: "Idioma actualizado" });
+              Alert.success({
+                title: "Actualizado!",
+                message: "Idioma actualizado",
+              });
               await updateState("language");
               onClose();
             } catch (e) {

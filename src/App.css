@@ -14,16 +14,10 @@
 
 .content-container{
     position: absolute;
-    left: 12%;
+    left: 65px;
     right: 5px;
-    top: 75px;
+    top: 0;
     height: 100%;
     padding-bottom: 10px;
    
-}
-
-@media (max-width: 860px){
-    .content-container {
-        left: 0;
-    }
 }
