@@ -66,13 +66,7 @@ export const MyProfile = () => {
               onChange={(e) => handleProfileImg(e.target.files[0])}
             />
             <ProfProgressBar type="normal" />
-            <ProfProgressBar type="profesional" />
-            <div className="input-group">
-              <span className="input-group-text" id="basic-addon3">
-                GitHub
-              </span>
-              <input type="text" className="form-control" />
-            </div>
+            <ProfProgressBar type="profesional" />            
           </Card.Body>
         </Card>
       </Col>

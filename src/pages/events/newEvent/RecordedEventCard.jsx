@@ -1,13 +1,10 @@
-import axios from "axios";
-import React from "react";
+import React from 'react'
+
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
-import { postPrivate } from "../../../services/apiService";
 
-const UserEventCard = (props) => {
-  
-
+const RecordedEventCard = (props) => {
   return (
     <Col md={4}>
       <div key={props.event?.id}>
@@ -24,15 +21,15 @@ const UserEventCard = (props) => {
             <Card.Title>
               <h5 style={{ color: "#91D3FF" }}>{props.event?.title}</h5>
             </Card.Title>
-            {/* <Card.Text> */}
+            <Card.Text>
               <p style={{ color: "#588CAF" }}>{props.event?.eventDate}</p>
-            {/* </Card.Text> */}
-            <Button variant="info" onClick={()=>{props.handleDelete(props.event.id)}} >Darme de Baja</Button>
+            </Card.Text>
+            
           </Card.Body>
         </Card>
       </div>
     </Col>
-  );
-};
+  )
+}
 
-export default UserEventCard;
+export default RecordedEventCard

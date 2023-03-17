@@ -47,6 +47,7 @@ function ProfilePage({ updateData }) {
         .substring(0, 10),
       firstname: user?.moodleUserData.firstname,
       lastname: user?.moodleUserData.lastname,
+      gender: user?.userBasicDatum.gender,
       //email: user?.moodleUserData.email,
       city: user?.moodleUserData.city,
       phone: user?.moodleUserData.phone,
@@ -54,6 +55,7 @@ function ProfilePage({ updateData }) {
       discord: user?.userBasicDatum.discord,
       linkedIn: user?.userBasicDatum.linkedIn,
       idnumber: user?.moodleUserData.idnumber,
+      github: user?.moodleUserData.github,
     });
   }, [user]);
 
@@ -125,6 +127,28 @@ function ProfilePage({ updateData }) {
                   })
                 }
               />
+            </div>
+            <div className="input-group">
+              <span className="input-group-text" id="basic-addon3">
+                Género
+              </span>
+              <select
+                name=""
+                id=""
+                value={userGeneralData?.gender}
+                className="form-control"
+                onChange={(event) =>
+                  setUserGeneralData({
+                    ...userGeneralData,
+                    gender: event.target.value,
+                  })
+                }
+              >
+                <option value=""></option>
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+                <option value="O">Otro</option>
+              </select>
             </div>
             <div className="input-group">
               <span className="input-group-text" id="basic-addon3">
@@ -248,6 +272,22 @@ function ProfilePage({ updateData }) {
                   setUserGeneralData({
                     ...userGeneralData,
                     linkedIn: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="input-group">
+              <span className="input-group-text" id="basic-addon3">
+                GitHub
+              </span>
+              <input
+                type="text"
+                value={userGeneralData?.github}
+                className="form-control"
+                onChange={(e) =>
+                  setUserGeneralData({
+                    ...userGeneralData,
+                    github: e.target.value,
                   })
                 }
               />

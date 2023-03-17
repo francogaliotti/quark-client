@@ -26,15 +26,15 @@ export const EditActivityModal = ({
     //idiomas parametrizados
     const languageList = await getPublic(`/parameters/languages`);
     //setLanList(languageList.data);
-    let allLang = languageList.data;
-    let userLang = [];
+    let array1 = languageList.data;
+    let array2 = [];
     user.languages.map((l) => {
-      userLang.push(l.language);
+      array2.push(l.language);
     });
-    const array3 = allLang.filter(element => !userLang.some(item => item.id === element.id));
-    
+    const array3 = array1.filter(element => !array2.some(item => item.id === element.id));
     if (!isNew) {
-      setLanList(...array3, current)
+      let array4 = [current.language, ...array3]
+      setLanList(array4)
     } else {
       setLanList(array3);
     }
@@ -509,6 +509,7 @@ export const EditActivityModal = ({
               </span>
               <select
                 className="form-control"
+                value={currentActivity?.language?.id}
                 onChange={(v) => {
                   const languagesSelected = lanList.filter(
                     (l) => l.id == v.target.value
@@ -545,6 +546,7 @@ export const EditActivityModal = ({
                       level: e.target.value,
                     })
                   }
+                  checked={currentActivity.level === "A1"}
                 />
                 <label for="A1" className="form-check-label">
                   A1
@@ -561,6 +563,7 @@ export const EditActivityModal = ({
                       level: e.target.value,
                     })
                   }
+                  checked={currentActivity.level === "A2"}
                 />
                 <label for="A2" className="form-check-label">
                   A2
@@ -577,6 +580,7 @@ export const EditActivityModal = ({
                       level: e.target.value,
                     })
                   }
+                  checked={currentActivity.level === "B1"}
                 />
                 <label for="B1" className="form-check-label">
                   B1
@@ -593,6 +597,7 @@ export const EditActivityModal = ({
                       level: e.target.value,
                     })
                   }
+                  checked={currentActivity.level === "B2"}
                 />
                 <label for="B2" className="form-check-label">
                   B2
@@ -609,6 +614,7 @@ export const EditActivityModal = ({
                       level: e.target.value,
                     })
                   }
+                  checked={currentActivity.level === "C1"}
                 />
                 <label for="C1" className="form-check-label">
                   C1
@@ -625,6 +631,7 @@ export const EditActivityModal = ({
                       level: e.target.value,
                     })
                   }
+                  checked={currentActivity.level === "C2"}
                 />
                 <label for="C2" className="form-check-label">
                   C2

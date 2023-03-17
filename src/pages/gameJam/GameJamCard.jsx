@@ -5,23 +5,21 @@ import axios from "axios";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Alert from "../../services/alertService";
+import { useNavigate } from "react-router-dom";
 
 const GameJamCard = (gameJam) => {
+  const navigate = useNavigate();
   console.log(gameJam);
-  async function handleClick() {
-    // console.log("Hoola");
-    axios.post("http://localhost:3030/enrollGameJam", {
-      'userId': "1",
-      "gameJamId": "1"
-    }).then(()=>{console.log("Despues de la peticion")});
+  async function handleClick(id) {
+   navigate(`/course/${id}`)
     
-    Alert.success({ title: "Exito!", message: "Ya estas Inscripto!" })
+    
   }
 
   return (
     <div key={gameJam.gameJam.id}>
       <Row md={2} className="justify-content-center g-4">
-        <Col sm={7}>
+        <Col sm={8}>
           <Card className="col-12" border="info" bg="dark">
             <Card.Img variant="top" src={gameJam.gameJam.url} />
             <Card.Body
@@ -38,16 +36,16 @@ const GameJamCard = (gameJam) => {
                 <Button
                   className="col-4"
                   style={{ marginRight: "10px" ,backgroundColor:"#0B2A3F",border:"1px solid #2390B6"}}
-                  onClick={handleClick}
+                  onClick={()=>{handleClick(gameJam.gameJam.idCurso)}}
                 >
-                  Inscribirme
+                  Ir a la Game Jam
                 </Button>
-                <Button className="col-3" style={{ marginRight: "10px" ,backgroundColor:"#0B2A3F",border:"1px solid #2390B6"}}>Adicional</Button>
+                {/* <Button className="col-3" style={{ marginRight: "10px" ,backgroundColor:"#0B2A3F",border:"1px solid #2390B6"}}>Adicional</Button> */}
               </div>
             </Card.Body>
           </Card>
         </Col>
-        <Col md={5}>
+        {/* <Col md={4}>
           <Card className="col-12" border="info" bg="dark">
             <Card.Header as="h5" style={{color:"#91D3FF"}}>
               Datos Importantes Sobre la GameJam
@@ -58,7 +56,7 @@ const GameJamCard = (gameJam) => {
               <Button style={{ marginRight: "10px" ,backgroundColor:"#0B2A3F",border:"1px solid #2390B6"}}>Go somewhere</Button>
             </Card.Body>
           </Card>
-        </Col>
+        </Col> */}
       </Row>
     </div>
   );

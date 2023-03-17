@@ -17,7 +17,7 @@ const GameJam = () => {
     fetchData(setGameJam);
   }, []);
   return (
-    <Container>
+    <Container fluid >
       <div className="mainContainer1">
         <h1 className="title">Game Jams</h1>
         <h5 className="subtitle">Subtitulo</h5>
@@ -36,10 +36,10 @@ const GameJam = () => {
             alignItems: "center",
           }}
         >
-          <div className="divBottones" style={{ padding: "20px" }}>
+          {/* <div className="divBottones" style={{ padding: "20px" }}>
             <button className="futureEvents">Atras</button>
             <button className="recordedEvents clicked">Siguiente</button>
-          </div>
+          </div> */}
         </div>
       </div>
     </Container>
