@@ -16,7 +16,6 @@ function DevRegisterForm() {
   const navigate = useNavigate();
 
   const initialValues = {
-    username: "",
     firstName: "",
     lastName: "",
     password: "",
@@ -27,12 +26,12 @@ function DevRegisterForm() {
   };
 
   const validationSchema = Yup.object().shape({
-    username: Yup.string()
+    /*username: Yup.string()
       .min(3, "El minimo de caracteres es 3")
       .max(20, "El máximo de caracteres es 20")
       .lowercase("Solo puede llevar minúsculas")
       .strict()
-      .required("Campo requerido"),
+      .required("Campo requerido"),*/
     firstName: Yup.string()
       .min(3, "El minimo de caracteres es 3")
       .max(20, "El máximo de caracteres es 20")
@@ -69,21 +68,32 @@ function DevRegisterForm() {
 
   const onSubmit = async (data) => {
     const user = {
-      username: data.username,
+      //username: data.username,
       firstName: data.firstName,
       lastName: data.lastName,
       password: data.password,
       email: data.email,
       idnumber: data.idnumber,
     };
-    try {
-      const res = await postPublic(`/register`, { user });
-      console.log(res);
-      Alert.success({ title: "Email enviado", message: res.data.message });
-    } catch (e) {
-      Alert.error({ title: "Error!", message: e.response.data.message });
-      console.log(e);
-    }
+    Alert.confirmWithCancel({ title: "Sabes programar?", confirmmsg: "Si", cancelmsg: "No" }, async () => {
+      try {
+        const res = await postPublic(`/register/1`, { user });
+        console.log(res);
+        Alert.success({ title: "Email enviado", message: res.data.message });
+      } catch (e) {
+        Alert.error({ title: "Error!", message: e.response.data.message });
+        console.log(e);
+      }
+    }, async ()=>{
+      try {
+        const res = await postPublic(`/register/2`, { user });
+        console.log(res);
+        Alert.error({ title: "Error!", message: "No sabes programar" });
+      } catch (e) {
+        Alert.error({ title: "Error!", message: e.response.data.message });
+        console.log(e);
+      }
+    });
   };
 
   return (
@@ -97,17 +107,6 @@ function DevRegisterForm() {
               validationSchema={validationSchema}
             >
               <Form className="formContainer" id="devFormId">
-                <div className="singleField">
-                  <div className="inputContainer">
-                    <Field
-                      autoComplete="off"
-                      name="username"
-                      placeholder="Nombre de Usuario"
-                      className="form-control"
-                    />
-                    <ErrorMessage name="username" component="span" />
-                  </div>
-                </div>
                 <Row>
                   <Col md={6}>
                     <div className="singleField">
@@ -188,7 +187,7 @@ function DevRegisterForm() {
                 </div>
                 <div className="singleField">
                   <div className="inputContainer">
-                      <Field
+                    <Field
                       autoComplete="off"
                       name="idnumber2"
                       placeholder="Confirmar numero de identificación personal"
@@ -196,7 +195,6 @@ function DevRegisterForm() {
                       type="number"
                     />
 
-                    
                     <ErrorMessage name="idnumber2" component="span" />
                   </div>
                 </div>

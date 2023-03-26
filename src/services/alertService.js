@@ -1,8 +1,6 @@
 import Swal from "sweetalert2";
 
-
-
-//How to use this service: 
+//How to use this service:
 
 //Import Alert class "import Alert from 'route'"
 
@@ -11,20 +9,18 @@ import Swal from "sweetalert2";
 //Example: Alert.confirm({title:'A custom title', message:'A custom message'}, OnConfirmCallbackFunction)
 
 export default class Alert {
-
   //Button colors follow UI guidelines, icons colors are defaulted from the sweetAlert2 package
 
-  static buttonConfirmColor = '#FE720F'
-  static buttonCancelColor = '#181B20'
-
+  static buttonConfirmColor = "#FE720F";
+  static buttonCancelColor = "#181B20";
 
   static success({ title, message }) {
     Swal.fire({
       title,
       text: message,
       confirmButtonColor: this.buttonConfirmColor,
-      icon: 'success',
-    })
+      icon: "success",
+    });
   }
 
   static error({ title, message }) {
@@ -32,87 +28,92 @@ export default class Alert {
       title,
       text: message,
       confirmButtonColor: this.buttonConfirmColor,
-      icon: 'error',
-    })
+      icon: "error",
+    });
   }
-
 
   static info({ title, message }) {
     Swal.fire({
       title,
       text: message,
       confirmButtonColor: this.buttonConfirmColor,
-      icon: 'info',
-    })
+      icon: "info",
+    });
   }
-
 
   static confirm({ title, message }, onConfirm) {
-
     Swal.fire({
       title,
       text: message,
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
       confirmButtonColor: this.buttonConfirmColor,
-      confirmButtonText: 'Aceptar',
+      confirmButtonText: "Aceptar",
       cancelButtonColor: this.buttonCancelColor,
-      cancelButtonText: 'Cancelar',
-    }).then(result => {
-      if (result.isConfirmed) { return onConfirm() }
-    })
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        return onConfirm();
+      }
+    });
   }
 
-  static confirmWithCancel({ title, message }, onConfirm, onCancel) {
-
+  static confirmWithCancel(
+    { title, message, confirmmsg, cancelmsg },
+    onConfirm,
+    onCancel
+  ) {
     Swal.fire({
       title,
       text: message,
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
       confirmButtonColor: this.buttonConfirmColor,
-      confirmButtonText: 'Aceptar',
+      confirmButtonText: confirmmsg || "Aceptar",
       cancelButtonColor: this.buttonCancelColor,
-      cancelButtonText: 'Cancelar',
-    }).then(result => {
-      if (result.isConfirmed) { return onConfirm() }
-      else if(result.dismiss) { return onCancel() }
-    })
+      cancelButtonText: cancelmsg || "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        return onConfirm();
+      } else if (result.dismiss) {
+        return onCancel();
+      }
+    });
   }
 
-
-  static confirmRequest({ title, message }, request, onSuccess) {
+  static confirmRequest(
+    { title, message, confirmmsg, cancelmsg },
+    request,
+    onSuccess
+  ) {
     Swal.fire({
       title,
       text: message,
-      icon: 'warning',
-      confirmButtonText: 'Aceptar',
+      icon: "warning",
+      confirmButtonText: confirmmsg || "Aceptar",
       showCancelButton: true,
-      cancelButtonText: 'Cancelar',
+      cancelButtonText: cancelmsg || "Cancelar",
       cancelButtonColor: this.buttonCancelColor,
       confirmButtonColor: this.buttonConfirmColor,
       showLoaderOnConfirm: true,
       preConfirm: () => {
         return request()
-          .then(response => {
-            return response.data
+          .then((response) => {
+            return response.data;
           })
-          .catch(error => {
-            console.log(error)
+          .catch((error) => {
+            console.log(error);
             Swal.showValidationMessage(
               `No se pudo realizar la solicitud: ${error.response.data.message}`
-            )
-            Swal.getConfirmButton().textContent = 'Reintentar'
-          })
+            );
+            Swal.getConfirmButton().textContent = "Reintentar";
+          });
       },
-      allowOutsideClick: () => !Swal.isLoading()
+      allowOutsideClick: () => !Swal.isLoading(),
     }).then((result) => {
       if (result.isConfirmed) {
-
-        return onSuccess()
+        return onSuccess();
       }
-    })
+    });
   }
-
-
 }

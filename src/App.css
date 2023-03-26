@@ -9,15 +9,278 @@
     font-size: calc(10px + 2vmin);
     color: #000;
     /*text-align: center;*/
-    font-family: Andale Mono, monospace;
+    font-family: 'Inter', sans-serif !important;
 }
 
 .content-container{
     position: absolute;
-    left: 65px;
-    right: 5px;
-    top: 0;
-    height: 100%;
+    right: 120px;
+    top: 30px;
+    height: 95%;
+    left: 0;
     padding-bottom: 10px;
-   
+    transition: left 0.5s ease-out;
+}
+
+#colapsed {
+    left: 300px;
+}
+
+#toggled {
+    left: 120px;
+}
+
+/*SIDE-NAV*/
+
+#quark-side-nav{
+    background-color: #0A1C28;
+    transition: all 0.5s ease-out;
+}
+
+#quark-side-nav .quark-side-logo{
+    position: absolute;
+    left: 20px;
+    top: 50px
+}
+
+#quark-side-nav .nav-toggle {
+    margin-top: 80px;
+}
+
+#quark-side-nav .nav-items {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+}
+
+#quark-side-nav .nav-logout {
+    position: fixed;
+    bottom: 0;
+    transition: all 0.5s ease-out;
+}
+
+#nav-colapsed {
+    width: 64px;
+}
+
+#nav-toggled {
+    width: 240px;
+}
+
+/*HOME*/
+
+
+.titular-quark{
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 38px;
+    line-height: 46px;
+    letter-spacing: -0.065em;
+}
+
+.link-titular-quark{
+    text-decoration: none;
+    color: #2390B6;
+    transition: all ease .5s;
+}
+
+.link-titular-quark:hover{
+    color: #17637f;
+    transition: all ease .5s
+}
+
+.subtitular-quark{
+    color: #588CAF;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.hr-quark{
+    border: 1px solid #2F4A5B;
+}
+
+.btn-quark{
+    font-family: 'JetBrains Mono' !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+    line-height: 17px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    background: #0B2A3F !important;
+    border: 1px solid #2390B6 !important;
+    border-radius: 5px !important;
+    color: #588CAF !important;
+}
+
+
+.btn-quark:hover{
+    background: #0B86A0 !important;
+    border: 1px solid #4AA3DB !important;
+    color: #C4E4F9 !important;
+}
+
+.card-quark{
+    background: #1B1120 !important;
+    border: 1px solid #2F4A5B !important;
+    color: #588CAF;
+    margin-bottom: 23px !important;
+}
+
+.card-quark .card-body{
+    padding: 20px;
+}
+
+.card-quark .card-body .card-text{
+    color: #588CAF !important;
+}
+.card-quark .card-header{
+    background: #26182D;
+    border-bottom: 1px solid #2F4A5B;
+    padding: 20px !important;
+}
+
+.card-quark .card-footer{
+    background: #26182D;
+    border-top: 1px solid #2F4A5B;
+    padding: 20px 0 !important;
+}
+
+#cardIncioPerfil .quark-code-text{
+    font-family: 'JetBrains Mono' !important;
+}
+
+#cardIncioPerfil .quark-code-text .btn-link{
+    font-family: 'JetBrains Mono' !important;
+    color: #22C4FC !important;
+    text-decoration: none !important;
+    padding: 0px !important;
+    transition: all ease .5 !important;
+    margin-bottom: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+#cardIncioPerfil .quark-code-text .btn-link:hover{
+    color: #106581 !important;
+}
+
+.progress{
+    margin-bottom: 10px !important;
+    margin-top: -10px !important;
+}
+
+.progress .progress-bar-quark {
+    background-color: #2390B6;
+  }
+  :root {
+    --bs-secondary-bg: #153C56;
+  }
+
+  /*PERFIL*/
+
+ .profilePageContainer .card-quark .card-body{
+    border-top: 1px solid #2F4A5B !important;
+ }
+ .profilePageContainer .card-quark .card-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 0px;
+    align-items: center;
+ }
+
+ .profilePageContainer .card-quark .card-header h5{
+    margin-bottom: 0px !important;
+ }
+
+ .profilePageContainer .card-quark h3{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #FFFFFF;
+ }
+
+ .profilePageContainer .card-quark .card-header p{
+    margin-bottom: 0px !important;
+ }
+
+ .profilePageContainer .card-quark .userAndMail{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+ }
+
+ .my-profile-container .card-quark{
+    margin-top: 20px !important;
+    margin-bottom: 0px !important;
+ }
+ .my-profile-container .card-header{
+    padding: 13px !important;
+ }
+ .my-profile-container .card-body{
+    padding: 13px !important;
+ }
+
+ .my-profile-container .progress {
+    margin-bottom: 6px !important;
+    margin-top: 6px !important;
+}
+
+.rightContainer .btn-group .btn{
+    font-family: 'JetBrains Mono' !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+    line-height: 17px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    background: #0B2A3F !important;
+    border: 1px solid #2390B6 !important;
+    color: #588CAF !important;
+}
+
+.rightContainer .btn-group #presed{
+    background: #0B86A0 !important;
+    border: 1px solid #4AA3DB !important;
+    color: #C4E4F9 !important;
+}
+
+.card-body .input-group {
+    margin-bottom: 10px;
+}
+
+.card-body .input-group .input-group-text{
+    background: #26182D !important;
+    border-style: solid !important;
+    border-color: #2F4A5B !important;
+    color: #588CAF !important;
+    font-family: 'Inter' !important;
+    font-weight: 500 !important;
+    font-size: 15px !important;
+    min-width: 150px !important;
+}
+
+.card-body .input-group input{
+    border: 1px solid #2F4A5B !important;
+    background-color: transparent !important;
+    color: #22C4FC !important;
+}
+
+.card-body .input-group select{
+    border: 1px solid #2F4A5B !important;
+    background-color: transparent !important;
+    color: #22C4FC !important;
+}
+
+.card-body .input-group input[type="date"]::-webkit-calendar-picker-indicator{
+    filter: invert(var(--value, 100%))
+}
+
+.card-body .input-group textarea{
+    border: 1px solid #2F4A5B !important;
+    background-color: transparent !important;
+    color: #22C4FC !important;
 }

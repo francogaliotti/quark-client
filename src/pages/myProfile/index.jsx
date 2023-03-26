@@ -48,9 +48,9 @@ export const MyProfile = () => {
   };
 
   return (
-    <Row className="myProfileContainer">
-      <Col md={3} className="leftContainer">
-        <Card>
+    <Row className="my-profile-container">
+      <Col md={3} className="left-container">
+        <Card className="card card-quark" id="cardPerfil">
           <Card.Body>
             <Card.Img
               src={user?.userBasicDatum.imgUrl}
@@ -70,7 +70,7 @@ export const MyProfile = () => {
           </Card.Body>
         </Card>
       </Col>
-      <Col md={8} className="rightContainer">
+      <Col md={9} className="rightContainer">
         <div className="myProfileButtons">
           <ButtonGroup>
             <Button

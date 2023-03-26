@@ -1,26 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { PrimaryButton } from "../../../styles/styledComponents/Buttons";
-import { login, selectUser } from "../../../features/userSlice";
-//import "../../../styles/ProfilePage.css";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../features/userSlice";
 import { Countries } from "../../../jsons/countries";
-import Cookies from "universal-cookie";
 import {
-  getPublic,
-  postPublic,
   putPrivate,
-  putPublic,
 } from "../../../services/apiService";
 import Alert from "../../../services/alertService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
+import { Card } from "react-bootstrap";
 
 function ProfilePage({ updateData }) {
   const user = useSelector(selectUser);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const cookies = new Cookies();
 
   const [userGeneralData, setUserGeneralData] = useState({});
 
@@ -55,29 +46,29 @@ function ProfilePage({ updateData }) {
       discord: user?.userBasicDatum.discord,
       linkedIn: user?.userBasicDatum.linkedIn,
       idnumber: user?.moodleUserData.idnumber,
-      github: user?.moodleUserData.github,
+      github: user?.userBasicDatum.github,
     });
   }, [user]);
 
   return (
     <div className="profilePageContainer">
-      <div className="personalProfileContainer">
-        <div className="pHeader">
+      <Card className="personalProfileContainer card-quark">
+        <Card.Header className="pHeader">
           <h5>Sobre mí</h5>
           <p
             clasName="saveBtn"
             onClick={() => handleProfileChange()}
             style={{ cursor: "pointer" }}
           >
-            <FontAwesomeIcon icon={faFloppyDisk} className="d-inline" /> Guardar
+            <FontAwesomeIcon icon={faFloppyDisk} className="fa-solid" /> Guardar
             Cambios
           </p>
-        </div>
-        <div className="userAndMail">
+        </Card.Header>
+        <Card.Body className="userAndMail">
           <span>Nombre de Usuario: {user?.moodleUserData.username}</span>
           <span>Email: {user?.moodleUserData.email}</span>
-        </div>
-        <div className="generalData">
+        </Card.Body>
+        <Card.Body className="generalData">
           <h3>Datos generales</h3>
           <div className="fillForms">
             <div className="input-group">
@@ -183,9 +174,9 @@ function ProfilePage({ updateData }) {
               />
             </div>
           </div>
-        </div>
+        </Card.Body>
 
-        <div className="contact">
+        <Card.Body className="contact">
           <h3>Contacto y ubicación</h3>
           <div className="fillForms">
             <div className="input-group">
@@ -293,8 +284,8 @@ function ProfilePage({ updateData }) {
               />
             </div>
           </div>
-        </div>
-        <div className="biography">
+        </Card.Body>
+        <Card.Body className="biography">
           <div className="fillForms">
             <div className="input-group">
               <span className="input-group-text" id="basic-addon3">
@@ -312,8 +303,8 @@ function ProfilePage({ updateData }) {
               ></textarea>
             </div>
           </div>
-        </div>
-      </div>
+        </Card.Body>
+      </Card>
     </div>
   );
 }

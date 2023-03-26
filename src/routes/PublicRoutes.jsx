@@ -22,7 +22,7 @@ import { EditProfesionalProfile } from "../pages/myProfile/profesionalProfile/ed
 import { Offer } from "../pages/offer";
 import { Scholarships } from "../pages/scholarships";
 
-function PublicRoutes() {
+function PublicRoutes({setColapseDisabled}) {
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   return (
@@ -42,7 +42,7 @@ function PublicRoutes() {
             <Route path="/editProfile" element={<EditProfesionalProfile />} />
             <Route path="/profile" element={<MyProfile />} />
             <Route path="/myCourses" element={<MyCourses />} />
-            <Route exact path="/course/:id" element={<Course />} />
+            <Route exact path="/course/:id" element={<Course setColapseDisabled={setColapseDisabled} />} />
             <Route path="/events" element={<Events />} />
             <Route path="/offer" element={<Offer />} />
             <Route path="/scholarships" element={<Scholarships />} />

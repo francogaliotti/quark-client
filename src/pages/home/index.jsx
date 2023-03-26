@@ -31,8 +31,8 @@ function Home() {
 
   const [newsList, setNewsList] = useState([]);
   const [closestEvent, setClosestEvent] = useState();
-  const [showPersonalInfoModal, setShowPersonalInfoModal] = useState(false);
-  const [showExperienceModal, setShowExperienceModal] = useState(false);
+  //const [showPersonalInfoModal, setShowPersonalInfoModal] = useState(false);
+  //const [showExperienceModal, setShowExperienceModal] = useState(false);
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -53,15 +53,14 @@ function Home() {
   return (
     <div className="homePageContainer">
       <Container fluid>
+        <h1 className="titular-quark">Bienvenido(a/e)<a class="link-titular-quark">@{user?.moodleUserData.firstname}</a></h1>
+        <h4 className="subtitular-quark">
+          Estos son los cursos en los que estas inscripto(a/e), continua tu
+          entrenamiento!
+        </h4>
+        <hr className="hr-quark"/>
         <Row>
-          <Col md={8}>
-            <div className="welcomeMsgContainer">
-              <h1>Bienvenido(a/e) {user?.moodleUserData.firstname}</h1>
-              <p>
-                Estos son los cursos en los que estas inscripto(a/e), continua
-                tu entrenamiento!
-              </p>
-            </div>
+          <Col md={7}>
             {cursosOrdenados.length !== 0 && (
               <div className="homeCourses">
                 {cursosOrdenados?.map((c) => {
@@ -70,10 +69,10 @@ function Home() {
               </div>
             )}
           </Col>
-          <Col md={4}>
+          <Col md={5}>
             <ProfileCard />
             {/*Estos botones no van*/}
-           {/* <Button
+            {/* <Button
               variant="primary"
               onClick={() => setShowPersonalInfoModal(true)}
             >
@@ -89,14 +88,14 @@ function Home() {
         </Row>
       </Container>
 
-      <PersonalInfoModal
+      {/*<PersonalInfoModal
         show={showPersonalInfoModal}
         setShow={setShowPersonalInfoModal}
       />
       <ExperienceModal
         show={showExperienceModal}
         setShow={setShowExperienceModal}
-      />
+      />*/}
 
       {/*<h1>Bienvenido/a {user?.moodleUserData.firstname}!</h1>
       <div className="homeProgBars">

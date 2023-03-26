@@ -10,6 +10,7 @@ import { getPublic, postPublic } from "../../services/apiService";
 import Alert from "../../services/alertService";
 import env from "react-dotenv";
 import { Form, Button, Container, Col, Row } from "react-bootstrap";
+import QuarkLogo from "../../images/Group 6.png";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -113,14 +114,16 @@ function LoginForm() {
     <div className="loginPageContainer">
       <Container fluid>
         <Row className="justify-content-center">
-          <Col md={4}>
+          <Col md={5} >
             <Form
               ref={ref}
               action="http://34.66.2.129/moodle/login/index.php"
               onSubmit={(e) => handleSubmit(e)}
               method="post"
               id="login"
+              className="d-flex justify-content-center flex-column"
             >
+              <img src={QuarkLogo} className="w-70 mx-auto mb-5" />
               <input
                 type="hidden"
                 name="logintoken"
@@ -154,33 +157,32 @@ function LoginForm() {
                   }}
                 />
               </Form.Group>
-              <div className="mt-1 loginBtns">
+              <div className="mt-1 loginBtns mx-auto">
                 <Button
-                  variant="primary"
-                  type="submit"
+                  className="btn btn-outline-primary btn-quark"
                   id="loginbtn"
                   onClick="this.form.target='moodleframe'"
+                  type="submit"
                 >
                   Acceder
                 </Button>
                 <Button
                   variant="secondary"
                   id="lostPassBtn"
-                  className="mx-1"
+                  className="mx-1 btn btn-outline-primary btn-quark"
                   href="http://34.66.2.129/moodle/login/forgot_password.php"
                 >
                   Recuperar Contraseña
                 </Button>
               </div>
 
-              <div className="mt-5 notRegister">
-                <h6 className="text-center">
+              <div className="mt-5 notRegister mx-auto">
+                <h6 className="subtitular-quark">
                   ¿Todavía no tienes cuenta en Quark?
                 </h6>
 
                 <Button
-                  variant="secondary"
-                  className="text-center"
+                  className="btn btn-outline-primary btn-quark"
                   onClick={() => navigate("/registerDev")}
                 >
                   Registrarme ahora

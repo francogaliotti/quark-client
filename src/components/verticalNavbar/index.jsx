@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,8 @@ import {
   faCalendar,
   faTag,
   faGraduationCap,
-  faVirus
+  faVirus,
+  faGamepad,
 } from "@fortawesome/free-solid-svg-icons";
 import SideNav, {
   Toggle,
@@ -23,17 +24,26 @@ import SideNav, {
   NavText,
 } from "@trendmicro/react-sidenav";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
+import quarkLogo from "../../images/Vector.png";
+import quarkLogoExtendido from "../../images/Vector-extendido.png";
 
-function VerticalNavbar() {
+function VerticalNavbar({ setColapsed, colapsed }) {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-
-  const [expanded, setExpanded] = useState(false);
+  const [logoutItemId, setLogoutItemId] = useState("");
 
   const handleLogout = () => {
     dispatch(logout());
   };
+
+  useEffect(() => {
+    if (colapsed) {
+      setLogoutItemId("nav-toggled");
+    } else {
+      setLogoutItemId("nav-colapsed");
+    }
+  }, [colapsed]);
 
   return (
     <SideNav
@@ -45,9 +55,17 @@ function VerticalNavbar() {
         }
       }}
       style={{ position: "fixed" }}
+      id="quark-side-nav"
+      onToggle={() => setColapsed()}
     >
-      <SideNav.Toggle />
-      <SideNav.Nav defaultSelected="home">
+      {colapsed ? (
+        <img src={quarkLogoExtendido} className="quark-side-logo" />
+      ) : (
+        <img src={quarkLogo} className="quark-side-logo" />
+      )}
+
+      <SideNav.Toggle className="nav-toggle" />
+      <SideNav.Nav defaultSelected="home" className="nav-items">
         <NavItem eventKey="home">
           <NavIcon>
             <FontAwesomeIcon icon={faHome} className="d-inline" />
@@ -74,21 +92,9 @@ function VerticalNavbar() {
         </NavItem>
         <NavItem eventKey="gameJam">
           <NavIcon>
-            <FontAwesomeIcon icon={faVirus} className="d-inline" />
+            <FontAwesomeIcon icon={faGamepad} className="d-inline" />
           </NavIcon>
           <NavText>Game Jams</NavText>
-        </NavItem>
-        <NavItem eventKey="offer">
-          <NavIcon>
-            <FontAwesomeIcon icon={faTag} className="d-inline" />
-          </NavIcon>
-          <NavText>Oferta</NavText>
-        </NavItem>
-        <NavItem eventKey="scholarships">
-          <NavIcon>
-            <FontAwesomeIcon icon={faGraduationCap} className="d-inline" />
-          </NavIcon>
-          <NavText>Becas</NavText>
         </NavItem>
         {user?.professionalprofile.role == 1 && (
           <NavItem eventKey="config">
@@ -110,59 +116,13 @@ function VerticalNavbar() {
             </NavItem>
           </NavItem>
         )}
-        <NavItem eventKey="logout">
+        <NavItem eventKey="logout" className="nav-logout" id={logoutItemId}>
           <NavIcon>
-            <FontAwesomeIcon
-              icon={faSignOut}
-              className="d-inline"
-            />
+            <FontAwesomeIcon icon={faSignOut} className="d-inline" />
           </NavIcon>
           <NavText>LogOut</NavText>
         </NavItem>
       </SideNav.Nav>
-
-      {/*<Navbar bg="light" variant="light" className={`flex-column sidebar ${expanded ? "expanded" : ""}`} onMouseEnter={toggleExpand} onMouseLeave={toggleExpand}>
-  <Nav className="flex-column">
-    <Nav.Item>
-      <Nav.Link href="/" className="d-flex justify-content-start align-items-center">
-        <FontAwesomeIcon icon={faHome} className="d-inline" />
-        <span className={`pl-2 ${expanded ? "" : "d-none"}`}>Home</span>
-      </Nav.Link>
-    </Nav.Item>
-    <Nav.Item>
-      <Nav.Link href="/profile" className="d-flex justify-content-start align-items-center">
-        <FontAwesomeIcon icon={faUser} className="d-inline" />
-        <span className={`pl-2 ${expanded ? "" : "d-none"}`}>Profile</span>
-      </Nav.Link>
-    </Nav.Item>
-    <Nav.Item>
-      <Nav.Link href="/settings" className="d-flex justify-content-start align-items-center">
-        <FontAwesomeIcon icon={faCog} className="d-inline" />
-        <span className={`pl-2 ${expanded ? "" : "d-none"}`}>Settings</span>
-      </Nav.Link>
-    </Nav.Item>
-    <Nav.Item>
-      <Nav.Link href="/logout" className="d-flex justify-content-start align-items-center">
-        <FontAwesomeIcon icon={faSignOut} className="d-inline" />
-        <span className={`pl-2 ${expanded ? "" : "d-none"}`}>Logout</span>
-      </Nav.Link>
-    </Nav.Item>
-  </Nav>
-
-      <div className="verticalNavbarContainer">
-            <ul className='verticalList'>
-                <li><a onClick={() => navigate('/')}>Inicio</a></li>
-                <li><a onClick={() => navigate('/profile')}>Mi Perfil</a></li>
-                <li><a onClick={() => navigate('/myCourses')}>Mi Aprendizaje</a></li>
-                <li><a onClick={() => navigate('/events')}>Eventos</a></li>
-                <li><a onClick={() => navigate('/offer')}>Oferta</a></li>
-                <li><a onClick={() => navigate('/scholarships')}>Becas</a></li>
-                user?.professionalprofile.role == 1 &&
-                    <li><a onClick={() => navigate('/config')}>Administración del Sitio</a></li>
-                
-            </ul>
-            </div>
-    </Navbar>*/}
     </SideNav>
   );
 }

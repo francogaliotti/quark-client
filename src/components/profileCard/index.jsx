@@ -8,31 +8,32 @@ export const ProfileCard = () => {
   const user = useSelector(selectUser);
 
   return (
-    <div className="profileCardContainer">
-      <Card>
-        <Card.Header>
-          <Card.Img
-            variant="top"
-            src={user.userBasicDatum.imgUrl}
-            alt="Imagen de la tarjeta"
-          />
-          <Card.Title>{user.moodleUserData.username}</Card.Title>
-          <Card.Title>
-            {user.moodleUserData.firstname} {user.moodleUserData.lastname}
-          </Card.Title>
-        </Card.Header>
+    <Card className="card card-quark" id="cardIncioPerfil">
+      <Card.Header>
+        <Row>
+          <Col md={3}>
+            <Card.Img
+              variant="top"
+              src={user.userBasicDatum.imgUrl}
+              alt="Imagen de la tarjeta"
+            />
+          </Col>
+          <Col md={9}>
+            <h5>{user.userBasicDatum.nickname}</h5>
+            <h5>{user.moodleUserData.firstname} {user.moodleUserData.lastname}</h5>
+          </Col>
+        </Row>
+      </Card.Header>
 
-        <Card.Body>
-          <Card.Text>{user.userBasicDatum.biography}</Card.Text>
-        </Card.Body>
-        <Card.Body>
-          <ProfProgressBar type="normal" />
-          <ProfProgressBar type="profesional" />
-        </Card.Body>
-        <Card.Footer>
-          <Button variant="danger">Completa tu perfil</Button>
-        </Card.Footer>
-      </Card>
-    </div>
+      <Card.Body>
+        <Card.Text className="quark-code-text">{user.userBasicDatum.biography}</Card.Text>
+        <hr className="border border-primary border-1 opacity-50"/>
+        <ProfProgressBar type="normal" />
+        <ProfProgressBar type="profesional" />
+      </Card.Body>
+      <Card.Footer className="text-center">
+        <a className="btn btn-outline-primary btn-quark">Completa tu perfil</a>
+      </Card.Footer>
+    </Card>
   );
 };
