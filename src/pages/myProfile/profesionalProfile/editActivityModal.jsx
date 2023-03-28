@@ -271,7 +271,7 @@ export const EditActivityModal = ({
   return (
     <Modal show={show} onHide={onClose}>
       <Modal.Header closeButton>
-        <h4>Añadir Actividad</h4>
+        <h5>Añadir Actividad</h5>
       </Modal.Header>
       <Modal.Body>
         {type === 0 && (
@@ -538,7 +538,7 @@ export const EditActivityModal = ({
                   type="radio"
                   value="A1"
                   id="A1"
-                  className="form-check-input"
+                  className="btn-check"
                   name="score"
                   onChange={(e) =>
                     setCurrentActivity({
@@ -548,14 +548,14 @@ export const EditActivityModal = ({
                   }
                   checked={currentActivity.level === "A1"}
                 />
-                <label for="A1" className="form-check-label">
+                <label for="A1" className={`form-check-label btn btn-secondary btn-quark-radio ${currentActivity.level === "A1" ? "checked" : ""}`}>
                   A1
                 </label>
                 <input
                   type="radio"
                   value="A2"
                   id="A2"
-                  className="form-check-input"
+                  className="btn-check"
                   name="score"
                   onChange={(e) =>
                     setCurrentActivity({
@@ -565,14 +565,14 @@ export const EditActivityModal = ({
                   }
                   checked={currentActivity.level === "A2"}
                 />
-                <label for="A2" className="form-check-label">
+                <label for="A2" className={`form-check-label btn btn-secondary btn-quark-radio ${currentActivity.level === "A2" ? "checked" : ""}`}>
                   A2
                 </label>
                 <input
                   type="radio"
                   value="B1"
                   id="B1"
-                  className="form-check-input"
+                  className="btn-check"
                   name="score"
                   onChange={(e) =>
                     setCurrentActivity({
@@ -582,14 +582,14 @@ export const EditActivityModal = ({
                   }
                   checked={currentActivity.level === "B1"}
                 />
-                <label for="B1" className="form-check-label">
+                <label for="B1" className={`form-check-label btn btn-secondary btn-quark-radio ${currentActivity.level === "B1" ? "checked" : ""}`}>
                   B1
                 </label>
                 <input
                   type="radio"
                   value="B2"
                   id="B2"
-                  className="form-check-input"
+                  className="btn-check"
                   name="score"
                   onChange={(e) =>
                     setCurrentActivity({
@@ -599,14 +599,14 @@ export const EditActivityModal = ({
                   }
                   checked={currentActivity.level === "B2"}
                 />
-                <label for="B2" className="form-check-label">
+                <label for="B2" className={`form-check-label btn btn-secondary btn-quark-radio ${currentActivity.level === "B2" ? "checked" : ""}`}>
                   B2
                 </label>
                 <input
                   type="radio"
                   value="C1"
                   id="C1"
-                  className="form-check-input"
+                  className="btn-check"
                   name="score"
                   onChange={(e) =>
                     setCurrentActivity({
@@ -616,14 +616,14 @@ export const EditActivityModal = ({
                   }
                   checked={currentActivity.level === "C1"}
                 />
-                <label for="C1" className="form-check-label">
+                <label for="C1" className={`form-check-label btn btn-secondary btn-quark-radio ${currentActivity.level === "C1" ? "checked" : ""}`}>
                   C1
                 </label>
                 <input
                   type="radio"
                   value="C2"
                   id="C2"
-                  className="form-check-input"
+                  className="btn-check"
                   name="score"
                   onChange={(e) =>
                     setCurrentActivity({
@@ -633,14 +633,14 @@ export const EditActivityModal = ({
                   }
                   checked={currentActivity.level === "C2"}
                 />
-                <label for="C2" className="form-check-label">
+                <label for="C2" className={`form-check-label btn btn-secondary btn-quark-radio ${currentActivity.level === "C2" ? "checked" : ""}`}>
                   C2
                 </label>
               </div>
             </InputGroup>
           </Form>
         )}
-        <Button type="submit" variant="primary" onClick={onSubmit}>
+        <Button type="submit" className="btn-quark" onClick={onSubmit}>
           Guardar
         </Button>
       </Modal.Body>

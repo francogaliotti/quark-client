@@ -16,6 +16,7 @@ export default class Alert {
 
   static success({ title, message }) {
     Swal.fire({
+      customClass: "card-quark",
       title,
       text: message,
       confirmButtonColor: this.buttonConfirmColor,
@@ -25,6 +26,7 @@ export default class Alert {
 
   static error({ title, message }) {
     Swal.fire({
+      customClass: "card-quark",
       title,
       text: message,
       confirmButtonColor: this.buttonConfirmColor,
@@ -34,6 +36,7 @@ export default class Alert {
 
   static info({ title, message }) {
     Swal.fire({
+      customClass: "card-quark",
       title,
       text: message,
       confirmButtonColor: this.buttonConfirmColor,
@@ -43,6 +46,7 @@ export default class Alert {
 
   static confirm({ title, message }, onConfirm) {
     Swal.fire({
+      customClass: "card-quark",
       title,
       text: message,
       icon: "warning",
@@ -64,6 +68,7 @@ export default class Alert {
     onCancel
   ) {
     Swal.fire({
+      customClass: "card-quark",
       title,
       text: message,
       icon: "warning",
@@ -87,6 +92,7 @@ export default class Alert {
     onSuccess
   ) {
     Swal.fire({
+      customClass: "card-quark",
       title,
       text: message,
       icon: "warning",

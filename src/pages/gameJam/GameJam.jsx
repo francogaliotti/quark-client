@@ -19,9 +19,9 @@ const GameJam = () => {
   return (
     <Container fluid >
       <div className="mainContainer1">
-        <h1 className="title">Game Jams</h1>
-        <h5 className="subtitle">Subtitulo</h5>
-        <hr className="line" />
+        <h1 className="titular-quark">Game Jams</h1>
+        <h5  className="subtitular-quark">Subtitulo</h5>
+        <hr className="hr-quark" />
 
         {gameJam != null
           ? gameJam.map((gameJams) => <GameJamCard gameJam={gameJams} />)

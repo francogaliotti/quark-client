@@ -9,20 +9,21 @@ const EventCard = (props) => {
   
   return (
     <Col md={4}>
-      <div key={props.news?.id}> 
-      <Card border="info" bg="light" className="col-12"  style={{marginTop:"20px"}}>
+      {/* <div key={props.news?.id}>  */}
+      <Card className="my-auto card-quark " style={{ marginTop: "20px" }}>
         <Card.Img variant="top" src={props.news?.img} />
         <Card.Body>
-          <Card.Title>
-            <h5 style={{ color: "#91D3FF" }}>{props.news?.title}</h5>
-          </Card.Title>
-          <Card.Text>
-            <p style={{ color: "#588CAF" }}>{props.news?.eventDate}</p>
-          </Card.Text>
-          <Button variant="info" onClick={()=>{props.enrollUser(props.news.id)}} >Inscribirme</Button>
+            <h5 className="card-title">{props.news?.title}</h5>
+            <p className="card-text">Fecha: {new Date(props.news?.eventDate).toLocaleDateString("en-AU")}</p>
+              <button
+                className="btn btn-outline-primary btn-quark"
+                onClick={()=>{props.enrollUser(props.news.id)}}
+              >
+                Inscribirme
+              </button>
         </Card.Body>
       </Card>
-      </div>
+      {/* </div> */}
     </Col>
   );
 };

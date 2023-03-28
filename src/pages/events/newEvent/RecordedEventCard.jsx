@@ -6,29 +6,25 @@ import Col from "react-bootstrap/Col";
 
 const RecordedEventCard = (props) => {
   return (
+
     <Col md={4}>
-      <div key={props.event?.id}>
-        <Card
-          border="info"
-          bg="light"
-          className="col-12"
-          style={{ marginTop: "20px" }}
-        >
-          <a href={props.event.link} style={{ textDecoration: "none" }}>
-            <Card.Img variant="top" src={props.event?.img} />
-          </a>
-          <Card.Body>
-            <Card.Title>
-              <h5 style={{ color: "#91D3FF" }}>{props.event?.title}</h5>
-            </Card.Title>
-            <Card.Text>
-              <p style={{ color: "#588CAF" }}>{props.event?.eventDate}</p>
-            </Card.Text>
-            
-          </Card.Body>
-        </Card>
-      </div>
+      {/* <div key={props.news?.id}>  */}
+      <Card className="my-auto card-quark " style={{ marginTop: "20px" }}>
+        <Card.Img variant="top" src={props.event?.img} />
+        <Card.Body>
+            <h5 className="card-title">{props.event?.title}</h5>
+            <p className="card-text">Fecha: {new Date(props.event?.eventDate).toLocaleDateString("en-AU")}</p>
+              <a
+                className="btn btn-outline-primary btn-quark"
+               href={props.event.link}
+              >
+                Ir al evento
+              </a>
+        </Card.Body>
+      </Card>
+      {/* </div> */}
     </Col>
+ 
   )
 }
 

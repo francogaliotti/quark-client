@@ -1,15 +1,6 @@
 .app-container {
-
-    /*margin-top: 100px;*/
     min-height: 100vh;
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*align-items: center;*/
-   /* justify-content: center;*/
-    font-size: calc(10px + 2vmin);
     color: #000;
-    /*text-align: center;*/
-    font-family: 'Inter', sans-serif !important;
 }
 
 .content-container{
@@ -18,7 +9,7 @@
     top: 30px;
     height: 95%;
     left: 0;
-    padding-bottom: 10px;
+    padding-bottom: 10px !important;
     transition: left 0.5s ease-out;
 }
 
@@ -68,6 +59,14 @@
 }
 
 /*HOME*/
+p{
+    font-size: 16px !important;
+}
+
+
+span{
+    font-size: 16px !important;
+}
 
 
 .titular-quark{
@@ -178,12 +177,10 @@
     --bs-secondary-bg: #153C56;
   }
 
-  /*PERFIL*/
-
- .profilePageContainer .card-quark .card-body{
+ .my-profile-container .card-quark .card-body{
     border-top: 1px solid #2F4A5B !important;
  }
- .profilePageContainer .card-quark .card-header{
+ .my-profile-container .card-quark .card-header{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -191,11 +188,11 @@
     align-items: center;
  }
 
- .profilePageContainer .card-quark .card-header h5{
+ .my-profile-container .card-quark .card-header h5{
     margin-bottom: 0px !important;
  }
 
- .profilePageContainer .card-quark h3{
+ .my-profile-container .card-quark h3{
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
@@ -204,11 +201,11 @@
     color: #FFFFFF;
  }
 
- .profilePageContainer .card-quark .card-header p{
+ .my-profile-container .card-quark .card-header p{
     margin-bottom: 0px !important;
  }
 
- .profilePageContainer .card-quark .userAndMail{
+ .my-profile-container .card-quark .userAndMail{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -230,7 +227,7 @@
     margin-top: 6px !important;
 }
 
-.rightContainer .btn-group .btn{
+ .btn-group .btn{
     font-family: 'JetBrains Mono' !important;
     font-weight: 500 !important;
     font-size: 13px !important;
@@ -242,17 +239,17 @@
     color: #588CAF !important;
 }
 
-.rightContainer .btn-group #presed{
+.btn-group #presed{
     background: #0B86A0 !important;
     border: 1px solid #4AA3DB !important;
     color: #C4E4F9 !important;
 }
 
-.card-body .input-group {
+.input-group {
     margin-bottom: 10px;
 }
 
-.card-body .input-group .input-group-text{
+.input-group .input-group-text{
     background: #26182D !important;
     border-style: solid !important;
     border-color: #2F4A5B !important;
@@ -263,24 +260,149 @@
     min-width: 150px !important;
 }
 
-.card-body .input-group input{
+.input-group input{
     border: 1px solid #2F4A5B !important;
     background-color: transparent !important;
     color: #22C4FC !important;
 }
 
-.card-body .input-group select{
+.input-group select{
     border: 1px solid #2F4A5B !important;
     background-color: transparent !important;
     color: #22C4FC !important;
 }
 
-.card-body .input-group input[type="date"]::-webkit-calendar-picker-indicator{
+.input-group input[type="date"]::-webkit-calendar-picker-indicator{
     filter: invert(var(--value, 100%))
 }
 
-.card-body .input-group textarea{
+.input-group textarea{
     border: 1px solid #2F4A5B !important;
     background-color: transparent !important;
     color: #22C4FC !important;
+}
+
+/* General Inputs */
+
+.input-group-text{
+    background: #26182D !important;
+    border-style: solid !important;
+    border-color: #2F4A5B !important;
+    color: #588CAF !important;
+    font-family: 'Inter' !important;
+    font-weight: 500 !important;
+    font-size: 15px !important;
+    min-width: 150px !important;
+}
+
+input{
+    border: 1px solid #2F4A5B !important;
+    background-color: transparent !important;
+    color: #22C4FC !important;
+}
+
+select{
+    border: 1px solid #2F4A5B !important;
+    background-color: transparent !important;
+    color: #22C4FC !important;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator{
+    filter: invert(var(--value, 100%))
+}
+
+textarea{
+    border: 1px solid #2F4A5B !important;
+    background-color: transparent !important;
+    color: #22C4FC !important;
+}
+
+
+.my-profile-container .quark-title-action{
+    font-family: 'Inter';
+    font-size: 15px !important;
+    line-height: 19px;
+    color: #FFFFFF;
+    padding: 10px 30px 3px;
+    border-top: 1px solid #2F4A5B;
+    border-bottom: 1px solid #2F4A5B;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+.my-profile-container .quark-title-action h5{
+    font-weight: 600;
+}
+
+
+.my-profile-container .quark-title-action .quark-btn-action{
+    font-family: 'JetBrains Mono' !important;
+    font-weight: 500 !important;
+    font-size: 15px !important;
+    color: #588CAF;
+    transition: all ease .5s;
+}
+
+.my-profile-container .quark-title-action .quark-btn-action:hover{
+    color: #78c1f1;
+    transition: all ease .5s;
+}
+
+.profesionalProfileContainer .card-header .card-text{
+margin-bottom: 0px !important;
+}
+
+.profesionalProfileContainer .form-control{
+    border: 1px solid #2F4A5B !important;
+    background-color: transparent !important;
+    color: #22C4FC !important;
+    margin: 0px !important;
+    }
+
+/* Modal Styles */
+
+.modal-content{
+    background: #170e1b !important;
+    border: 1px solid #2F4A5B !important;
+    color: #588CAF;
+    margin-bottom: 23px !important;
+    border-radius: 8px;
+    padding: 0px;
+    overflow: hidden ;
+}
+
+.modal-header{
+    background: #27182e !important;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border: none !important;
+}
+
+.modal-header h5{
+    margin: 0px;
+    color: #588CAF;
+}
+
+.modal-body{
+    padding: 10px;
+}
+
+.inputRadios{
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.inputRadios .btn-quark-radio{
+    margin-left: 5px;
+    border-radius: 30px;
+    font-size: 15px;
+    padding: 6px 9px;
+    background: #0B2A3F !important;
+    border: 1px solid #2390B6 !important;
+    color: #588CAF !important;
+}
+
+.inputRadios .btn-quark-radio.checked{
+    background: #185075 !important;
 }

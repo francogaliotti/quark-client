@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Container, Row } from "react-bootstrap";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, ButtonGroup, Container, Row } from "react-bootstrap";
 import axios from "axios";
 import {
   getPrivate,
@@ -19,11 +19,14 @@ const Events = () => {
   const user = useSelector(selectUser);
   // const navigate = useNavigate();
   const cookies = new Cookies();
+  const refUserEvents = useRef(null);
+  const refFutureEvents = useRef(null);
+  const refPastEvents = useRef(null);
 
   const [events, setEvents] = useState(null);
   const [recorded, setRecorded] = useState(null);
   const [next, setNext] = useState(0);
-  const [userBool, setUserBool] = useState(true)
+  const [userBool, setUserBool] = useState(true);
 
   const [userEvents, setUserEvents] = useState(null);
 
@@ -42,31 +45,24 @@ const Events = () => {
     });
     setEvents(resF.data.row);
     next(1);
-    
   }
 
   async function fetchUserEvents() {
-    setNext(0)
+    setNext(0);
     var userDb = await getPrivate(`/studentEvents/${user.id}`);
     setUserEvents(userDb.data);
-    console.log(userEvents.length)
-    console.log(next)
-    
-    
-    
-    
-    
+    console.log(userEvents.length);
+    console.log(next);
   }
 
   async function fetchPastEvents(status, next) {
     const resP = await postPublic(`/events/pastEvents`, { page: pastPage });
     setRecorded(resP.data.rows);
     next(2);
-   
-    
   }
 
   async function enrollUser(eventId) {
+    
     try {
       await postPrivate("/studentEvents/enroll", {
         userId: user.id,
@@ -74,36 +70,31 @@ const Events = () => {
       });
 
       setEvents(events.filter((e) => e.id !== eventId));
-      Alert.success({ title: "Exito", message: "Se te inscribio al evento" });
+      Alert.success({ title: "Exito", message:"Se te inscribio en el evento" });
     } catch (err) {
       Alert.error({ title: "Error", message: err.message });
     }
   }
 
-  async function handleButton(eventId){
-    console.log(eventId)
-    try{
+  async function handleButton(eventId) {
+    console.log(eventId);
+    try {
       Alert.confirm({ title: "¿Eliminar esta inscripcion?" }, async () => {
         await postPrivate("/studentEvents/droll", {
           userId: user.id,
-          eventId 
-        })
-          
-        console.log("Antes de eliminar")
-        
-        setUserEvents(userEvents.filter((e) => e.id !== eventId ))
-        console.log("Despues de eliminar")
-        Alert.success({ title: "Exito", message: "Se te inscribio al evento" });
-      })
-        
-      
-    
-    }catch(err){
-      console.log(err.message)
-    }
-    
-  }
+          eventId,
+        });
 
+        console.log("Antes de eliminar");
+
+        setUserEvents(userEvents.filter((e) => e.id !== eventId));
+        console.log("Despues de eliminar");
+        Alert.success({ title: "Exito", message: "Se te dio de baja en el evento" });
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
 
   useEffect(() => {
     fetchUserEvents();
@@ -115,70 +106,104 @@ const Events = () => {
 
   return (
     <Container fluid>
-      <div className="titleContainer">
-        <h1 className="title">Eventos Quark</h1>
-        <h5 className="subtitle">Subtitulo</h5>
-        <hr className="line" />
+      
+        <h1 className="titular-quark">Eventos Quark</h1>
+        <h5 className="subtitular-quark">Subtitulo</h5>
+        <hr className="hr-quark" />
 
-        <button
-          onClick={() => {
-            fetchUserEvents(setEvents, setNext);
-          }}
-          className="futureEvents"
-          id="future"
-        >
-          Mis Eventos
-        </button>
+        <div className="myProfileButtons">
+          <ButtonGroup>
+            <Button
+              ref={refUserEvents}
+              onClick={() => {
+                fetchUserEvents(setEvents, setNext);
+                
+                refUserEvents.current.id = "presed";
+                refFutureEvents.current.id = "";
+                refPastEvents.current.id = "";
+              }}
+              id="presed"
+              className="profileButton"
+            >
+              Mis Eventos
+            </Button>
+            <Button
+              ref={refFutureEvents}
+              onClick={() => {
+                fetchFutureEvents(setEvents, setNext);
+                
+                refUserEvents.current.id = "";
+                refFutureEvents.current.id = "presed";
+                refPastEvents.current.id = "";
+              }}
+              className="profileButton"
+            >
+              Eventos Futuros
+            </Button>
+            <Button
+              ref={refPastEvents}
+              onClick={() => {
+                fetchPastEvents(setRecorded, setNext);
+                
+                refUserEvents.current.id = "";
+                refFutureEvents.current.id = "";
+                refPastEvents.current.id = "presed";
+              }}
+              className="profileButton"
+            >
+              Eventos Grabados
+            </Button>
+          </ButtonGroup>
+        </div>
 
-        <button
-          onClick={() => {
-            fetchFutureEvents(setEvents, setNext);
-          }}
-          className="futureEvents"
-          id="future"
-        >
-          Proximos Eventos
-        </button>
-
-        <button
-          onClick={() => {
-            fetchPastEvents(setRecorded, setNext);
-          }}
-          className="recordedEvents clicked"
-          id="recorded"
-        >
-          Eventos Grabados
-        </button>
-      </div>
-
-      <div className="cardContainer">
-        <Row>
-          {userEvents != null && next == 0
-            ? userEvents.length == 0 && next == 0 ? <div>No hay eventos</div> : userEvents.map((news) => {
-            
-              if(userEvents.length != 0){
-                return <UserEventCard event={news} handleDelete={handleButton}/>
-              }
-              
-            }) : "" }
-        </Row>
-        <Row>
-          {events != null && next == 1
-            ? events.length == 0 && next == 1 ? <div>No hay eventos</div> : events.map((news) => {
-           
-              return <EventCard news={news} enrollUser={enrollUser}/>
-              
-              
-            }) : "" }
-        </Row>
-        <Row>
-          {recorded != null && next == 2
-            ? recorded.length == 0 && next == 2 ? <div>No hay eventos</div> : recorded.map((news) => {
-           
-              return <RecordedEventCard event={news}  />
-              
-              
-            }) : "" }
+      <div className="cardContainer " style={{
+          width : "100%",
+          height: "100%"
+        }}>
+        <Row className="mt-4" style={{
+          width : "100%",
+          
+          
+        }}>
+          {userEvents != null && next == 0 ? (
+            userEvents.length == 0 && next == 0 ? (
+              <h2 className="my-auto" style={{color:"#2390B6"}}>Ups... Parece que no tienes eventos</h2>
+            ) : (
+              userEvents.map((news) => {
+                if (userEvents.length != 0) {
+                  return (
+                    <UserEventCard event={news} handleDelete={handleButton} />
+                  );
+                }
+              })
+            )
+          ) : (
+            ""
+          )}
+        
+          {events != null && next == 1 ? (
+            events.length == 0 && next == 1 ? (
+              <h2 className="my-auto" style={{color:"#2390B6"}}>No hay eventos</h2>
+            ) : (
+              events.map((news) => {
+                return <EventCard news={news} enrollUser={enrollUser} />;
+              })
+            )
+          ) : (
+            ""
+          )}
+      
+          {recorded != null && next == 2 ? (
+            recorded.length == 0 && next == 2 ? (
+              <h2 className="my-auto" style={{color:"#2390B6"}}>No hay eventos</h2>
+            ) : (
+              recorded.map((news) => {
+                return <RecordedEventCard event={news} />;
+              })
+            )
+          ) : (
+            ""
+          )}
         </Row>
       </div>
     </Container>

@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPenToSquare,
   faPlus,
+  faPlusSquare,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import { deletePrivate, getPrivate } from "../../../services/apiService";
@@ -134,60 +135,62 @@ function ProfesionalProfile() {
       />
       <div className="activityContainer">
         <div className="aboutContainer" id="ppAbout">
-          <div className="acHeader d-flex justify-content-between">
+          <div className="acHeader d-flex justify-content-between quark-title-action">
             <h5>Idiomas</h5>
             <h5
+              className="quark-btn-action"
               style={{ cursor: "pointer" }}
               onClick={() => openModal(3, true, {})}
             >
-              Añadir nuevo
+              <FontAwesomeIcon icon={faPlusSquare} /> Añadir nuevo
             </h5>
           </div>
-          {user.languages?.map((lan) => {
-            return (
-              <Card>
-                <Card.Header className="d-flex justify-content-between">
-                  <Card.Title>Idioma</Card.Title>
-                  <div className="crudBtns">
-                    <FontAwesomeIcon
-                      icon={faPenToSquare}
-                      style={{ cursor: "pointer" }}
-                      onClick={() => openModal(3, false, lan)}
-                    />
-                    <FontAwesomeIcon
-                      icon={faTrashCan}
-                      style={{ cursor: "pointer" }}
-                      onClick={() => handleDelete(3, lan.id)}
-                    />
-                  </div>
-                </Card.Header>
-                <Card.Body>
-                  <Card.Text className="d-flex justify-content-between">
-                    <p>Idioma</p>
-                    <p className="form-control">{lan?.language.name}</p>
-                  </Card.Text>
-                  <Card.Text className="d-flex justify-content-between">
-                    <p>Nivel</p>
-                    <p className="form-control">{lan?.level}</p>
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            );
-          })}
+          <Row>
+            {user.languages?.map((lan) => {
+              return (
+                <Col sm={6}>
+                  <Card className="card-quark">
+                    <Card.Header className="d-flex justify-content-between">
+                      <Card.Title>Idioma</Card.Title>
+                      <div className="crudBtns">
+                        <FontAwesomeIcon
+                          icon={faPenToSquare}
+                          style={{ cursor: "pointer" }}
+                          onClick={() => openModal(3, false, lan)}
+                        />{" "}
+                        <FontAwesomeIcon
+                          icon={faTrashCan}
+                          style={{ cursor: "pointer" }}
+                          onClick={() => handleDelete(3, lan.id)}
+                        />
+                      </div>
+                    </Card.Header>
+                    <Card.Body>
+                      <p className="mt-1 card-text">Idioma</p>
+                      <p className="form-control">{lan?.language.name}</p>
+                      <p className="mt-4 card-text">Nivel</p>
+                      <p className="form-control">{lan?.level}</p>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              );
+            })}
+          </Row>
         </div>
-        <div className="activityContainer">
-          <div className="acHeader d-flex justify-content-between">
+        <div className="aboutContainer" id="ppAbout">
+          <div className="acHeader d-flex justify-content-between quark-title-action">
             <h5>Historial Académico</h5>
             <h5
+              className="quark-btn-action"
               style={{ cursor: "pointer" }}
               onClick={() => openModal(0, true, {})}
             >
-              Añadir nueva
+              <FontAwesomeIcon icon={faPlusSquare} /> Añadir nueva
             </h5>
           </div>
           {user.academicActivities?.map((lan) => {
             return (
-              <Card>
+              <Card className="card-quark">
                 <Card.Header className="d-flex justify-content-between">
                   <Card.Title>Actividad Académica</Card.Title>
                   <div className="crudBtns">
@@ -195,7 +198,7 @@ function ProfesionalProfile() {
                       icon={faPenToSquare}
                       style={{ cursor: "pointer" }}
                       onClick={() => openModal(0, false, lan)}
-                    />
+                    />{" "}
                     <FontAwesomeIcon
                       icon={faTrashCan}
                       style={{ cursor: "pointer" }}
@@ -204,31 +207,28 @@ function ProfesionalProfile() {
                   </div>
                 </Card.Header>
                 <Card.Body>
-                  <Card.Text className="d-flex justify-content-between">
-                    <p>Título</p>
-                    <p className="form-control">{lan?.title}</p>
-                  </Card.Text>
-                  <Card.Text className="d-flex justify-content-between">
-                    <p>Institución</p>
-                    <p className="form-control">{lan?.institution}</p>
-                  </Card.Text>
-                  <Card.Text className="d-flex justify-content-between">
-                    <p>Estado</p>
-                    <p className="form-control">{lan?.state}</p>
-                  </Card.Text>
-                  <Card.Text className="d-flex justify-content-between">
-                    <p>Inicio</p>
-                    <p className="form-control">
-                      {new Date(lan?.beginDate).toLocaleDateString("en-AU")}
-                    </p>
-                  </Card.Text>
+                  <p className="mt-1 card-text">Título</p>
+                  <p className="form-control">{lan?.title}</p>
+
+                  <p className="mt-4 card-text">Institución</p>
+                  <p className="form-control">{lan?.institution}</p>
+
+                  <p className="mt-4 card-text">Estado</p>
+                  <p className="form-control">{lan?.state}</p>
+
+                  <p className="mt-4 card-text">Inicio</p>
+                  <p className="form-control">
+                    {" "}
+                    {new Date(lan?.beginDate).toLocaleDateString("en-AU")}
+                  </p>
+
                   {lan?.endDate && (
-                    <Card.Text className="d-flex justify-content-between">
-                      <p>Finalización</p>
+                    <>
+                      <p className="mt-4 card-text">Finalización</p>
                       <p className="form-control">
                         {new Date(lan?.endDate).toLocaleDateString("en-AU")}
                       </p>
-                    </Card.Text>
+                    </>
                   )}
                 </Card.Body>
               </Card>
@@ -236,18 +236,19 @@ function ProfesionalProfile() {
           })}
         </div>
         <div className="aboutContainer" id="ppAbout">
-          <div className="acHeader d-flex justify-content-between">
+          <div className="acHeader d-flex justify-content-between quark-title-action">
             <h5>Historial Laboral</h5>
             <h5
+              className="quark-btn-action"
               style={{ cursor: "pointer" }}
               onClick={() => openModal(1, true, {})}
             >
-              Añadir nueva
+              <FontAwesomeIcon icon={faPlusSquare} /> Añadir nueva
             </h5>
           </div>
           {user.laborActivities?.map((lan) => {
             return (
-              <Card>
+              <Card className="card-quark">
                 <Card.Header className="d-flex justify-content-between">
                   <Card.Title>Actividad Laboral</Card.Title>
                   <div className="crudBtns">
@@ -255,7 +256,7 @@ function ProfesionalProfile() {
                       icon={faPenToSquare}
                       style={{ cursor: "pointer" }}
                       onClick={() => openModal(1, false, lan)}
-                    />
+                    />{" "}
                     <FontAwesomeIcon
                       icon={faTrashCan}
                       style={{ cursor: "pointer" }}
@@ -264,31 +265,28 @@ function ProfesionalProfile() {
                   </div>
                 </Card.Header>
                 <Card.Body>
-                  <Card.Text className="d-flex justify-content-between">
-                    <p>Título</p>
-                    <p className="form-control">{lan?.title}</p>
-                  </Card.Text>
-                  <Card.Text className="d-flex justify-content-between">
-                    <p>Empresa</p>
-                    <p className="form-control">{lan?.company}</p>
-                  </Card.Text>
-                  <Card.Text className="d-flex justify-content-between">
-                    <p>Estado</p>
-                    <p className="form-control">{lan?.state}</p>
-                  </Card.Text>
-                  <Card.Text className="d-flex justify-content-between">
-                    <p>Inicio</p>
-                    <p className="form-control">
-                      {new Date(lan?.beginDate).toLocaleDateString("en-AU")}
-                    </p>
-                  </Card.Text>
+                  <p className="mt-1 card-text">Título</p>
+                  <p className="form-control">{lan?.title}</p>
+
+                  <p className="mt-4 card-text">Empresa</p>
+                  <p className="form-control">{lan?.company}</p>
+
+                  <p className="mt-4 card-text">Estado</p>
+                  <p className="form-control">{lan?.state}</p>
+
+                  <p className="mt-4 card-text">Inicio</p>
+                  <p className="form-control">
+                    {" "}
+                    {new Date(lan?.beginDate).toLocaleDateString("en-AU")}
+                  </p>
+
                   {lan?.endDate && (
-                    <Card.Text className="d-flex justify-content-between">
-                      <p>Finalización</p>
+                    <>
+                      <p className="mt-4 card-text">Finalización</p>
                       <p className="form-control">
                         {new Date(lan?.endDate).toLocaleDateString("en-AU")}
                       </p>
-                    </Card.Text>
+                    </>
                   )}
                 </Card.Body>
               </Card>
@@ -296,18 +294,19 @@ function ProfesionalProfile() {
           })}
         </div>
         <div className="aboutContainer" id="ppAbout">
-          <div className="acHeader d-flex justify-content-between">
+          <div className="acHeader d-flex justify-content-between quark-title-action">
             <h5>Historial de proyectos independientes</h5>
             <h5
+              className="quark-btn-action"
               style={{ cursor: "pointer" }}
               onClick={() => openModal(2, true, {})}
             >
-              Añadir nueva
+              <FontAwesomeIcon icon={faPlusSquare} /> Añadir nueva
             </h5>
           </div>
           {user.independentActivities?.map((lan) => {
             return (
-              <Card>
+              <Card className="card-quark">
                 <Card.Header className="d-flex justify-content-between">
                   <Card.Title>Proyecto</Card.Title>
                   <div className="crudBtns">
@@ -315,7 +314,7 @@ function ProfesionalProfile() {
                       icon={faPenToSquare}
                       style={{ cursor: "pointer" }}
                       onClick={() => openModal(2, false, lan)}
-                    />
+                    />{" "}
                     <FontAwesomeIcon
                       icon={faTrashCan}
                       style={{ cursor: "pointer" }}
@@ -324,18 +323,14 @@ function ProfesionalProfile() {
                   </div>
                 </Card.Header>
                 <Card.Body>
-                  <Card.Text className="d-flex justify-content-between">
-                    <p>Nombre</p>
-                    <p className="form-control">{lan?.title}</p>
-                  </Card.Text>
-                  <Card.Text className="d-flex justify-content-between">
-                    <p>URL</p>
-                    <p className="form-control">{lan?.projectUrl}</p>
-                  </Card.Text>
-                  <Card.Text className="d-flex justify-content-between">
-                    <p>Descripción</p>
-                    <p className="form-control">{lan?.description}</p>
-                  </Card.Text>
+                  <p className="mt-1 card-text">Nombre</p>
+                  <p className="form-control">{lan?.title}</p>
+
+                  <p className="mt-4 card-text mt-2">Repositorio</p>
+                  <p className="form-control">{lan?.projectUrl}</p>
+
+                  <p className="mt-4 card-text">Descripción</p>
+                  <p className="form-control">{lan?.description}</p>
                 </Card.Body>
               </Card>
             );

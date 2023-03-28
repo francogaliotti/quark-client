@@ -10,27 +10,28 @@ const UserEventCard = (props) => {
 
   return (
     <Col md={4}>
-      <div key={props.event?.id}>
-        <Card
-          border="info"
-          bg="light"
-          className="col-12"
-          style={{ marginTop: "20px" }}
+      {/* <div key={props.event?.id}> */}
+        <Card 
+          className="card-quark"
+          
         >
           <a href={props.event.link} style={{ textDecoration: "none" }}>
             <Card.Img variant="top" src={props.event?.img} />
           </a>
           <Card.Body>
-            <Card.Title>
-              <h5 style={{ color: "#91D3FF" }}>{props.event?.title}</h5>
-            </Card.Title>
-            {/* <Card.Text> */}
-              <p style={{ color: "#588CAF" }}>{props.event?.eventDate}</p>
-            {/* </Card.Text> */}
-            <Button variant="info" onClick={()=>{props.handleDelete(props.event.id)}} >Darme de Baja</Button>
+            <h5 className="card-title">{props.event?.title}</h5>
+            <p className="card-text">Fecha: {new Date(props.event?.eventDate).toLocaleDateString("en-AU")}</p>
+              <a
+                className="btn btn-outline-primary btn-quark"
+                onClick={()=>{props.handleDelete(props.event.id)}}
+              >
+                Darme de Baja
+              </a>
+              
+            
           </Card.Body>
         </Card>
-      </div>
+      {/* </div> */}
     </Col>
   );
 };

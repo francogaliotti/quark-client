@@ -20,28 +20,21 @@ const GameJamCard = (gameJam) => {
     <div key={gameJam.gameJam.id}>
       <Row md={2} className="justify-content-center g-4">
         <Col sm={8}>
-          <Card className="col-12" border="info" bg="dark">
+          <Card className="my-auto card-quark ">
             <Card.Img variant="top" src={gameJam.gameJam.url} />
-            <Card.Body
-              style={{
-                display: "flex",
-                alignItems: "flex-start",
-                justifyContent: "center",
-                flexDirection: "column",
-              }}
-            >
-              <h5 style={{color:"#91D3FF"}}>{gameJam.gameJam.fullName}</h5>
-              <h6 style={{color:"#588CAF"}}>{gameJam.gameJam.timestarted}</h6>
-              <div className="buttonContainer col-12">
+            <Card.Body>
+              <h5>{gameJam.gameJam.fullName}</h5>
+              <h6>{gameJam.gameJam.timestarted}</h6>
+              
                 <Button
-                  className="col-4"
-                  style={{ marginRight: "10px" ,backgroundColor:"#0B2A3F",border:"1px solid #2390B6"}}
+                  
+                  className="btn btn-outline-primary btn-quark"
                   onClick={()=>{handleClick(gameJam.gameJam.idCurso)}}
                 >
                   Ir a la Game Jam
                 </Button>
-                {/* <Button className="col-3" style={{ marginRight: "10px" ,backgroundColor:"#0B2A3F",border:"1px solid #2390B6"}}>Adicional</Button> */}
-              </div>
+                
+              
             </Card.Body>
           </Card>
         </Col>
