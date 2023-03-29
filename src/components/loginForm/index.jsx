@@ -114,7 +114,7 @@ function LoginForm() {
     <div className="loginPageContainer">
       <Container fluid>
         <Row className="justify-content-center">
-          <Col md={5} >
+          <Col md={4} >
             <Form
               ref={ref}
               action="http://34.66.2.129/moodle/login/index.php"

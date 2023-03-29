@@ -406,3 +406,34 @@ margin-bottom: 0px !important;
 .inputRadios .btn-quark-radio.checked{
     background: #185075 !important;
 }
+
+/* Master View*/
+
+.quark-masterview-card{
+    padding: 30px;
+    background: #0A1C28 !important;
+    border-radius: 8px;
+    border: none !important;
+}
+
+.quark-masterview-card .btn-quark.disabled{
+    border: none !important;
+    background-color: transparent !important;
+}
+
+.quark-masterview-card .courses.disabled{
+    opacity: .2;
+}
+
+.level-initial h3{
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 38px;
+    line-height: 46px;
+    letter-spacing: -0.065em;
+    display: block;
+    text-align: center;
+    background: #0A1C28 !important;
+    margin-bottom: 20px;
+    padding: 15px;
+}

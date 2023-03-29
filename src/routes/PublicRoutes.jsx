@@ -17,6 +17,7 @@ import Events from "../pages/events/newEvent/Events";
 import GameJam from "../pages/gameJam/GameJam";
 import Home from "../pages/home";
 import MyCourses from "../pages/myCourses";
+import MasterView from "../pages/myCourses/MasterView";
 import { MyProfile } from "../pages/myProfile";
 import { EditProfesionalProfile } from "../pages/myProfile/profesionalProfile/editProfProfile";
 import { Offer } from "../pages/offer";
@@ -41,7 +42,7 @@ function PublicRoutes({setColapseDisabled}) {
           <>
             <Route path="/editProfile" element={<EditProfesionalProfile />} />
             <Route path="/profile" element={<MyProfile />} />
-            <Route path="/myCourses" element={<MyCourses />} />
+            <Route path="/myCourses" element={<MasterView/>} />
             <Route exact path="/course/:id" element={<Course setColapseDisabled={setColapseDisabled} />} />
             <Route path="/events" element={<Events />} />
             <Route path="/offer" element={<Offer />} />
