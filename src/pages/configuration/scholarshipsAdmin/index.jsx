@@ -79,7 +79,7 @@ export const ScholarshipsAdmin = () => {
   }, [pageNumber]);
 
   return (
-    <div className="crudAdminContainer">
+    <div className="crudAdminContainer" style={{backgroundColor: "#ffffff"}}>
       <EditScholarshipsModal
         open={openModal}
         onClose={() => setOpenModal(false)}

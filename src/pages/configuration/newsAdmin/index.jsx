@@ -76,7 +76,7 @@ export const NewsAdmin = () => {
   }, [pageNumber]);
 
   return (
-    <div className="crudAdminContainer">
+    <div className="crudAdminContainer" style={{backgroundColor: "#ffffff"}}>
       <EditNewsModal
         open={openModal}
         onClose={() => setOpenModal(false)}

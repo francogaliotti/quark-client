@@ -1,11 +1,17 @@
+
 import axios from "axios";
 import React, { useRef, useState } from "react";
 import { ButtonGroup, Button } from "react-bootstrap";
+import {useSelector}  from "react-redux";
+import { selectUser } from "../../features/userSlice";
 import MasterViewCard from "./MasterViewCard";
+
 
 const MasterView = () => {
   const refUnity = useRef(null);
   const refUnreal = useRef(null);
+  const user = useSelector(selectUser);
+  
 
   const [carrer, setCarrer] = useState(true)
 
@@ -14,6 +20,13 @@ const MasterView = () => {
 
   const [inicialUnreal, setInicialUnreal] = useState(null);
   const [intermedioUnreal, setIntermedioUnreal] = useState(null);
+
+  const [inicialUnityAlumnol, setInicialUnityAlumno ] = useState([])
+  const [intermedioUnityAlumnol, setIntermedioUnityAlumno ] = useState([])
+  const [inicialUnrealAlumnol, setInicialUnrealAlumno ] = useState([])
+  const [intermedioUnrealAlumnol, setIntermedioUnrealAlumno ] = useState([])
+  
+  let tieneInicial
 
   async function fetchCourses() {
     const url = "http://34.66.2.129:3030/courses/getCoursesLists";
@@ -26,13 +39,22 @@ const MasterView = () => {
 
       setInicialUnreal(data.data.rta.unrealInicial);
       setIntermedioUnreal(data.data.rta.unrealIntermedio);
+      
     } catch (err) {
       console.log(err.message);
     }
   }
 
+  async function Includes(){
+    user.moodleUserData.listaCurso.forEach(course => {
+      tieneInicial = inicialUnity.includes(c => c.idCurso == course.idCurso)
+  })
+  console.log(tieneInicial)
+  }
+
   useState(() => {
     fetchCourses();
+    Includes()
   }, []);
 
   return (
@@ -90,7 +112,7 @@ const MasterView = () => {
               level={"Nivel Inicial"}
             ></MasterViewCard>
           ) : (
-            "nada"
+            ""
           )}
         </div>
 
@@ -101,7 +123,7 @@ const MasterView = () => {
               level={"Nivel Intermedio"}
             ></MasterViewCard>
           ) : (
-            "nada"
+            ""
           )}
         </div>
       </div>  }
@@ -110,11 +132,11 @@ const MasterView = () => {
         
         <h3>Unity Engine</h3>
         <div className="col-6">  
-          {inicialUnity != null ? (<MasterViewCard courseData={inicialUnity} level={"Nivel Inicial"}></MasterViewCard>):("nada")}
+          {inicialUnity != null ? (<MasterViewCard courseData={inicialUnity} level={"Nivel Inicial"}></MasterViewCard>):("")}
         </div>
         
         <div className="col-6">  
-          {intermedioUnity != null ? (<MasterViewCard courseData={intermedioUnity} level={"Nivel Intermedio"}></MasterViewCard>):("nada")}
+          {intermedioUnity != null ? (<MasterViewCard courseData={intermedioUnity} level={"Nivel Intermedio"}></MasterViewCard>):("")}
         </div>
       </div> }
       

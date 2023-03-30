@@ -65,7 +65,7 @@ export const EventsAdmin = () => {
     }, [openModal]);
 
     return (
-        <div className='crudAdminContainer'>
+        <div className='crudAdminContainer' style={{backgroundColor: "#ffffff"}}>
             <EditEventModal
                 open={openModal}
                 onClose={() => setOpenModal(false)}

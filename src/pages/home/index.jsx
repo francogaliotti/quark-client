@@ -14,6 +14,7 @@ import { Container, Row, Col, Card, Modal, Button } from "react-bootstrap";
 import { ProfileCard } from "../../components/profileCard";
 import { PersonalInfoModal } from "../../components/onBoardingModals/personalInfoModal";
 import { ExperienceModal } from "../../components/onBoardingModals/experienceModal";
+import { NewsAccordion } from "../../components/newsAccordion";
 
 function Home() {
   const user = useSelector(selectUser);
@@ -26,7 +27,7 @@ function Home() {
     cursosOrdenados = arrayForSort
       .sort((x, y) => x.lastaccess - y.lastaccess)
       .reverse()
-      .splice(0, 3);
+      .splice(0, 2);
   }
 
   const [newsList, setNewsList] = useState([]);
@@ -60,7 +61,7 @@ function Home() {
         </h4>
         <hr className="hr-quark"/>
         <Row>
-          <Col md={7}>
+          <Col md={6}>
             {cursosOrdenados.length !== 0 && (
               <div className="homeCourses">
                 {cursosOrdenados?.map((c) => {
@@ -69,7 +70,8 @@ function Home() {
               </div>
             )}
           </Col>
-          <Col md={5}>
+          <Col md={6}>
+            <NewsAccordion/>
             <ProfileCard />
             {/*Estos botones no van*/}
             {/* <Button

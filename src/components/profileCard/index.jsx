@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { selectUser } from "../../features/userSlice";
 import ProfProgressBar from "../profProgressBar";
 
@@ -32,7 +33,7 @@ export const ProfileCard = () => {
         <ProfProgressBar type="profesional" />
       </Card.Body>
       <Card.Footer className="text-center">
-        <a className="btn btn-outline-primary btn-quark">Completa tu perfil</a>
+        <Link  to="/profile" className="btn btn-outline-primary btn-quark">Completa tu perfil</Link>
       </Card.Footer>
     </Card>
   );
