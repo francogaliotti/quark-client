@@ -25,20 +25,28 @@ export const SingleCourse = ({ course }) => {
       <Card.Img variant="top" src={course.url} alt="Imagen de la tarjeta" />
       {!stats ? (
         <>
-          <Card.Body>
+          <Card.Body style={{paddingTop: "0"}}>
             <h5 className="card-title">{course.fullName}</h5>
-            <p className="card-text">@Ultima Unidad Cursada</p>
-              <a
-                className="btn btn-outline-primary btn-quark"
-                onClick={() => handleMoodleCourse(course.idCurso)}
-              >
-                Continuar cursado
-              </a>
-              <a
-                className="btn btn-outline-primary btn-quark" /*onClick={() => showStats(!stats)}*/
+            {course.progress != null && (
+              <>
+                <p className="card-text">{course.progress}% Completado</p>
+                <ProgressBar
+                  className="progress-bar-quark"
+                  now={Math.round(course.progress)}
+                />
+              </>
+            )}
+            <a
+              className="btn btn-outline-primary btn-quark"
+              onClick={() => handleMoodleCourse(course.idCurso)}
+            >
+              Continuar cursado
+            </a>
+            {/*  <a
+                className="btn btn-outline-primary btn-quark" /*onClick={() => showStats(!stats)}
               >
                 Stats
-              </a>
+              </a>*/}
           </Card.Body>
         </>
       ) : (

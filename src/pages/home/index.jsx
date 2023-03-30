@@ -30,24 +30,16 @@ function Home() {
       .splice(0, 2);
   }
 
-  const [newsList, setNewsList] = useState([]);
   const [closestEvent, setClosestEvent] = useState();
   //const [showPersonalInfoModal, setShowPersonalInfoModal] = useState(false);
   //const [showExperienceModal, setShowExperienceModal] = useState(false);
 
   useEffect(() => {
-    const fetchNews = async () => {
-      const res = await postPublic(`/news/platformNews`, { listaCurso });
-      setNewsList(res.data);
-    };
     const fetchEvent = async () => {
       const res = await getPublic(`/events/closestEvent`);
       setClosestEvent(res.data);
     };
-    const listaCurso = user?.moodleUserData.listaCurso.map((c) => {
-      return c.idCurso;
-    });
-    fetchNews();
+    
     fetchEvent();
   }, []);
 
@@ -71,7 +63,7 @@ function Home() {
             )}
           </Col>
           <Col md={6}>
-            <NewsAccordion/>
+            <NewsAccordion user={user}/>
             <ProfileCard />
             {/*Estos botones no van*/}
             {/* <Button
