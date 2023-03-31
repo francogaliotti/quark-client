@@ -12,47 +12,47 @@ function ProfProgressBar(props) {
     let counter = 0;
     if (type) {
       if (user?.academicActivities.length != 0) {
-        counter += 16.7;
+        counter += 25;
       }
       if (user?.laborActivities.length != 0) {
-        counter += 16.7;
+        counter += 25;
       }
       if (user?.independentActivities.length != 0) {
-        counter += 16.7;
+        counter += 25;
       }
       if (user?.languages?.length != 0) {
-        counter += 16.7;
-      }
-      if (user?.skills.length != 0) {
-        counter += 16.7;
-      }
-      if (user?.userBasicDatum.nickname?.length != 0) {
-        counter += 16.7;
+        counter += 25;
       }
     } else {
       if (user?.userBasicDatum.biography?.length != 0) {
-        counter += 12.5;
+        counter += 10;
       }
       if (user?.userBasicDatum.birthdate?.length != (0 || undefined)) {
-        counter += 12.5;
-      }
-      if (user?.moodleUserData.firstname?.length != 0) {
-        counter += 12.5;
-      }
-      if (user?.moodleUserData.lastname?.length != 0) {
-        counter += 12.5;
-      }
-      if (user?.moodleUserData.email?.length != 0) {
-        counter += 12.5;
+        counter += 10;
       }
       if (user?.moodleUserData.country?.length != 0) {
-        counter += 12.5;
+        counter += 10;
       }
       if (user?.moodleUserData.city?.length != 0) {
-        counter += 12.5;
+        counter += 10;
       }
       if (user?.moodleUserData.phone?.length != 0) {
-        counter += 12.5;
+        counter += 10;
+      }
+      if (user?.userBasicDatum.imgUrl?.length != 0) {
+        counter += 10;
+      }
+      if (user?.userBasicDatum.linkedIn?.length != 0) {
+        counter += 10;
+      }
+      if (user?.userBasicDatum.github?.length != 0) {
+        counter += 10;
+      }
+      if (user?.userBasicDatum.discord?.length != 0) {
+        counter += 10;
+      }
+      if (user?.userBasicDatum.gender?.length != 0) {
+        counter += 10;
       }
     }
     setPorcentaje(counter);

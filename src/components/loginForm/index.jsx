@@ -41,7 +41,7 @@ function LoginForm() {
 
   const setSesskeyNull = async () => {
     const res = await postPublic(`/sesskey/`, {
-      id: moodleData.moodleUserData.id, //aca tiene que ir user.id
+      id: moodleData.moodleUserData.id, 
       sesskey: null,
     });
   };
@@ -193,7 +193,7 @@ function LoginForm() {
               </div>
               <iframe
                 id="inlineFrameExample"
-                style={{ display: "none" }}
+                //style={{ display: "none" }}
                 title="Inline Frame Example"
                 width="600"
                 height="400"
@@ -202,10 +202,10 @@ function LoginForm() {
               ></iframe>
               <iframe
                 id="inlineFrameExample"
-                style={{ display: "none" }}
+                //style={{ display: "none" }}
                 title="cookieFrame"
-                width="1"
-                height="1"
+                width="600"
+                height="1000"
                 ref={cookieRef}
                 src=""
                 name="cookieFrame"

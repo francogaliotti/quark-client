@@ -166,10 +166,16 @@ function ProfesionalProfile() {
                       </div>
                     </Card.Header>
                     <Card.Body>
-                      <p className="mt-1 card-text">Idioma</p>
-                      <p className="form-control">{lan?.language.name}</p>
-                      <p className="mt-4 card-text">Nivel</p>
-                      <p className="form-control">{lan?.level}</p>
+                      <div className="input-group">
+                        <span className="input-group-text">Idioma</span>
+                        <span className="form-control">
+                          {lan?.language.name}
+                        </span>
+                      </div>
+                      <div className="input-group">
+                        <span className="input-group-text">Nivel</span>
+                        <span className="form-control">{lan?.level}</span>
+                      </div>
                     </Card.Body>
                   </Card>
                 </Col>
@@ -207,27 +213,33 @@ function ProfesionalProfile() {
                   </div>
                 </Card.Header>
                 <Card.Body>
-                  <p className="mt-1 card-text">Título</p>
-                  <p className="form-control">{lan?.title}</p>
-
-                  <p className="mt-4 card-text">Institución</p>
-                  <p className="form-control">{lan?.institution}</p>
-
-                  <p className="mt-4 card-text">Estado</p>
-                  <p className="form-control">{lan?.state}</p>
-
-                  <p className="mt-4 card-text">Inicio</p>
-                  <p className="form-control">
-                    {" "}
-                    {new Date(lan?.beginDate).toLocaleDateString("en-AU")}
-                  </p>
-
+                  <div className="input-group">
+                    <span className="input-group-text">Título</span>
+                    <span className="form-control">{lan?.title}</span>
+                  </div>
+                  <div className="input-group">
+                    <span className="input-group-text">Institución</span>
+                    <span className="form-control">{lan?.institution}</span>
+                  </div>
+                  <div className="input-group">
+                    <span className="input-group-text">Estado</span>
+                    <span className="form-control">{lan?.state}</span>
+                  </div>
+                  <div className="input-group">
+                    <span className="input-group-text">Inicio</span>
+                    <span className="form-control">
+                      {new Date(lan?.beginDate).toLocaleDateString("en-AU")}
+                    </span>
+                  </div>
                   {lan?.endDate && (
                     <>
-                      <p className="mt-4 card-text">Finalización</p>
-                      <p className="form-control">
-                        {new Date(lan?.endDate).toLocaleDateString("en-AU")}
-                      </p>
+                      <div className="input-group">
+                        <span className="input-group-text">Finalización</span>
+                        <span className="form-control">
+                          {" "}
+                          {new Date(lan?.endDate).toLocaleDateString("en-AU")}
+                        </span>
+                      </div>
                     </>
                   )}
                 </Card.Body>
@@ -265,27 +277,33 @@ function ProfesionalProfile() {
                   </div>
                 </Card.Header>
                 <Card.Body>
-                  <p className="mt-1 card-text">Título</p>
-                  <p className="form-control">{lan?.title}</p>
-
-                  <p className="mt-4 card-text">Empresa</p>
-                  <p className="form-control">{lan?.company}</p>
-
-                  <p className="mt-4 card-text">Estado</p>
-                  <p className="form-control">{lan?.state}</p>
-
-                  <p className="mt-4 card-text">Inicio</p>
-                  <p className="form-control">
-                    {" "}
-                    {new Date(lan?.beginDate).toLocaleDateString("en-AU")}
-                  </p>
-
+                  <div className="input-group">
+                    <span className="input-group-text">Título</span>
+                    <span className="form-control">{lan?.title}</span>
+                  </div>
+                  <div className="input-group">
+                    <span className="input-group-text">Empresa</span>
+                    <span className="form-control">{lan?.company}</span>
+                  </div>
+                  <div className="input-group">
+                    <span className="input-group-text">Estado</span>
+                    <span className="form-control">{lan?.state}</span>
+                  </div>
+                  <div className="input-group">
+                    <span className="input-group-text">Inicio</span>
+                    <span className="form-control">
+                      {new Date(lan?.beginDate).toLocaleDateString("en-AU")}
+                    </span>
+                  </div>
                   {lan?.endDate && (
                     <>
-                      <p className="mt-4 card-text">Finalización</p>
-                      <p className="form-control">
-                        {new Date(lan?.endDate).toLocaleDateString("en-AU")}
-                      </p>
+                      <div className="input-group">
+                        <span className="input-group-text">Finalización</span>
+                        <span className="form-control">
+                          {" "}
+                          {new Date(lan?.endDate).toLocaleDateString("en-AU")}
+                        </span>
+                      </div>
                     </>
                   )}
                 </Card.Body>
@@ -323,14 +341,18 @@ function ProfesionalProfile() {
                   </div>
                 </Card.Header>
                 <Card.Body>
-                  <p className="mt-1 card-text">Nombre</p>
-                  <p className="form-control">{lan?.title}</p>
-
-                  <p className="mt-4 card-text mt-2">Repositorio</p>
-                  <p className="form-control">{lan?.projectUrl}</p>
-
-                  <p className="mt-4 card-text">Descripción</p>
-                  <p className="form-control">{lan?.description}</p>
+                  <div className="input-group">
+                    <span className="input-group-text">Nombre</span>
+                    <span className="form-control">{lan?.title}</span>
+                  </div>
+                  <div className="input-group">
+                    <span className="input-group-text">Repositorio</span>
+                    <span className="form-control">{lan?.projectUrl}</span>
+                  </div>
+                  <div className="input-group">
+                    <span className="input-group-text">Descripción</span>
+                    <span className="form-control">{lan?.description}</span>
+                  </div>
                 </Card.Body>
               </Card>
             );
