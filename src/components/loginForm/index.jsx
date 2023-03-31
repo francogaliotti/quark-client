@@ -26,7 +26,9 @@ function LoginForm() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    
     if (user) navigate("/home");
+    
   }, [user]);
 
   const handleSubmit = async (e) => {
@@ -66,12 +68,13 @@ function LoginForm() {
 
   const goHome = async () => {
     setTimeout(async () => {
+      
       try {
         /*const loginResponse = await axios.get(`http://localhost:3030/login`,
                     //{ withCredentials: "include" }
                     )*/
-        console.log(`${env.SERVER_URL}login`);
-        cookieRef.current.src = `http://34.66.2.129:3030/login/`;
+        console.log(`${env.SERVER_URL}/login`);
+        cookieRef.current.src = `http://${env.SERVER_URL}/login/`;
         const profInfo = await getPublic(
           `/user/${moodleData.moodleUserData.id}`
         );
@@ -117,7 +120,7 @@ function LoginForm() {
           <Col md={4} >
             <Form
               ref={ref}
-              action="http://34.66.2.129/moodle/login/index.php"
+              action={`http://${env.MOODLE_URL}/login/index.php`}
               onSubmit={(e) => handleSubmit(e)}
               method="post"
               id="login"
@@ -170,7 +173,7 @@ function LoginForm() {
                   variant="secondary"
                   id="lostPassBtn"
                   className="mx-1 btn btn-outline-primary btn-quark"
-                  href="http://34.66.2.129/moodle/login/forgot_password.php"
+                  href={`http://${env.MOODLE_URL}/login/forgot_password.php`}
                 >
                   Recuperar Contraseña
                 </Button>
@@ -194,7 +197,7 @@ function LoginForm() {
                 title="Inline Frame Example"
                 width="600"
                 height="400"
-                src="http://34.66.2.129/moodle/my/"
+                src={`http://${env.MOODLE_URL}/my/`}
                 name="moodleframe"
               ></iframe>
               <iframe
