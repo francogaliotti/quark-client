@@ -3,7 +3,7 @@ import env from "react-dotenv";
 import Cookies from 'universal-cookie';
 
 //TODO here we should put the base url from the server side
-axios.defaults.baseURL = env?.SERVER_URL || "http://34.66.2.129:3030/"
+axios.defaults.baseURL = ("http://"+env?.SERVER_URL) ||  "http://35.184.2.206:3030/"
 const cookies = new Cookies()
 const token = cookies.get("QuarkSession")
 

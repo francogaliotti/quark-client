@@ -50,6 +50,6 @@ window.env = {
   "npm_command": "start",
   "INIT_CWD": "/home/theo/quark-client",
   "EDITOR": "vi",
-  "SERVER_URL": "http://34.66.2.129:3030/",
-  "MOODLE_URL": "http://34.66.2.129/moodle/"
+  "SERVER_URL": "34.66.2.129:3030",
+  "MOODLE_URL": "34.66.2.129/moodle/"
 };
