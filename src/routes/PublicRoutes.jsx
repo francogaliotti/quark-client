@@ -40,7 +40,6 @@ function PublicRoutes({setColapseDisabled}) {
 
         {user && (
           <>
-            <Route path="/editProfile" element={<EditProfesionalProfile />} />
             <Route path="/profile" element={<MyProfile />} />
             <Route path="/myCourses" element={<MasterView/>} />
             <Route exact path="/course/:id" element={<Course setColapseDisabled={setColapseDisabled} />} />

@@ -39,7 +39,7 @@ function LoginForm() {
 
   const setSesskeyNull = async () => {
     const res = await postPublic(`/sesskey/`, {
-      id: moodleData.moodleUserData.id, //aca tiene que ir user.id
+      id: moodleData.moodleUserData.id, 
       sesskey: null,
     });
   };
