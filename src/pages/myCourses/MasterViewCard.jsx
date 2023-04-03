@@ -11,7 +11,7 @@ import {
 import { SingleCourse } from "../../components/singleCourse";
 
 const MasterViewCard = ({courseData, level, purchased}) => {
-  
+  console.log("Hola")
   return (
     <div className=" card card-quark quark-masterview-card courses disabled">
       <div className="acHeader d-flex justify-content-between quark-title-action">
