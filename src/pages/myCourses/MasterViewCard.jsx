@@ -11,13 +11,13 @@ import {
 import { SingleCourse } from "../../components/singleCourse";
 
 const MasterViewCard = ({courseData, level, purchased}) => {
-  console.log(purchased)
+  
   return (
     <div className=" card card-quark quark-masterview-card courses ">
       <div className="acHeader d-flex justify-content-between quark-title-action">
         <h5>{level}</h5>
         <h5
-          className={`btn btn-primary btn-quark`}//aca pone algo
+          className={`btn btn-primary btn-quark ${purchased == true? "disableButton" : ""}`}//aca pone algo
           style={{ cursor: "pointer" }}
         >
           {" "}
