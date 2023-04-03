@@ -454,6 +454,20 @@ margin-bottom: 0px !important;
     background: #0A1C28 !important;
     border-radius: 8px;
     border: none !important;
+    
+}
+
+.coursesContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+    margin: auto;
+    padding: 20px;
+}
+
+.cardDiv{
+    max-width: 50%;
 }
 
 .quark-masterview-card .btn-quark.disabled{
@@ -476,4 +490,8 @@ margin-bottom: 0px !important;
     background: #0A1C28 !important;
     margin-bottom: 20px;
     padding: 15px;
+}
+
+.disableButton{
+    display: none !important;
 }
