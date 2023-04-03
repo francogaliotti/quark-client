@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import ProfProgressBar from "../../components/profProgressBar";
 import { login, selectUser } from "../../features/userSlice";
 import Alert from "../../services/alertService";
-import { getPublic, postPublic } from "../../services/apiService";
+import { getPublic } from "../../services/apiService";
 import ProfesionalProfile from "./profesionalProfile";
 import ProfilePage from "./profilePage";
+import { ImgModal } from "./imgModal";
 //import "../../styles/ProfilePage.css";
 
 export const MyProfile = () => {
@@ -16,23 +17,17 @@ export const MyProfile = () => {
 
   const [profileOpen, isProfileOpen] = useState(true);
   const [profesionalProfileOpen, isProfesionalProfileOpen] = useState(false);
+  const [openImgModal, setOpenImgModal] = useState(false);
+  const [currentImg, setCurrentImg] = useState("");
   const refProfile = useRef(null);
   const refProfesional = useRef(null);
 
   const handleProfileImg = async (file) => {
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("userid", user.id);
-      const res = await postPublic(`/userImg/upload`, formData);
-      console.log(res);
-      Alert.success({ title: "Actualizado!", message: "Imagen actualizada" });
-      await updateData();
-    } catch (e) {
-      console.log(e);
-      Alert.error({ title: "Error!", message: e.response.data.msg });
-    }
+    console.log(file);
+      setOpenImgModal(true)
+      setCurrentImg(file)
   };
+
 
   const updateData = async () => {
     const moodleData = await getPublic(
@@ -56,7 +51,7 @@ export const MyProfile = () => {
               src={user?.userBasicDatum.imgUrl}
               onClick={() => refImg.current.click()}
               style={{ cursor: "pointer" }}
-            />
+  />
             <input
               ref={refImg}
               type="file"
@@ -65,8 +60,11 @@ export const MyProfile = () => {
               accept="image/png, image/jpeg, image/jpg"
               onChange={(e) => handleProfileImg(e.target.files[0])}
             />
+            {openImgModal && 
+            <ImgModal show={openImgModal} onClose={()=>setOpenImgModal(false)} img={currentImg} updateData={updateData} user={user}/>
+            }
             <ProfProgressBar type="normal" />
-            <ProfProgressBar type="profesional" />            
+            <ProfProgressBar type="profesional" />
           </Card.Body>
         </Card>
       </Col>

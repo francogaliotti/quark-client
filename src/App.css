@@ -304,6 +304,24 @@ span{
     color: #22C4FC !important;
 }
 
+/*Img
+
+.image-container {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .image-container > img {
+
+    width: 100%;
+  }
+
+  */
+
 /* General Inputs */
 
 .input-group-text{
