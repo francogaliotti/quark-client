@@ -7,10 +7,11 @@ import { useSelector } from "react-redux";
 
 const GameJam = () => {
   const user = useSelector(selectUser);
-  const [gameJam, setGameJam] = useState(null);
+  const [gameJam, setGameJam] = useState([]);
 
   async function fetchData(state) {
     setGameJam(user.moodleUserData.listaGameJams)
+    console.log(gameJam)
   }
 
   useEffect(() => {
@@ -23,9 +24,9 @@ const GameJam = () => {
         <h5  className="subtitular-quark">Subtitulo</h5>
         <hr className="hr-quark" />
 
-        {gameJam != null
+        {gameJam.length != 0 
           ? gameJam.map((gameJams) => <GameJamCard gameJam={gameJams} />)
-          : "No hay Nada"}
+          : <h3 className="subtitular-quark">Parece que no hay nada por aqui...</h3>}
 
         <div
           className="buscador"

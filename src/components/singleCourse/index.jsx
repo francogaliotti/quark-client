@@ -21,7 +21,7 @@ export const SingleCourse = ({ course }) => {
     //window.open(env.MOODLE_URL + `course/view.php?id=${id}`, "_blank", "noopener noreferrer")
   };
   return (
-    <Card className="mb-3 card-quark ">
+    <Card className="mb-3 card-quark">
       <Card.Img variant="top" src={course.url} alt="Imagen de la tarjeta" />
       {!stats ? (
         <>
