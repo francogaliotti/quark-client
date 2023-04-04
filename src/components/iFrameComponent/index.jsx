@@ -3,7 +3,7 @@ import env from "react-dotenv";
 import { LoadingModal } from "../loadingModal";
 
 export const IFrameComponent = ({ url }) => {
-  const src = (env?.MOODLE_URL || "http://34.66.2.129/moodle/") + url;
+  const src = ("http://35.184.2.206/") + url;
 
   return (
     <div

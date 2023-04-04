@@ -126,6 +126,7 @@ span{
     border: 1px solid #2F4A5B !important;
     color: #588CAF;
     margin-bottom: 23px !important;
+
 }
 
 .card-quark .card-body{
@@ -461,13 +462,13 @@ margin-bottom: 0px !important;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+    flex-wrap: wrap;
     flex-direction: row;
-    margin: auto;
-    padding: 20px;
+    margin-top: 20px;
 }
 
 .cardDiv{
-    max-width: 50%;
+    max-width: 45%;
 }
 
 .quark-masterview-card .btn-quark.disabled{
@@ -475,8 +476,8 @@ margin-bottom: 0px !important;
     background-color: transparent !important;
 }
 
-.quark-masterview-card .courses.disabled{
-    opacity: .2;
+.quark-masterview-card.disabled .courses{
+    opacity: .2 !important;
 }
 
 .level-initial h3{
@@ -495,3 +496,4 @@ margin-bottom: 0px !important;
 .disableButton{
     display: none !important;
 }
+

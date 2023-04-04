@@ -98,7 +98,7 @@ const MasterView = () => {
             id="presed"
             className="profileButton"
           >
-            Unreal Engine
+            Carrera Unreal 
           </Button>
           <Button
             ref={refUnreal}
@@ -109,7 +109,7 @@ const MasterView = () => {
             }}
             // className="profileButton"
           >
-            Unity Engine
+           Carrera Unity 
           </Button>
         </ButtonGroup>
       </div>
@@ -162,11 +162,12 @@ const MasterView = () => {
       {!carrer && (
         <>
           <div className="row level-initial">
-            <h3>Unity Engine</h3>
+            <h3>Unity</h3>
           </div>
           <div className="row level-initial">
             {inicialUnity != null ? (
               <MasterViewCard
+              
                 purchased={pinicialUnity}
                 courseData={inicialUnity}
                 level={"Nivel Inicial"}

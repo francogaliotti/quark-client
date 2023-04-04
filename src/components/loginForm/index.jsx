@@ -193,16 +193,16 @@ function LoginForm() {
               </div>
               <iframe
                 id="inlineFrameExample"
-                style={{ display: "none" }}
+                // style={{ display: "none" }}
                 title="Inline Frame Example"
                 width="600"
                 height="400"
-                src={`http://${env.MOODLE_URL}/my/`}
+                src={`http://${env.MOODLE_URL}/my`}
                 name="moodleframe"
               ></iframe>
               <iframe
                 id="inlineFrameExample"
-                style={{ display: "none" }}
+                // style={{ display: "none" }}
                 title="cookieFrame"
                 width="600"
                 height="1000"
