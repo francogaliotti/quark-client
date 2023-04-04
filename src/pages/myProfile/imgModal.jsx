@@ -1,13 +1,16 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import AvatarEditor from "react-avatar-editor";
-import { Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { postPublic } from "../../services/apiService";
 import Alert from "../../services/alertService";
 
 export const ImgModal = ({ show, onClose, img, updateData, user }) => {
   const editor = useRef(null);
+  const [scale, setScale] = useState(1.2);
 
-  
+  const handleScaleChange = (event) => {
+    setScale(event.target.value);
+  }
 
   const guardarCambios = async () => {
     const formData = new FormData();
@@ -52,12 +55,13 @@ export const ImgModal = ({ show, onClose, img, updateData, user }) => {
           height={250}
           border={50}
           borderRadius={8}
-          scale={1.2}
-          showGrid={true}
+          scale={scale}
+          //showGrid={true}
         />
-        <button className="btn-quark mt-4" onClick={guardarCambios}>
+        <input type="range" min="1" max="3" step="0.1" value={scale} onChange={handleScaleChange} className="mt-2"/>
+        <Button className="btn-quark mt-2" onClick={guardarCambios}>
           Guardar Cambios
-        </button>
+        </Button>
       </Modal.Body>
     </Modal>
   );
