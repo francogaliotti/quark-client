@@ -32,7 +32,6 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       if (cookies.get("QuarkSession")) {
-        console.log("asd");
         const username = cookies.get("username");
         const res = await getPublic(`/user/getMoodleData/${username}`);
         const user = res.data;
@@ -64,8 +63,9 @@ function App() {
           contentContainer.current.id = "toggled";
         }
       }
-    }
-  }, [colapsed]);
+    } else {
+    contentContainer.current.id = "expanded"
+  }}, [colapsed, colapseDisabled]);
 
   if (loading) {
     return (
