@@ -76,13 +76,13 @@ const MasterView = () => {
   return (
     <div className="container">
       <h1 className="titular-quark">
-        Este es un ejemplo de titulo general{" "}
-        <a className="link-titular-quark" href="#">
+        Mi Aprendizaje
+        {/* <a className="link-titular-quark" href="#">
           @ejemplo
-        </a>
+        </a> */}
       </h1>
       <h4 className="subtitular-quark">
-        Este es un ejemplo de subtitulo descriptivo para las secciones
+        Estos son los cursos disponibles
       </h4>
       <hr className="hr-quark" />
       <div className="myProfileButtons mb-3">

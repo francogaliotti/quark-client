@@ -14,6 +14,7 @@ import Cookies from "universal-cookie";
 import Alert from "../../../services/alertService";
 import UserEventCard from "./UserEventCard";
 import RecordedEventCard from "./RecordedEventCard";
+import Error from "../../../components/error";
 
 const Events = () => {
   const user = useSelector(selectUser);
@@ -167,7 +168,7 @@ const Events = () => {
         }}>
           {userEvents != null && next == 0 ? (
             userEvents.length == 0 && next == 0 ? (
-              <h2 className="my-auto" style={{color:"#2390B6"}}>Ups... Parece que no tienes eventos</h2>
+             <Error></Error>
             ) : (
               userEvents.map((news) => {
                 if (userEvents.length != 0) {
@@ -183,7 +184,7 @@ const Events = () => {
         
           {events != null && next == 1 ? (
             events.length == 0 && next == 1 ? (
-              <h2 className="my-auto" style={{color:"#2390B6"}}>No hay eventos</h2>
+              <Error></Error>
             ) : (
               events.map((news) => {
                 return <EventCard news={news} enrollUser={enrollUser} />;
@@ -195,7 +196,7 @@ const Events = () => {
       
           {recorded != null && next == 2 ? (
             recorded.length == 0 && next == 2 ? (
-              <h2 className="my-auto" style={{color:"#2390B6"}}>No hay eventos</h2>
+              <Error></Error>
             ) : (
               recorded.map((news) => {
                 return <RecordedEventCard event={news} />;

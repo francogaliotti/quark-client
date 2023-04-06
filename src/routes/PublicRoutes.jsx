@@ -22,6 +22,7 @@ import { MyProfile } from "../pages/myProfile";
 import { EditProfesionalProfile } from "../pages/myProfile/profesionalProfile/editProfProfile";
 import { Offer } from "../pages/offer";
 import { Scholarships } from "../pages/scholarships";
+import Error from "../components/error";
 
 function PublicRoutes({setColapseDisabled}) {
   const user = useSelector(selectUser);
@@ -37,6 +38,7 @@ function PublicRoutes({setColapseDisabled}) {
           path="/confirmRegisterDev/:id"
           element={<ConfirmRegisterDev />}
         />
+        <Route path="*" element={<Error/>}/>
 
         {user && (
           <>
