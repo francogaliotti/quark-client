@@ -14,17 +14,15 @@ export const userSlice = createSlice({
     },
     reducers: {
         login: (state, action) => {
-            sessionStorage.setItem("sesskey", action.payload.sesskey)
-            sessionStorage.setItem("token", action.payload.token)
             const cookies = new Cookies()
+            cookies.set("sesskey", action.payload.sesskey)
             cookies.set('username', action.payload.moodleUserData.username)
             state.user = action.payload
             console.log(action.payload)           
         },
         logout: async (state) => {
-            sessionStorage.removeItem("sesskey")
-            sessionStorage.removeItem("token")
             const cookies = new Cookies()
+            cookies.remove("sesskey")
             cookies.remove('QuarkSession')
             cookies.remove('username')
             const res = await postPublic(`/sesskey/`, {

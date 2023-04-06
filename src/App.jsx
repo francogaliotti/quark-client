@@ -40,8 +40,7 @@ function App() {
           login({
             ...user,
             ...profInfo.data,
-            token: sessionStorage.getItem("token"),
-            sesskey: sessionStorage.getItem("sesskey"),
+            sesskey: cookies.get("sesskey"),
             LoggedIn: true,
           })
         );
