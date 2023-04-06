@@ -17,6 +17,7 @@ export const EditNewsModal = ({ open, onClose, fetch, update, setUpdate, current
     useEffect(() => {
         const fetchData = async () => {
             const res = await getPublic(`/news`)
+            console.log(res.data)
             setMoodleCourses(res.data)
         }
         fetchData()

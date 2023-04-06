@@ -3,7 +3,7 @@ import env from "react-dotenv";
 import { LoadingModal } from "../loadingModal";
 
 export const IFrameComponent = ({ url }) => {
-  const src = ("http://35.184.2.206/") + url;
+  const src = ("http://35.184.2.206:3000/") + url;
 
   return (
     <div

@@ -16,7 +16,7 @@ const MasterViewCard = ({courseData, level, purchased}) => {
  async function handleClick(){
     Alert.info({
       title: "No disponible en la beta", 
-      message:"Con imaginacion funciona <3"
+      // message:"Con imaginacion funciona <3"
     })
  }
 
