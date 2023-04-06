@@ -54,7 +54,7 @@ export const ImgModal = ({ show, onClose, img, updateData, user }) => {
           width={250}
           height={250}
           border={50}
-          borderRadius={8}
+          borderRadius={500}
           scale={scale}
           //showGrid={true}
         />

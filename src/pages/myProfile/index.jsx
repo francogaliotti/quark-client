@@ -50,7 +50,7 @@ export const MyProfile = () => {
             <Card.Img
               src={user?.userBasicDatum.imgUrl}
               onClick={() => refImg.current.click()}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", borderRadius:"50%" }}
   />
             <input
               ref={refImg}

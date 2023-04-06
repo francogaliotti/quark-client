@@ -16,6 +16,7 @@ export const ProfileCard = () => {
             <Card.Img
               src={user.userBasicDatum.imgUrl}
               alt="Imagen de la tarjeta"
+              style={{borderRadius: "50%"}}
             />
           </Col>
           <Col md={9}>
