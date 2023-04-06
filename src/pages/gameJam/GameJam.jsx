@@ -4,6 +4,8 @@ import Container from "react-bootstrap/Container";
 import GameJamCard from "./GameJamCard";
 import { selectUser } from "../../features/userSlice";
 import { useSelector } from "react-redux";
+import errorImg from "../../images/Ups.png"
+import Error from "../../components/error";
 
 const GameJam = () => {
   const user = useSelector(selectUser);
@@ -26,7 +28,9 @@ const GameJam = () => {
 
         {gameJam.length != 0 
           ? gameJam.map((gameJams) => <GameJamCard gameJam={gameJams} />)
-          : <h3 className="subtitular-quark">Parece que no hay nada por aqui...</h3>}
+          : <> 
+            <Error></Error>
+          </>}
 
         <div
           className="buscador"

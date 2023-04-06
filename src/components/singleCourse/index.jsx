@@ -29,7 +29,7 @@ export const SingleCourse = ({ course }) => {
             <h5 className="card-title">{course.fullName}</h5>
             {course.progress != null && (
               <>
-                <p className="card-text">{course.progress}% Completado</p>
+                <p className="card-text">{Math.round(course.progress)}% Completado</p>
                 <ProgressBar
                   className="progress-bar-quark"
                   now={Math.round(course.progress)}
