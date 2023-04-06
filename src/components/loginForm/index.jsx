@@ -197,7 +197,7 @@ function LoginForm() {
                 title="Inline Frame Example"
                 width="600"
                 height="400"
-                src={`http://${env.MOODLE_URL}/my`}
+                src={`http://${env.MOODLE_URL}/my/`}
                 name="moodleframe"
               ></iframe>
               <iframe
