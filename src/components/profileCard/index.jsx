@@ -14,7 +14,6 @@ export const ProfileCard = () => {
         <Row>
           <Col md={3}>
             <Card.Img
-              variant="top"
               src={user.userBasicDatum.imgUrl}
               alt="Imagen de la tarjeta"
             />
