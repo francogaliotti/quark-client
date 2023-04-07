@@ -20,7 +20,7 @@ export const NewsAccordion = ({ user }) => {
   return (
     <>
       {newsList.length !== 0 && (
-        <Accordion className="acordion-quark">
+        <Accordion className="accordion-quark">
           <Accordion.Item eventKey="0">
             <Accordion.Header>
               Novedades{" "}

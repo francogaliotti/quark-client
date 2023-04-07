@@ -184,19 +184,19 @@ span{
     --bs-secondary-bg: #153C56;
   }
 
-  .acordion-quark .acordion-item{
+  .accordion-quark .accordion-item{
     border-radius: 8px;
-    border: 0px solid #2390B6 !important;
+    border: 1px solid #2F4A5B !important;
     color: #2390B6;
 }
 
-.acordion-quark button{
+.accordion-quark button{
     background: #0A1C28 !important;
     color: #2390B6;
     border: 0px solid #2390B6 !important;
 }
 
-.acordion-quark .accordion-collapse{
+.accordion-quark .accordion-collapse{
     background: #0A1C28 !important;
     color: #2390B6;
     border: 0px solid #2390B6 !important;
