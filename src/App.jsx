@@ -34,14 +34,11 @@ function App() {
       if (cookies.get("QuarkSession")) {
         const username = cookies.get("username");
         const res = await getPublic(`/user/getMoodleData/${username}`);
-        const user = res.data;
-        const profInfo = await getPublic(`/user/${user.moodleUserData.id}`);
+        const profInfo = await getPublic(`/user/${res?.data.moodleUserData.id}`);
         dispatch(
           login({
-            ...user,
+            ...res.data,
             ...profInfo.data,
-            sesskey: cookies.get("sesskey"),
-            LoggedIn: true,
           })
         );
         setLoading(false);
