@@ -228,7 +228,7 @@ function ProfesionalProfile() {
                   <div className="input-group">
                     <span className="input-group-text">Inicio</span>
                     <span className="form-control">
-                      {new Date(lan?.beginDate).toLocaleDateString("en-AU")}
+                      {new Date(lan?.beginDate).toLocaleDateString("es-AR")}
                     </span>
                   </div>
                   {lan?.endDate && (
@@ -237,7 +237,7 @@ function ProfesionalProfile() {
                         <span className="input-group-text">Finalización</span>
                         <span className="form-control">
                           {" "}
-                          {new Date(lan?.endDate).toLocaleDateString("en-AU")}
+                          {new Date(lan?.endDate).toLocaleDateString("es-AR")}
                         </span>
                       </div>
                     </>
@@ -292,7 +292,7 @@ function ProfesionalProfile() {
                   <div className="input-group">
                     <span className="input-group-text">Inicio</span>
                     <span className="form-control">
-                      {new Date(lan?.beginDate).toLocaleDateString("en-AU")}
+                      {new Date(lan?.beginDate).toLocaleDateString("es-AR")}
                     </span>
                   </div>
                   {lan?.endDate && (
@@ -301,7 +301,7 @@ function ProfesionalProfile() {
                         <span className="input-group-text">Finalización</span>
                         <span className="form-control">
                           {" "}
-                          {new Date(lan?.endDate).toLocaleDateString("en-AU")}
+                          {new Date(lan?.endDate).toLocaleDateString("es-AR")}
                         </span>
                       </div>
                     </>
