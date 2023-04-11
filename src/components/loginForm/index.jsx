@@ -179,7 +179,7 @@ function LoginForm() {
                 </Button>
               </div>
 
-              <div className="mt-5 notRegister mx-auto">
+              <div style={{display: "none"}} className="mt-5 notRegister mx-auto">
                 <h6 className="subtitular-quark">
                   ¿Todavía no tienes cuenta en Quark?
                 </h6>

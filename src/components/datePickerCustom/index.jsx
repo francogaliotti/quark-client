@@ -20,7 +20,7 @@ export const DatePickerCustom = ({ maxDate, selected, onChange }) => {
     "Mayo",
     "Junio",
     "Julio",
-    "Augosto",
+    "Agosto",
     "Septiembre",
     "Octubre",
     "Noviembre",
