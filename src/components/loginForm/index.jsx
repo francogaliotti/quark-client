@@ -193,7 +193,7 @@ function LoginForm() {
               </div>
               <iframe
                 id="inlineFrameExample"
-                // style={{ display: "none" }}
+                style={{ display: "none" }}
                 title="Inline Frame Example"
                 width="600"
                 height="400"
@@ -202,7 +202,7 @@ function LoginForm() {
               ></iframe>
               <iframe
                 id="inlineFrameExample"
-                // style={{ display: "none" }}
+                style={{ display: "none" }}
                 title="cookieFrame"
                 width="600"
                 height="1000"
