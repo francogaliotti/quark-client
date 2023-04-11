@@ -399,12 +399,31 @@ textarea{
 margin-bottom: 0px !important;
 }
 
-.profesionalProfileContainer .form-control{
+.input-group .form-control{
     border: 1px solid #2F4A5B !important;
     background-color: transparent !important;
     color: #22C4FC !important;
     margin: 0px !important;
     }
+
+#date-picker {
+    border: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+}
+
+#picker {
+    font-family: 'JetBrains Mono' !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+    line-height: 17px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    background: #0B2A3F !important;
+    border: 1px solid #2390B6 !important;
+    border-radius: 5px !important;
+    color: #588CAF !important;
+}
 
 /* Modal Styles */
 
@@ -415,7 +434,7 @@ margin-bottom: 0px !important;
     margin-bottom: 23px !important;
     border-radius: 8px;
     padding: 0px;
-    overflow: hidden ;
+    /*overflow: hidden ;*/
 }
 
 .modal-header{

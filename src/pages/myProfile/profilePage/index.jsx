@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../features/userSlice";
 import { Countries } from "../../../jsons/countries";
-import {
-  putPrivate,
-} from "../../../services/apiService";
+import { putPrivate } from "../../../services/apiService";
 import Alert from "../../../services/alertService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { Card } from "react-bootstrap";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { DatePickerCustom } from "../../../components/datePickerCustom";
 
 function ProfilePage({ updateData }) {
   const user = useSelector(selectUser);
@@ -33,9 +34,7 @@ function ProfilePage({ updateData }) {
     setUserGeneralData({
       biography: user?.userBasicDatum.biography,
       nickname: user?.userBasicDatum.nickname,
-      birthdate: new Date(user?.userBasicDatum.birthdate)
-        .toISOString()
-        .substring(0, 10),
+      birthdate: new Date(user?.userBasicDatum.birthdate),
       firstname: user?.moodleUserData.firstname,
       lastname: user?.moodleUserData.lastname,
       gender: user?.userBasicDatum.gender,
@@ -161,17 +160,29 @@ function ProfilePage({ updateData }) {
               <span className="input-group-text" id="basic-addon3">
                 Fecha de Nacimiento
               </span>
-              <input
-                type="date"
-                value={userGeneralData?.birthdate}
-                className="form-control"
-                onChange={(e) =>
+              <DatePickerCustom
+                maxDate={new Date().getFullYear() - 17}
+                selected={userGeneralData?.birthdate}
+                onChange={(date) =>
                   setUserGeneralData({
                     ...userGeneralData,
-                    birthdate: e.target.value,
+                    birthdate: date,
                   })
                 }
               />
+              {/*<DatePicker
+                selected={userGeneralData?.birthdate}
+                dateFormat="dd/MM/yyyy"
+                id="date-picker"
+                wrapperClassName="form-control"
+                showIcon
+                onChange={(date) =>
+                  setUserGeneralData({
+                    ...userGeneralData,
+                    birthdate: date,
+                  })
+                }
+              />*/}
             </div>
           </div>
         </Card.Body>

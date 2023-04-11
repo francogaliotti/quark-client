@@ -8,6 +8,7 @@ import {
   postPrivate,
   putPrivate,
 } from "../../../services/apiService";
+import { DatePickerCustom } from "../../../components/datePickerCustom";
 
 export const EditActivityModal = ({
   show,
@@ -46,7 +47,7 @@ export const EditActivityModal = ({
       if (current.beginDate) {
         setCurrentActivity({
           ...current,
-          beginDate: new Date(current.beginDate).toISOString().substring(0, 10),
+          beginDate: new Date(current.beginDate),
         });
         if (current.endDate) {
           setCurrentActivity({
@@ -54,7 +55,7 @@ export const EditActivityModal = ({
             beginDate: new Date(current.beginDate)
               .toISOString()
               .substring(0, 10),
-            endDate: new Date(current.endDate).toISOString().substring(0, 10),
+            endDate: new Date(current.endDate),
           });
         }
       }
@@ -332,14 +333,12 @@ export const EditActivityModal = ({
               <span className="input-group-text" id="basic-addon3">
                 Inicio
               </span>
-              <input
-                type="date"
-                className="form-control"
-                value={currentActivity?.beginDate}
-                onChange={(e) =>
+              <DatePickerCustom
+                selected={currentActivity?.beginDate}
+                onChange={(date) =>
                   setCurrentActivity({
                     ...currentActivity,
-                    beginDate: e.target.value,
+                    beginDate: date,
                   })
                 }
               />
@@ -348,14 +347,12 @@ export const EditActivityModal = ({
               <span className="input-group-text" id="basic-addon3">
                 Finalización
               </span>
-              <input
-                type="date"
-                className="form-control"
-                value={currentActivity?.endDate}
-                onChange={(e) =>
+              <DatePickerCustom
+                selected={currentActivity?.endDate}
+                onChange={(date) =>
                   setCurrentActivity({
                     ...currentActivity,
-                    endDate: e.target.value,
+                    endDate: date,
                   })
                 }
               />
@@ -420,14 +417,12 @@ export const EditActivityModal = ({
               <span className="input-group-text" id="basic-addon3">
                 Inicio
               </span>
-              <input
-                type="date"
-                className="form-control"
-                value={currentActivity?.beginDate}
-                onChange={(e) =>
+              <DatePickerCustom
+                selected={currentActivity?.beginDate}
+                onChange={(date) =>
                   setCurrentActivity({
                     ...currentActivity,
-                    beginDate: e.target.value,
+                    beginDate: date,
                   })
                 }
               />
@@ -436,14 +431,12 @@ export const EditActivityModal = ({
               <span className="input-group-text" id="basic-addon3">
                 Finalización
               </span>
-              <input
-                type="date"
-                className="form-control"
-                value={currentActivity?.endDate}
-                onChange={(e) =>
+              <DatePickerCustom
+                selected={currentActivity?.endDate}
+                onChange={(date) =>
                   setCurrentActivity({
                     ...currentActivity,
-                    endDate: e.target.value,
+                    endDate: date,
                   })
                 }
               />
