@@ -52,7 +52,7 @@ const Events = () => {
     setNext(0);
     var userDb = await getPrivate(`/studentEvents/${user.id}`);
     setUserEvents(userDb.data);
-    console.log(userEvents.length);
+    
     console.log(next);
   }
 

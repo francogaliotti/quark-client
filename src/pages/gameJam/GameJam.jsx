@@ -13,7 +13,7 @@ const GameJam = () => {
 
   async function fetchData(state) {
     setGameJam(user.moodleUserData.listaGameJams)
-    console.log(gameJam)
+    
   }
 
   useEffect(() => {
