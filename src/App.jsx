@@ -34,7 +34,9 @@ function App() {
       if (cookies.get("QuarkSession")) {
         const username = cookies.get("username");
         const res = await getPublic(`/user/getMoodleData/${username}`);
-        const profInfo = await getPublic(`/user/${res?.data.moodleUserData.id}`);
+        const profInfo = await getPublic(
+          `/user/${res?.data.moodleUserData.id}`
+        );
         dispatch(
           login({
             ...res.data,
@@ -48,10 +50,18 @@ function App() {
       }
     };
     fetchData();
+    // const unlogged = cookies.get("unlogged");
+    // if (unlogged == "false") {
+    //   fetchData();
+    // } else {
+    //   navigate("/login");
+    //     setLoading(false);
+    // }
   }, []);
 
   useEffect(() => {
-    if (!colapseDisabled) { //Desabilita el colapse cuando está en un curso
+    if (!colapseDisabled) {
+      //Desabilita el colapse cuando está en un curso
       if (colapsed) {
         contentContainer.current.id = "colapsed";
       } else {
@@ -60,8 +70,9 @@ function App() {
         }
       }
     } else {
-    contentContainer.current.id = "expanded"
-  }}, [colapsed, colapseDisabled]);
+      contentContainer.current.id = "expanded";
+    }
+  }, [colapsed, colapseDisabled]);
 
   if (loading) {
     return (
@@ -77,7 +88,10 @@ function App() {
     <div className="app-container">
       {cookies.get("QuarkSession") && (
         <>
-          <VerticalNavbar setColapsed={() => setColapsed(!colapsed)} colapsed={colapsed} />
+          <VerticalNavbar
+            setColapsed={() => setColapsed(!colapsed)}
+            colapsed={colapsed}
+          />
         </>
       )}
       <div className="content-container" id="toggled" ref={contentContainer}>
