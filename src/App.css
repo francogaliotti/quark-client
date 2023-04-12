@@ -425,6 +425,29 @@ margin-bottom: 0px !important;
     color: #588CAF !important;
 }
 
+.picker-calendar {
+    background: #170e1b !important;
+    border-color: #0B86A0 !important;
+}
+
+.react-datepicker__header{
+    background-color: #26182D  !important;
+    border-bottom: 1px solid #0B86A0 !important;
+}
+
+.react-datepicker__day-names{
+    background-color: #26182D;
+}
+
+.react-datepicker__day-name {
+    color: #0B86A0 !important;
+}
+
+.calendar-day {
+    border-radius: 5px;
+    color: #0B86A0 !important;
+}
+
 /* Modal Styles */
 
 .modal-content{

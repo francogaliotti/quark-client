@@ -108,9 +108,9 @@ function VerticalNavbar({ setColapsed, colapsed }) {
             <NavItem eventKey="config/news">
               <NavText>Novedades</NavText>
             </NavItem>
-            <NavItem eventKey="config/scholarships">
+            {/*<NavItem eventKey="config/scholarships">
               <NavText>Becas</NavText>
-            </NavItem>
+        </NavItem>*/}
             <NavItem eventKey="config/adminMoodle">
               <NavText>Moodle</NavText>
             </NavItem>

@@ -173,20 +173,22 @@ function LoginForm() {
                   variant="secondary"
                   id="lostPassBtn"
                   className="mx-1 btn btn-outline-primary btn-quark"
-                  href={`http://${env.MOODLE_URL}/login/forgot_password.php`}
+                  onClick={()=>Alert.info({title: "No disponible en la beta"})}
+                  //href={`http://${env.MOODLE_URL}/login/forgot_password.php`}
                 >
                   Recuperar Contraseña
                 </Button>
               </div>
 
-              <div style={{display: "none"}} className="mt-5 notRegister mx-auto">
+              <div className="mt-5 notRegister mx-auto">
                 <h6 className="subtitular-quark">
                   ¿Todavía no tienes cuenta en Quark?
                 </h6>
 
                 <Button
                   className="btn btn-outline-primary btn-quark"
-                  onClick={() => navigate("/registerDev")}
+                  //onClick={() => navigate("/registerDev")}
+                  onClick={()=>Alert.info({title: "No disponible en la beta"})}
                 >
                   Registrarme ahora
                 </Button>
