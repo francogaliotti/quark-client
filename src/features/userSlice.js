@@ -23,15 +23,18 @@ export const userSlice = createSlice({
     },
     logout: async (state) => {
       const cookies = new Cookies();
-      const sesskeyCookie = cookies.get("sesskey")
-      cookies.remove("QuarkSession");
-      cookies.remove("username");
+      const sesskeyCookie = cookies.get("sesskey");
       const res = await postPublic(`/sesskey/`, {
         id: state.user.id,
         sesskey: null,
       });
       await moodleLogout(sesskeyCookie);
-      cookies.remove("sesskey");
+      // Obtenemos todas las cookies actuales
+      const allCookies = cookies.getAll();
+      // Recorremos todas las cookies y las eliminamos
+      for (const cookieName in allCookies) {
+        cookies.remove(cookieName);
+      }
       state.user = null;
     },
   },

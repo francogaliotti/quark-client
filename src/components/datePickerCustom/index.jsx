@@ -24,13 +24,15 @@ export const DatePickerCustom = ({ maxDate, selected, onChange }) => {
     "Septiembre",
     "Octubre",
     "Noviembre",
-    "Deciembre",
+    "Diciembre",
   ];
   return (
     <DatePicker
       dateFormat="dd/MM/yyyy"
       id="date-picker"
       wrapperClassName="form-control"
+      calendarClassName="picker-calendar"
+      dayClassName={(date) => "calendar-day"}
       renderCustomHeader={({
         date,
         changeYear,
@@ -42,10 +44,11 @@ export const DatePickerCustom = ({ maxDate, selected, onChange }) => {
       }) => (
         <div
           style={{
-            margin: 10,
+            padding: 10,
             display: "flex",
             justifyContent: "center",
-            color: "#000"
+            color: "#000",
+            backgroundColor: "#26182D"
           }}
         >
           <Button className="btn-quark" onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
