@@ -16,6 +16,7 @@ import UserEventCard from "./UserEventCard";
 import RecordedEventCard from "./RecordedEventCard";
 import Error from "../../../components/error";
 
+
 const Events = () => {
   const user = useSelector(selectUser);
   // const navigate = useNavigate();
@@ -97,8 +98,11 @@ const Events = () => {
     }
   }
 
+
   useEffect(() => {
+    
     fetchUserEvents();
+
   }, []);
 
   useEffect(() => {
@@ -161,9 +165,9 @@ const Events = () => {
           width : "100%",
           height: "100%"
         }}>
-        <Row className="mt-4" style={{
+        <Row  style={{
           width : "100%",
-          
+          marginTop: "60px" 
           
         }}>
           {userEvents != null && next == 0 ? (

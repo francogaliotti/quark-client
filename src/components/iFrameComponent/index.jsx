@@ -4,7 +4,7 @@ import { LoadingModal } from "../loadingModal";
 
 export const IFrameComponent = ({ url }) => {
   const src = ("http://"+env?.MOODLE_URL) + url;
-console.log(("http://"+env?.MOODLE_URL) + url)
+
   return (
     <div
       className="iFrameContainer"

@@ -27,6 +27,9 @@ export const userSlice = createSlice({
     logout: async (state) => {
       const cookies = new Cookies();
       const sesskeyCookie = cookies.get("sesskey");
+
+      // Eliminar todas las cookies después de 1 segundo
+
       const res = await postPublic(`/sesskey/`, {
         id: state.user.id,
         sesskey: null,

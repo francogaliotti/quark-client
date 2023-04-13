@@ -16,16 +16,16 @@ const UserEventCard = (props) => {
           
         >
           <a href={props.event.link} style={{ textDecoration: "none" }}>
-            <Card.Img variant="top" src={props.event?.img} />
+            <Card.Img variant="top" src={props.event?.img} style={{height: "197px"}}/>
           </a>
           <Card.Body>
-            <h5 className="card-title">{props.event?.title}</h5>
+            <h5 className="card-title">Titulo: {props.event?.title}</h5>
             <p className="card-text">Fecha: {new Date(props.event?.eventDate).toLocaleDateString("en-AU")}</p>
               <a
                 className="btn btn-outline-primary btn-quark"
                 onClick={()=>{props.handleDelete(props.event.id)}}
               >
-                Darme de Baja
+                Darme de baja
               </a>
               
             
