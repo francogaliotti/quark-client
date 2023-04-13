@@ -26,7 +26,7 @@ export const SingleCourse = ({ course }) => {
       {!stats ? (
         <>
           <Card.Body style={{paddingTop: "0"}}>
-            <h5 className="card-title">{course.fullName}</h5>
+            <h5 className="card-title">Curso: {course.fullName}</h5>
             {course.progress != null && (
               <>
                 <p className="card-text">{Math.round(course.progress)}% Completado</p>
