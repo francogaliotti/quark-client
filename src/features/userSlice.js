@@ -4,8 +4,8 @@ import { postPublic } from "../services/apiService";
 import env from "react-dotenv";
 
 const moodleLogout = async (key) => {
-  const moodleSrc = env?.MOODLE_URL || "34.66.2.129/moodle/";
-  window.location.href = `http://${moodleSrc}/login/logout.php?sesskey=${key}`;
+  const moodleSrc = env?.MOODLE_URL
+  window.location.href = `http://${moodleSrc}/login/logout.php?sesskey=${key}`
 };
 
 export const userSlice = createSlice({
