@@ -405,6 +405,9 @@ margin-bottom: 0px !important;
     color: #22C4FC !important;
     margin: 0px !important;
     }
+    
+
+/*Estilos de date-picker*/
 
 #date-picker {
     border: none !important;
@@ -446,6 +449,10 @@ margin-bottom: 0px !important;
 .calendar-day {
     border-radius: 5px;
     color: #0B86A0 !important;
+}
+
+.react-datepicker__triangle {
+    background-color: red !important;
 }
 
 /* Modal Styles */

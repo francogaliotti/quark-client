@@ -52,9 +52,7 @@ export const EditActivityModal = ({
         if (current.endDate) {
           setCurrentActivity({
             ...current,
-            beginDate: new Date(current.beginDate)
-              .toISOString()
-              .substring(0, 10),
+            beginDate: new Date(current.beginDate),
             endDate: new Date(current.endDate),
           });
         }

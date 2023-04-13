@@ -4,7 +4,8 @@ import { postPublic } from "../services/apiService";
 import env from "react-dotenv";
 
 const moodleLogout = async (key) => {
-  window.location.href = `http://${env.MOODLE_URL}/login/logout.php?sesskey=${key}`;
+  const moodleSrc = env?.MOODLE_URL
+  window.location.href = `http://${moodleSrc}/login/logout.php?sesskey=${key}`
 };
 
 export const userSlice = createSlice({
@@ -15,7 +16,9 @@ export const userSlice = createSlice({
   reducers: {
     login: (state, action) => {
       const cookies = new Cookies();
-      cookies.set("username", action.payload.moodleUserData.username);
+      if (!cookies.get("username")) {
+        cookies.set("username", action.payload.moodleUserData.username);
+      }
       state.user = action.payload;
       if (action.payload.sesskey) {
         cookies.set("sesskey", action.payload.sesskey);
