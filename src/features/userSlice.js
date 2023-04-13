@@ -27,17 +27,12 @@ export const userSlice = createSlice({
     logout: async (state) => {
       const cookies = new Cookies();
       const sesskeyCookie = cookies.get("sesskey");
-
-      // Eliminar todas las cookies después de 1 segundo
-
       const res = await postPublic(`/sesskey/`, {
         id: state.user.id,
         sesskey: null,
       });
       await moodleLogout(sesskeyCookie);
-      // Obtenemos todas las cookies actuales
       const allCookies = cookies.getAll();
-      // Recorremos todas las cookies y las eliminamos
       for (const cookieName in allCookies) {
         cookies.remove(cookieName);
       }
