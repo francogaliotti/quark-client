@@ -23,6 +23,7 @@ import { EditProfesionalProfile } from "../pages/myProfile/profesionalProfile/ed
 import { Offer } from "../pages/offer";
 import { Scholarships } from "../pages/scholarships";
 import Error from "../components/error";
+import Prueba from "../components/Prueba"
 
 function PublicRoutes({setColapseDisabled}) {
   const user = useSelector(selectUser);
@@ -31,7 +32,7 @@ function PublicRoutes({setColapseDisabled}) {
     <>
       <Routes>
         {/*Public routes */}
-        <Route path="/login" element={<LoginForm />} />
+        <Route path="/login" element={<LoginForm/>} />
         <Route path="/registerDev" element={<DevRegisterForm />} />
         <Route path="/registerCom" element={<ComRegisterForm />} />
         <Route

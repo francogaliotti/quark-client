@@ -39,7 +39,7 @@ function App() {
           );
           setLoading(false);
         } catch (e) {
-          window.location.href = "http://34.66.2.129:3000/home";
+          window.location.href = "http://35.184.2.206/home";
         }
       } else {
         navigate("/login");

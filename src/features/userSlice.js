@@ -5,7 +5,7 @@ import env from "react-dotenv";
 
 const moodleLogout = async (key) => {
   const moodleSrc = env?.MOODLE_URL
-  window.location.href = `http://${moodleSrc}/login/logout.php?sesskey=${key}`
+  window.location.href = `${moodleSrc}/login/logout.php?sesskey=${key}`
 };
 
 export const userSlice = createSlice({

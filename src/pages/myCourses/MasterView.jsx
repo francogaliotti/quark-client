@@ -31,7 +31,7 @@ const MasterView = () => {
   const [pavanzadoUnreal, setpAvanzadoUnreal] = useState(null);
 
   async function fetchCourses() {
-    const url = `http://${env.SERVER_URL}/courses/getCoursesLists`;
+    const url = `${env.SERVER_URL}/courses/getCoursesLists`;
 
     try {
       var data = await axios.post(url, {
