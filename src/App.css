@@ -559,3 +559,15 @@ margin-bottom: 0px !important;
     display: none !important;
 }
 
+.loginPageContainer{
+    height: 100% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notRegister{
+    display: flex;
+    flex-direction: column;
+} 
+

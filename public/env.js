@@ -44,7 +44,7 @@ window.env = {
   "OS_FLAVOUR": "debian-10",
   "INIT_CWD": "/opt/bitnami/quark-client",
   "EDITOR": "vi",
-  "SERVER_URL": "35.184.2.206:3030",
-  "MOODLE_URL": "35.184.2.206:3000",
+  "SERVER_URL": "http://35.184.2.206:3030",
+  "MOODLE_URL": "http://35.184.2.206:3000/",
   "PORT": "80"
 };
