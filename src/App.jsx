@@ -47,13 +47,6 @@ function App() {
       }
     };
     fetchData();
-    // const unlogged = cookies.get("unlogged");
-    // if (unlogged == "false") {
-    //   fetchData();
-    // } else {
-    //   navigate("/login");
-    //     setLoading(false);
-    // }
   }, []);
 
   useEffect(() => {
