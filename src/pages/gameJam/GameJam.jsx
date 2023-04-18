@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
 import Container from "react-bootstrap/Container";
 import GameJamCard from "./GameJamCard";
 import { selectUser } from "../../features/userSlice";
 import { useSelector } from "react-redux";
-import errorImg from "../../images/Ups.png"
 import Error from "../../components/error";
 import { Button, ButtonGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

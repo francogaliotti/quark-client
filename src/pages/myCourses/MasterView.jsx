@@ -1,10 +1,9 @@
-import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { ButtonGroup, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/userSlice";
 import MasterViewCard from "./MasterViewCard";
-import env from "react-dotenv";
+import { postPrivate } from "../../services/apiService";
 
 const MasterView = () => {
   let refUnity = useRef(null);
@@ -31,12 +30,11 @@ const MasterView = () => {
   const [pavanzadoUnreal, setpAvanzadoUnreal] = useState(null);
 
   async function fetchCourses() {
-    const url = `${env.SERVER_URL}/courses/getCoursesLists`;
 
     try {
-      var data = await axios.post(url, {
+      var data = await postPrivate("/courses/getCoursesLists", {
         listaCursos: user.moodleUserData.listaCurso,
-      });
+      })
 
       setInicialUnity(data.data.rta.unityInicial);
       setIntermedioUnity(data.data.rta.unityIntermedio);

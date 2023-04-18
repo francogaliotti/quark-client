@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Cookies from "universal-cookie";
 import { postPublic } from "../services/apiService";
-import env from "react-dotenv";
 
 const moodleLogout = async (key) => {
-  const moodleSrc = env?.MOODLE_URL
+  const moodleSrc = process.env.REACT_APP_MOODLE_URL
   window.location.href = `${moodleSrc}/login/logout.php?sesskey=${key}`
 };
 

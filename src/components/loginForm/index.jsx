@@ -2,14 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { login, selectUser } from "../../features/userSlice";
-import { PrimaryButton } from "../../styles/styledComponents/Buttons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { PrimaryInput } from "../../styles/styledComponents/Inputs";
 //import '../../styles/Login.css'
 import Cookies from "universal-cookie";
 import { getPublic, postPublic } from "../../services/apiService";
 import Alert from "../../services/alertService";
-import env from "react-dotenv";
 import { Form, Button, Container, Col, Row } from "react-bootstrap";
 import QuarkLogo from "../../images/Group 6.png";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -70,7 +67,7 @@ function LoginForm() {
 
   const getMoodleData = async () => {
     try {
-      console.log(env.SERVER_URL);
+      console.log(process.env.REACT_APP_SERVER_URL);
       const res = await getPublic(`user/getMoodleData/${email}`);
       moodleData = res.data;
     } catch (e) {
@@ -83,7 +80,7 @@ function LoginForm() {
   };
 
   const setQuarkSessionCookie = async ()=> {
-    cookieRef.current.src = `${env.SERVER_URL}/login/`;
+    cookieRef.current.src = `${process.env.REACT_APP_SERVER_URL}/login/`;
   }
 
   const goHome = async () => {
@@ -133,7 +130,7 @@ function LoginForm() {
           <Col md={4}>
             <Form
               ref={ref}
-              action={`${env.MOODLE_URL}/login/index.php`}
+              action={`${process.env.REACT_APP_MOODLE_URL}/login/index.php`}
               onSubmit={(e) => handleSubmit(e)}
               method="post"
               id="login"
@@ -239,17 +236,17 @@ function LoginForm() {
               </div>
               <iframe
                 id="inlineFrameExample"
-                //style={{ display: "none" }}
+                style={{ display: "none" }}
                 title="Inline Frame Example"
                 width="600"
                 height="400"
-                src={`${env.MOODLE_URL}my/`}
+                src={`${process.env.REACT_APP_MOODLE_URL}my/`}
                 sandbox="allow-forms allow-scripts"
                 name="moodleframe"
               ></iframe>
               <iframe
                 id="inlineFrameExample"
-                //style={{ display: "none" }}
+                style={{ display: "none" }}
                 title="cookieFrame"
                 width="600"
                 height="200"

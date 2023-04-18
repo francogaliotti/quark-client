@@ -24,6 +24,7 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log("ENV: ", process.env.REACT_APP_SERVER_URL)
       if (cookies.get("QuarkSession") && cookies.get("username")) {
         try {
           const username = cookies.get("username");

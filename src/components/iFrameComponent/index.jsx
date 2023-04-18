@@ -1,9 +1,8 @@
 import React from "react";
-import env from "react-dotenv";
 import { LoadingModal } from "../loadingModal";
 
 export const IFrameComponent = ({ url }) => {
-  const src = (env?.MOODLE_URL) + url;
+  const src = (process.env.REACT_APP_MOODLE_URL) + url;
 
   return (
     <div
