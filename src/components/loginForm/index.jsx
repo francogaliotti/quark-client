@@ -35,15 +35,6 @@ function LoginForm() {
 
   }, [user]);
 
-  useEffect(()=> {
-    if (cookies.get("QuarkSession") || cookies.get("username")) {
-      const allCookies = cookies.getAll();
-      for (const cookieName in allCookies) {
-        cookies.remove(cookieName);
-      }
-    }
-  }, [])
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     await getMoodleData();

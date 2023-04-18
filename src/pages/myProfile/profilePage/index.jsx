@@ -63,10 +63,10 @@ function ProfilePage({ updateData }) {
             Cambios
           </p>
         </Card.Header>
-        <Card.Body className="userAndMail">
+        {/* <Card.Body className="userAndMail">
           <span>Nombre de Usuario: {user?.moodleUserData.username}</span>
           <span>Email: {user?.moodleUserData.email}</span>
-        </Card.Body>
+        </Card.Body> */}
         <Card.Body className="generalData">
           <h3>Datos generales</h3>
           <div className="fillForms">
