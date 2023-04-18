@@ -35,7 +35,17 @@ function LoginForm() {
 
   useEffect(() => {
     if (user) navigate("/home");
+
   }, [user]);
+
+  useEffect(()=> {
+    if (cookies.get("QuarkSession") || cookies.get("username")) {
+      const allCookies = cookies.getAll();
+      for (const cookieName in allCookies) {
+        cookies.remove(cookieName);
+      }
+    }
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,34 +82,31 @@ function LoginForm() {
     }
   };
 
+  const setQuarkSessionCookie = async ()=> {
+    cookieRef.current.src = `${env.SERVER_URL}/login/`;
+  }
+
   const goHome = async () => {
+    await setQuarkSessionCookie()
     setTimeout(async () => {
       try {
-        /*const loginResponse = await axios.get(`http://localhost:3030/login`,
-                    //{ withCredentials: "include" }
-                    )*/
-        console.log(`${env.SERVER_URL}/login`);
-        cookieRef.current.src = `${env.SERVER_URL}/login/`;
+        
         const profInfo = await getPublic(
           `/user/${moodleData.moodleUserData.id}`
         );
-
         try {
           const res = await getPublic(
             `/sesskey/${moodleData.moodleUserData.id}`
           );
           console.log(res);
           if (res.data.sesskey === null) {
-            cookies.remove("QuarkSession");
             throw "Contraseña incorrecta";
           }
-          //cookieRef.current.src = `http://34.71.113.200:3030/login`
           dispatch(
             login({
               ...moodleData,
               ...profInfo.data,
               sesskey: res.data.sesskey,
-              //token: loginResponse.data.token,
               LoggedIn: true,
             })
           );
@@ -107,6 +114,7 @@ function LoginForm() {
         } catch (e) {
           console.log(e);
           Alert.error({ title: e, message: "Intenta de nuevo" });
+          cookies.remove("QuarkSession");
         }
       } catch (e) {
         console.log(e);
@@ -115,7 +123,7 @@ function LoginForm() {
           message: "Intenta de nuevo",
         });
       }
-    }, 2000);
+    }, 3000);
   };
 
   return (
@@ -153,34 +161,30 @@ function LoginForm() {
                   }}
                 />
               </Form.Group>
-              <Form.Group
-                controlId="formBasicPassword"
-                className="row"
-              >
+              <Form.Group controlId="formBasicPassword" className="row">
                 <div className="col-10 mt-1 ">
-                <Form.Control
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  id="password"
-                  placeholder="Contraseña"
-                  autoComplete="current-password"
-                  className="password-input-field"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                />
+                  <Form.Control
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    id="password"
+                    placeholder="Contraseña"
+                    autoComplete="current-password"
+                    className="password-input-field"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                  />
                 </div>
 
                 <div className="eye d-flex justify-content-center align-items-center col-2">
-                <FontAwesomeIcon
-                  icon={showPassword ? faEyeSlash : faEye}
-                  className="d-inline"
-                  style={{cursor: "pointer", color: "#588CAF"}}
-                  onClick={(e) => {
-                    
-                    e.preventDefault();
-                    toggleShowPassword();
-                  }}
-                />
+                  <FontAwesomeIcon
+                    icon={showPassword ? faEyeSlash : faEye}
+                    className="d-inline"
+                    style={{ cursor: "pointer", color: "#588CAF" }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      toggleShowPassword();
+                    }}
+                  />
                 </div>
                 {/* <button
                   className="btn-quark"
@@ -235,20 +239,20 @@ function LoginForm() {
               </div>
               <iframe
                 id="inlineFrameExample"
-                // style={{ display: "none" }}
+                //style={{ display: "none" }}
                 title="Inline Frame Example"
                 width="600"
                 height="400"
-                src={`${env.MOODLE_URL}/my/`}
+                src={`${env.MOODLE_URL}my/`}
                 sandbox="allow-forms allow-scripts"
                 name="moodleframe"
               ></iframe>
               <iframe
                 id="inlineFrameExample"
-                style={{ display: "none" }}
+                //style={{ display: "none" }}
                 title="cookieFrame"
                 width="600"
-                height="1000"
+                height="200"
                 ref={cookieRef}
                 src=""
                 name="cookieFrame"

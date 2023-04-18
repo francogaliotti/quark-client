@@ -33,7 +33,7 @@ export async function putPrivate(path, data) {
 }
 
 export async function getPublic(path) {
-    console.log(env.EDITOR)
+    
     return axios.get(path);
 }
 

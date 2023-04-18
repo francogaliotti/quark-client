@@ -24,7 +24,7 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (cookies.get("QuarkSession")) {
+      if (cookies.get("QuarkSession") && cookies.get("username")) {
         try {
           const username = cookies.get("username");
           const res = await getPublic(`/user/getMoodleData/${username}`);
@@ -39,7 +39,7 @@ function App() {
           );
           setLoading(false);
         } catch (e) {
-          window.location.href = "http://35.184.2.206/home";
+          window.location.href = "https://playground.quarktalent.com/home";
         }
       } else {
         navigate("/login");
@@ -76,7 +76,7 @@ function App() {
 
   return (
     <div className="app-container">
-      {cookies.get("QuarkSession") && (
+      {(cookies.get("QuarkSession") && cookies.get("username")) && (
         <>
           <VerticalNavbar
             setColapsed={() => setColapsed(!colapsed)}
