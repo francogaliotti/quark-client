@@ -1,9 +1,8 @@
 import axios from "axios";
-import env from "react-dotenv";
 import Cookies from 'universal-cookie';
 
 //TODO here we should put the base url from the server side
-axios.defaults.baseURL = (env?.SERVER_URL) 
+axios.defaults.baseURL = (process.env.REACT_APP_SERVER_URL) 
 const cookies = new Cookies()
 const token = cookies.get("QuarkSession")
 
@@ -33,7 +32,7 @@ export async function putPrivate(path, data) {
 }
 
 export async function getPublic(path) {
-    console.log(env.EDITOR)
+    
     return axios.get(path);
 }
 

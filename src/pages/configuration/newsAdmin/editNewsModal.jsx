@@ -66,17 +66,17 @@ export const EditNewsModal = ({ open, onClose, fetch, update, setUpdate, current
                     <label for="validity">Vencimiento</label>
                     <input type="date" id='validity' className='modalInput' value={currentNews?.endDate} onChange={(e) => setCurrentNews({ ...currentNews, endDate: e.target.value })} />
                 </div>
-                <div className="modalCamp">
+                {moodleCourses.length > 0 && <div className="modalCamp">
                     <label for="filter">Filtros <p>(Mantener Ctrl.)</p></label>
                     <select multiple id="filter" className='modalInput selectMultiple' onChange={(e) => {
                         const selectedOptions = Array.from(e.target.selectedOptions).map(option => option.value);
                         setCurrentNews({ ...currentNews, courseList: selectedOptions })
                     }} >
-                        {moodleCourses.map(course => {
+                        {moodleCourses?.map(course => {
                             return <option value={course.id}>{course.name}</option>
                         })}
                     </select>
-                </div>
+                </div>}
                 <PrimaryButton id='createButton' onClick={() => handleSubmit()}>{update ? <>Actualizar</> : <>Crear</>}</PrimaryButton>
             </div>
         </div>
